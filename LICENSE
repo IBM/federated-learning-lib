@@ -1,15 +1,17 @@
 License Agreement
+
 Part 1 – General Terms
-BY DOWNLOADING, INSTALLING, COPYING, ACCESSING, CLICKING ON AN
-″ACCEPT″ BUTTON, OR OTHERWISE USING THE PROGRAM, LICENSEE AGREES TO THE TERMS OF THIS AGREEMENT. IF YOU ARE ACCEPTING THESE TERMS ON BEHALF OF LICENSEE, YOU REPRESENT AND WARRANT THAT YOU HAVE FULL AUTHORITY TO BIND LICENSEE TO THESE TERMS. IF YOU DO NOT AGREE TO THESE TERMS,
-v DO NOT DOWNLOAD, INSTALL, COPY, ACCESS, CLICK ON AN ″ACCEPT″ BUTTON, OR USE THE PROGRAM; AND
-v DESTROY ALL COPIES OF THE PROGRAM.
+
+BY DOWNLOADING, INSTALLING, COPYING, ACCESSING, CLICKING ON AN ″ACCEPT″ BUTTON, OR OTHERWISE USING THE PROGRAM, LICENSEE AGREES TO THE TERMS OF THIS AGREEMENT. IF YOU ARE ACCEPTING THESE TERMS ON BEHALF OF LICENSEE, YOU REPRESENT AND WARRANT THAT YOU HAVE FULL AUTHORITY TO BIND LICENSEE TO THESE TERMS. IF YOU DO NOT AGREE TO THESE TERMS, DO NOT DOWNLOAD, INSTALL, COPY, ACCESS, CLICK ON AN ″ACCEPT″ BUTTON, OR USE THE PROGRAM; AND DESTROY ALL COPIES OF THE PROGRAM.
+
 1.	Definitions
 ″IBM″ – International Business Machines Corporation or one of its subsidiaries.
 ″Program″ – the following, including the original and all whole or partial copies: 1) machine-readable instructions and data, 2) components, files, and modules, 3) audio-visual
 content (such as images, text, recordings, or pictures), and 4) related licensed materials (such as keys and documentation).
+
 2.	Agreement Structure
 This Agreement is the complete agreement between Licensee and IBM regarding the use of the Program. It replaces any prior oral or written communications between Licensee and IBM concerning Licensee's use of the Program.
+
 3.	License Grant
 The Program is owned by IBM or an IBM supplier, and is copyrighted and licensed, not sold.
 IBM grants Licensee a nonexclusive, non-transferable, royalty-free, revocable license to 1) use the Program for non-commercial purposes, 2) make and install copies to support such non-commercial purposes, and 3) make a backup copy, all provided that:
@@ -19,32 +21,40 @@ c.	Licensee reproduces all copyright notices and other legends of ownership on e
 d.	Licensee ensures that anyone who uses the Program (accessed either locally or remotely) 1) does so only on Licensee's behalf and 2) complies with the terms of this Agreement; and
 e.	Licensee does not 1) use, copy, modify, make derivative versions, or distribute the Program except as expressly permitted in this Agreement; 2) reverse assemble, reverse compile, otherwise translate, or reverse engineer the Program, except as expressly permitted by law without the possibility of contractual waiver; 3) use any of the Program's components, files, modules, audio-visual content, or related licensed materials separately from that Program; or 4) sublicense, rent, or lease the Program;
 	This license applies to each copy of the Program that Licensee makes.
+	
 3.1	Trade-ups, Updates, Fixes, and Patches
+
 3.1.1	Trade-ups
 If the Program is replaced by a trade-up Program, the replaced Program's license is promptly terminated.
+
 3.1.2	Updates, Fixes, and Patches
 When Licensee receives an update, fix, or patch to a Program, Licensee accepts any additional  or different terms that are applicable to such update, fix, or patch as provided.  If no additional or different terms are provided, then the update, fix, or patch is subject solely to this Agreement. If the Program is replaced by an update, Licensee agrees to promptly discontinue use of the replaced Program.
+
 3.2	Term and Termination
 This Agreement is effective until terminated.
 IBM may terminate Licensee's license if Licensee fails to comply with the terms of this Agreement.
 If the license is terminated for any reason by either party, Licensee agrees to promptly discontinue use of and destroy all of Licensee's copies of the Program. Any terms of this Agreement that by their nature extend beyond termination of this Agreement remain in effect until fulfilled, and apply to both parties' respective successors and assignees.
+
 4.	No Warranties
-SUBJECT TO ANY STATUTORY WARRANTIES THAT CANNOT BE EXCLUDED, IBM MAKES NO WARRANTIES OR CONDITIONS, EXPRESS OR IMPLIED, REGARDING THE PROGRAM OR SUPPORT, IF ANY, INCLUDING, BUT NOT LIMITED TO, ANY IMPLIED WARRANTIES OR CONDITIONS OF MERCHANTABILITY, SATISFACTORY
-QUALITY, FITNESS FOR A PARTICULAR PURPOSE, AND TITLE, AND ANY WARRANTY OR CONDITION OF NON-INFRINGEMENT.  THE PROGRAM IS PROVIDED "AS-IS."
+SUBJECT TO ANY STATUTORY WARRANTIES THAT CANNOT BE EXCLUDED, IBM MAKES NO WARRANTIES OR CONDITIONS, EXPRESS OR IMPLIED, REGARDING THE PROGRAM OR SUPPORT, IF ANY, INCLUDING, BUT NOT LIMITED TO, ANY IMPLIED WARRANTIES OR CONDITIONS OF MERCHANTABILITY, SATISFACTORY QUALITY, FITNESS FOR A PARTICULAR PURPOSE, AND TITLE, AND ANY WARRANTY OR CONDITION OF NON-INFRINGEMENT.  THE PROGRAM IS PROVIDED "AS-IS."
 SOME STATES OR JURISDICTIONS DO NOT ALLOW  THE  EXCLUSION  OF  EXPRESS OR IMPLIED WARRANTIES, SO THE ABOVE EXCLUSION MAY NOT APPLY TO LICENSEE. IN THAT  EVENT,  SUCH WARRANTIES ARE LIMITED IN DURATION TO  THE MINIMUM PERIOD REQUIRED BY LAW. NO WARRANTIES APPLY AFTER THAT PERIOD. SOME STATES OR JURISDICTIONS DO NOT ALLOW LIMITATIONS ON HOW LONG AN IMPLIED WARRANTY LASTS, SO THE ABOVE LIMITATION  MAY  NOT  APPLY TO LICENSEE. LICENSEE MAY HAVE OTHER RIGHTS THAT VARY FROM STATE TO STATE OR JURISDICTION TO JURISDICTION.
 THE DISCLAIMERS AND EXCLUSIONS IN THIS SECTION 4 ALSO APPLY TO ANY OF IBM'S PROGRAM DEVELOPERS AND SUPPLIERS.
 MANUFACTURERS, SUPPLIERS, OR PUBLISHERS OF NON-IBM PROGRAMS MAY PROVIDE THEIR OWN WARRANTIES.
-IBM DOES NOT PROVIDE SUPPORT OF ANY KIND, UNLESS IBM SPECIFIES OTHERWISE. IN SUCH EVENT, ANY SUPPORT PROVIDED BY IBM IS SUBJECT TO THE DISCLAIMERS AND EXCLUSIONS IN THIS                                                                                                                                                                                                                                                                                                SECTION 4.
+IBM DOES NOT PROVIDE SUPPORT OF ANY KIND, UNLESS IBM SPECIFIES OTHERWISE. IN SUCH EVENT, ANY SUPPORT PROVIDED BY IBM IS SUBJECT TO THE DISCLAIMERS AND EXCLUSIONS IN THIS SECTION 4.
+
 5.	Limitation of Liability
 The limitations and exclusions in this Section 5 (Limitation of Liability) apply to the full extent they are not prohibited by applicable law without the possibility of contractual waiver.
+
 5.1	Items for Which IBM Is Not Liable
 UNDER NO CIRCUMSTANCES IS IBM, ITS PROGRAM DEVELOPERS OR SUPPLIERS LIABLE FOR ANY OF THE FOLLOWING, EVEN IF INFORMED OF THEIR POSSIBILITY:
 a.	LOSS OF, OR DAMAGE TO, DATA;
 b.	SPECIAL, INCIDENTAL, EXEMPLARY, OR INDIRECT DAMAGES, OR FOR ANY ECONOMIC CONSEQUENTIAL DAMAGES; OR
 c.	LOST PROFITS, BUSINESS, REVENUE, GOODWILL, OR ANTICIPATED SAVINGS.
+
 6.	Third Party Notices
 The Program may include third party code that IBM, not the third party, licenses to Licensee under this Agreement. Notices, if any, for the third party code (″Third Party Notices″) are included for Licensee's information only.  These notices can be found in the Program's  NOTICES file(s). Information on how to obtain source code for certain third party code can be found in the Third Party Notices. If in the Third Party Notices IBM identifies third party code   as ″Modifiable Third Party Code,″ IBM authorizes Licensee to 1) modify the Modifiable Third Party Code and 2) reverse engineer the Program modules that directly interface with the Modifiable Third Party Code provided that it is only for the purpose of debugging Licensee's
 modifications to such third party code. IBM's service and support obligations, if any, apply only  to the unmodified Program.
+
 7.	General
 a.	Nothing in this Agreement affects any statutory rights of consumers that cannot be waived or limited by contract.
 b.	If any provision of this Agreement is held to be invalid or unenforceable, the remaining provisions of this Agreement remain in full force and effect.
@@ -57,6 +67,8 @@ g.	Neither Licensee nor IBM is responsible for failure to fulfill any obligation
 h.	No right or cause of action for any third party is created by this Agreement, nor is IBM responsible for any third party claims against Licensee.
 i.	In entering into this Agreement, neither party is relying on any representation not specified in this Agreement, including but not limited to any representation concerning: 1) the performance or function of the Program; 2) the experiences or recommendations of other parties; or 3) any results or savings that Licensee may achieve.
 j.	The license and intellectual property indemnification terms of Licensee's other agreements with IBM (if any) do not apply to Program licenses granted under this Agreement.
+
 8.	Geographic Scope and Governing Law
 All matters arising from or relating in any manner of this Agreement shall be (a) interpreted, and the rights and liabilities of the Parties determined, in accordance with the Laws of the State of New York applicable to agreements executed, delivered and performed within such State, without regard to the principles of conflicts of laws thereof and (b) subject to the exclusive jurisdiction of any state or federal court located within the county of New York in the State of New York.  Each Party hereby submits to the jurisdiction of any aforementioned court, waives any objection to New York venue of any action instituted hereunder, and consents to the granting of such legal or equitable relief as is deemed appropriate by any aforementioned court.
+
 The United Nations Convention on Contracts for the International Sale of Goods does not apply.
