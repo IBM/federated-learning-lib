@@ -1,201 +1,62 @@
-                                 Apache License
-                           Version 2.0, January 2004
-                        http://www.apache.org/licenses/
-
-   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
-
-   1. Definitions.
-
-      "License" shall mean the terms and conditions for use, reproduction,
-      and distribution as defined by Sections 1 through 9 of this document.
-
-      "Licensor" shall mean the copyright owner or entity authorized by
-      the copyright owner that is granting the License.
-
-      "Legal Entity" shall mean the union of the acting entity and all
-      other entities that control, are controlled by, or are under common
-      control with that entity. For the purposes of this definition,
-      "control" means (i) the power, direct or indirect, to cause the
-      direction or management of such entity, whether by contract or
-      otherwise, or (ii) ownership of fifty percent (50%) or more of the
-      outstanding shares, or (iii) beneficial ownership of such entity.
-
-      "You" (or "Your") shall mean an individual or Legal Entity
-      exercising permissions granted by this License.
-
-      "Source" form shall mean the preferred form for making modifications,
-      including but not limited to software source code, documentation
-      source, and configuration files.
-
-      "Object" form shall mean any form resulting from mechanical
-      transformation or translation of a Source form, including but
-      not limited to compiled object code, generated documentation,
-      and conversions to other media types.
-
-      "Work" shall mean the work of authorship, whether in Source or
-      Object form, made available under the License, as indicated by a
-      copyright notice that is included in or attached to the work
-      (an example is provided in the Appendix below).
-
-      "Derivative Works" shall mean any work, whether in Source or Object
-      form, that is based on (or derived from) the Work and for which the
-      editorial revisions, annotations, elaborations, or other modifications
-      represent, as a whole, an original work of authorship. For the purposes
-      of this License, Derivative Works shall not include works that remain
-      separable from, or merely link (or bind by name) to the interfaces of,
-      the Work and Derivative Works thereof.
-
-      "Contribution" shall mean any work of authorship, including
-      the original version of the Work and any modifications or additions
-      to that Work or Derivative Works thereof, that is intentionally
-      submitted to Licensor for inclusion in the Work by the copyright owner
-      or by an individual or Legal Entity authorized to submit on behalf of
-      the copyright owner. For the purposes of this definition, "submitted"
-      means any form of electronic, verbal, or written communication sent
-      to the Licensor or its representatives, including but not limited to
-      communication on electronic mailing lists, source code control systems,
-      and issue tracking systems that are managed by, or on behalf of, the
-      Licensor for the purpose of discussing and improving the Work, but
-      excluding communication that is conspicuously marked or otherwise
-      designated in writing by the copyright owner as "Not a Contribution."
-
-      "Contributor" shall mean Licensor and any individual or Legal Entity
-      on behalf of whom a Contribution has been received by Licensor and
-      subsequently incorporated within the Work.
-
-   2. Grant of Copyright License. Subject to the terms and conditions of
-      this License, each Contributor hereby grants to You a perpetual,
-      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
-      copyright license to reproduce, prepare Derivative Works of,
-      publicly display, publicly perform, sublicense, and distribute the
-      Work and such Derivative Works in Source or Object form.
-
-   3. Grant of Patent License. Subject to the terms and conditions of
-      this License, each Contributor hereby grants to You a perpetual,
-      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
-      (except as stated in this section) patent license to make, have made,
-      use, offer to sell, sell, import, and otherwise transfer the Work,
-      where such license applies only to those patent claims licensable
-      by such Contributor that are necessarily infringed by their
-      Contribution(s) alone or by combination of their Contribution(s)
-      with the Work to which such Contribution(s) was submitted. If You
-      institute patent litigation against any entity (including a
-      cross-claim or counterclaim in a lawsuit) alleging that the Work
-      or a Contribution incorporated within the Work constitutes direct
-      or contributory patent infringement, then any patent licenses
-      granted to You under this License for that Work shall terminate
-      as of the date such litigation is filed.
-
-   4. Redistribution. You may reproduce and distribute copies of the
-      Work or Derivative Works thereof in any medium, with or without
-      modifications, and in Source or Object form, provided that You
-      meet the following conditions:
-
-      (a) You must give any other recipients of the Work or
-          Derivative Works a copy of this License; and
-
-      (b) You must cause any modified files to carry prominent notices
-          stating that You changed the files; and
-
-      (c) You must retain, in the Source form of any Derivative Works
-          that You distribute, all copyright, patent, trademark, and
-          attribution notices from the Source form of the Work,
-          excluding those notices that do not pertain to any part of
-          the Derivative Works; and
-
-      (d) If the Work includes a "NOTICE" text file as part of its
-          distribution, then any Derivative Works that You distribute must
-          include a readable copy of the attribution notices contained
-          within such NOTICE file, excluding those notices that do not
-          pertain to any part of the Derivative Works, in at least one
-          of the following places: within a NOTICE text file distributed
-          as part of the Derivative Works; within the Source form or
-          documentation, if provided along with the Derivative Works; or,
-          within a display generated by the Derivative Works, if and
-          wherever such third-party notices normally appear. The contents
-          of the NOTICE file are for informational purposes only and
-          do not modify the License. You may add Your own attribution
-          notices within Derivative Works that You distribute, alongside
-          or as an addendum to the NOTICE text from the Work, provided
-          that such additional attribution notices cannot be construed
-          as modifying the License.
-
-      You may add Your own copyright statement to Your modifications and
-      may provide additional or different license terms and conditions
-      for use, reproduction, or distribution of Your modifications, or
-      for any such Derivative Works as a whole, provided Your use,
-      reproduction, and distribution of the Work otherwise complies with
-      the conditions stated in this License.
-
-   5. Submission of Contributions. Unless You explicitly state otherwise,
-      any Contribution intentionally submitted for inclusion in the Work
-      by You to the Licensor shall be under the terms and conditions of
-      this License, without any additional terms or conditions.
-      Notwithstanding the above, nothing herein shall supersede or modify
-      the terms of any separate license agreement you may have executed
-      with Licensor regarding such Contributions.
-
-   6. Trademarks. This License does not grant permission to use the trade
-      names, trademarks, service marks, or product names of the Licensor,
-      except as required for reasonable and customary use in describing the
-      origin of the Work and reproducing the content of the NOTICE file.
-
-   7. Disclaimer of Warranty. Unless required by applicable law or
-      agreed to in writing, Licensor provides the Work (and each
-      Contributor provides its Contributions) on an "AS IS" BASIS,
-      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
-      implied, including, without limitation, any warranties or conditions
-      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
-      PARTICULAR PURPOSE. You are solely responsible for determining the
-      appropriateness of using or redistributing the Work and assume any
-      risks associated with Your exercise of permissions under this License.
-
-   8. Limitation of Liability. In no event and under no legal theory,
-      whether in tort (including negligence), contract, or otherwise,
-      unless required by applicable law (such as deliberate and grossly
-      negligent acts) or agreed to in writing, shall any Contributor be
-      liable to You for damages, including any direct, indirect, special,
-      incidental, or consequential damages of any character arising as a
-      result of this License or out of the use or inability to use the
-      Work (including but not limited to damages for loss of goodwill,
-      work stoppage, computer failure or malfunction, or any and all
-      other commercial damages or losses), even if such Contributor
-      has been advised of the possibility of such damages.
-
-   9. Accepting Warranty or Additional Liability. While redistributing
-      the Work or Derivative Works thereof, You may choose to offer,
-      and charge a fee for, acceptance of support, warranty, indemnity,
-      or other liability obligations and/or rights consistent with this
-      License. However, in accepting such obligations, You may act only
-      on Your own behalf and on Your sole responsibility, not on behalf
-      of any other Contributor, and only if You agree to indemnify,
-      defend, and hold each Contributor harmless for any liability
-      incurred by, or claims asserted against, such Contributor by reason
-      of your accepting any such warranty or additional liability.
-
-   END OF TERMS AND CONDITIONS
-
-   APPENDIX: How to apply the Apache License to your work.
-
-      To apply the Apache License to your work, attach the following
-      boilerplate notice, with the fields enclosed by brackets "[]"
-      replaced with your own identifying information. (Don't include
-      the brackets!)  The text should be enclosed in the appropriate
-      comment syntax for the file format. We also recommend that a
-      file or class name and description of purpose be included on the
-      same "printed page" as the copyright notice for easier
-      identification within third-party archives.
-
-   Copyright [yyyy] [name of copyright owner]
-
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
+License Agreement
+Part 1 – General Terms
+BY DOWNLOADING, INSTALLING, COPYING, ACCESSING, CLICKING ON AN
+″ACCEPT″ BUTTON, OR OTHERWISE USING THE PROGRAM, LICENSEE AGREES TO THE TERMS OF THIS AGREEMENT. IF YOU ARE ACCEPTING THESE TERMS ON BEHALF OF LICENSEE, YOU REPRESENT AND WARRANT THAT YOU HAVE FULL AUTHORITY TO BIND LICENSEE TO THESE TERMS. IF YOU DO NOT AGREE TO THESE TERMS,
+v DO NOT DOWNLOAD, INSTALL, COPY, ACCESS, CLICK ON AN ″ACCEPT″ BUTTON, OR USE THE PROGRAM; AND
+v DESTROY ALL COPIES OF THE PROGRAM.
+1.	Definitions
+″IBM″ – International Business Machines Corporation or one of its subsidiaries.
+″Program″ – the following, including the original and all whole or partial copies: 1) machine-readable instructions and data, 2) components, files, and modules, 3) audio-visual
+content (such as images, text, recordings, or pictures), and 4) related licensed materials (such as keys and documentation).
+2.	Agreement Structure
+This Agreement is the complete agreement between Licensee and IBM regarding the use of the Program. It replaces any prior oral or written communications between Licensee and IBM concerning Licensee's use of the Program.
+3.	License Grant
+The Program is owned by IBM or an IBM supplier, and is copyrighted and licensed, not sold.
+IBM grants Licensee a nonexclusive, non-transferable, royalty-free, revocable license to 1) use the Program for non-commercial purposes, 2) make and install copies to support such non-commercial purposes, and 3) make a backup copy, all provided that:
+a.	Licensee has lawfully obtained the Program and complies with the terms of this Agreement;
+b.	the backup copy does not execute unless the backed-up Program cannot execute;
+c.	Licensee reproduces all copyright notices and other legends of ownership on each copy, or partial copy, of the Program;
+d.	Licensee ensures that anyone who uses the Program (accessed either locally or remotely) 1) does so only on Licensee's behalf and 2) complies with the terms of this Agreement; and
+e.	Licensee does not 1) use, copy, modify, make derivative versions, or distribute the Program except as expressly permitted in this Agreement; 2) reverse assemble, reverse compile, otherwise translate, or reverse engineer the Program, except as expressly permitted by law without the possibility of contractual waiver; 3) use any of the Program's components, files, modules, audio-visual content, or related licensed materials separately from that Program; or 4) sublicense, rent, or lease the Program;
+	This license applies to each copy of the Program that Licensee makes.
+3.1	Trade-ups, Updates, Fixes, and Patches
+3.1.1	Trade-ups
+If the Program is replaced by a trade-up Program, the replaced Program's license is promptly terminated.
+3.1.2	Updates, Fixes, and Patches
+When Licensee receives an update, fix, or patch to a Program, Licensee accepts any additional  or different terms that are applicable to such update, fix, or patch as provided.  If no additional or different terms are provided, then the update, fix, or patch is subject solely to this Agreement. If the Program is replaced by an update, Licensee agrees to promptly discontinue use of the replaced Program.
+3.2	Term and Termination
+This Agreement is effective until terminated.
+IBM may terminate Licensee's license if Licensee fails to comply with the terms of this Agreement.
+If the license is terminated for any reason by either party, Licensee agrees to promptly discontinue use of and destroy all of Licensee's copies of the Program. Any terms of this Agreement that by their nature extend beyond termination of this Agreement remain in effect until fulfilled, and apply to both parties' respective successors and assignees.
+4.	No Warranties
+SUBJECT TO ANY STATUTORY WARRANTIES THAT CANNOT BE EXCLUDED, IBM MAKES NO WARRANTIES OR CONDITIONS, EXPRESS OR IMPLIED, REGARDING THE PROGRAM OR SUPPORT, IF ANY, INCLUDING, BUT NOT LIMITED TO, ANY IMPLIED WARRANTIES OR CONDITIONS OF MERCHANTABILITY, SATISFACTORY
+QUALITY, FITNESS FOR A PARTICULAR PURPOSE, AND TITLE, AND ANY WARRANTY OR CONDITION OF NON-INFRINGEMENT.  THE PROGRAM IS PROVIDED "AS-IS."
+SOME STATES OR JURISDICTIONS DO NOT ALLOW  THE  EXCLUSION  OF  EXPRESS OR IMPLIED WARRANTIES, SO THE ABOVE EXCLUSION MAY NOT APPLY TO LICENSEE. IN THAT  EVENT,  SUCH WARRANTIES ARE LIMITED IN DURATION TO  THE MINIMUM PERIOD REQUIRED BY LAW. NO WARRANTIES APPLY AFTER THAT PERIOD. SOME STATES OR JURISDICTIONS DO NOT ALLOW LIMITATIONS ON HOW LONG AN IMPLIED WARRANTY LASTS, SO THE ABOVE LIMITATION  MAY  NOT  APPLY TO LICENSEE. LICENSEE MAY HAVE OTHER RIGHTS THAT VARY FROM STATE TO STATE OR JURISDICTION TO JURISDICTION.
+THE DISCLAIMERS AND EXCLUSIONS IN THIS SECTION 4 ALSO APPLY TO ANY OF IBM'S PROGRAM DEVELOPERS AND SUPPLIERS.
+MANUFACTURERS, SUPPLIERS, OR PUBLISHERS OF NON-IBM PROGRAMS MAY PROVIDE THEIR OWN WARRANTIES.
+IBM DOES NOT PROVIDE SUPPORT OF ANY KIND, UNLESS IBM SPECIFIES OTHERWISE. IN SUCH EVENT, ANY SUPPORT PROVIDED BY IBM IS SUBJECT TO THE DISCLAIMERS AND EXCLUSIONS IN THIS                                                                                                                                                                                                                                                                                                SECTION 4.
+5.	Limitation of Liability
+The limitations and exclusions in this Section 5 (Limitation of Liability) apply to the full extent they are not prohibited by applicable law without the possibility of contractual waiver.
+5.1	Items for Which IBM Is Not Liable
+UNDER NO CIRCUMSTANCES IS IBM, ITS PROGRAM DEVELOPERS OR SUPPLIERS LIABLE FOR ANY OF THE FOLLOWING, EVEN IF INFORMED OF THEIR POSSIBILITY:
+a.	LOSS OF, OR DAMAGE TO, DATA;
+b.	SPECIAL, INCIDENTAL, EXEMPLARY, OR INDIRECT DAMAGES, OR FOR ANY ECONOMIC CONSEQUENTIAL DAMAGES; OR
+c.	LOST PROFITS, BUSINESS, REVENUE, GOODWILL, OR ANTICIPATED SAVINGS.
+6.	Third Party Notices
+The Program may include third party code that IBM, not the third party, licenses to Licensee under this Agreement. Notices, if any, for the third party code (″Third Party Notices″) are included for Licensee's information only.  These notices can be found in the Program's  NOTICES file(s). Information on how to obtain source code for certain third party code can be found in the Third Party Notices. If in the Third Party Notices IBM identifies third party code   as ″Modifiable Third Party Code,″ IBM authorizes Licensee to 1) modify the Modifiable Third Party Code and 2) reverse engineer the Program modules that directly interface with the Modifiable Third Party Code provided that it is only for the purpose of debugging Licensee's
+modifications to such third party code. IBM's service and support obligations, if any, apply only  to the unmodified Program.
+7.	General
+a.	Nothing in this Agreement affects any statutory rights of consumers that cannot be waived or limited by contract.
+b.	If any provision of this Agreement is held to be invalid or unenforceable, the remaining provisions of this Agreement remain in full force and effect.
+c.	Licensee agrees to comply with all applicable export and import laws and regulations, including U.S. embargo and sanctions regulations and prohibitions on export for certain end uses or to certain users.
+d.	Licensee authorizes International Business Machines Corporation and its subsidiaries (and their successors and assigns, contractors and IBM Business Partners) to store and use Licensee's business contact information (if any) wherever they do business, in connection with IBM products and services, or in furtherance of IBM's business relationship with Licensee (if any).
+e.	Each party will allow the other reasonable opportunity to comply before it claims that the other has not met its obligations under this Agreement. The parties will attempt in good faith to resolve all disputes, disagreements, or claims between the parties relating to this Agreement.
+f.	Unless otherwise required by applicable law without the possibility of contractual waiver or limitation: 1) neither party will bring a legal action, regardless of form, for any claim arising out of or related to this Agreement more than two years after the cause of action arose; and
+2) upon the expiration of such time limit, any such claim and all respective rights related to the claim lapse.
+g.	Neither Licensee nor IBM is responsible for failure to fulfill any obligations due to causes beyond its control.
+h.	No right or cause of action for any third party is created by this Agreement, nor is IBM responsible for any third party claims against Licensee.
+i.	In entering into this Agreement, neither party is relying on any representation not specified in this Agreement, including but not limited to any representation concerning: 1) the performance or function of the Program; 2) the experiences or recommendations of other parties; or 3) any results or savings that Licensee may achieve.
+j.	The license and intellectual property indemnification terms of Licensee's other agreements with IBM (if any) do not apply to Program licenses granted under this Agreement.
+8.	Geographic Scope and Governing Law
+All matters arising from or relating in any manner of this Agreement shall be (a) interpreted, and the rights and liabilities of the Parties determined, in accordance with the Laws of the State of New York applicable to agreements executed, delivered and performed within such State, without regard to the principles of conflicts of laws thereof and (b) subject to the exclusive jurisdiction of any state or federal court located within the county of New York in the State of New York.  Each Party hereby submits to the jurisdiction of any aforementioned court, waives any objection to New York venue of any action instituted hereunder, and consents to the granting of such legal or equitable relief as is deemed appropriate by any aforementioned court.
+The United Nations Convention on Contracts for the International Sale of Goods does not apply.
