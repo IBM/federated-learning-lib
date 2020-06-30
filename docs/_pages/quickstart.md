@@ -412,7 +412,7 @@ x_train shape: (200, 28, 28, 1)
 200 train samples
 5000 test samples
 5000/5000 [==============================] - 2s 303us/step
-2020-06-29 11:46:06,542 - ibmfl.party.party_protocol_handler - INFO - {'loss': 0.6104391970634461, 'acc': 0.8152}```
+2020-06-29 11:46:06,542 - ibmfl.party.party_protocol_handler - INFO - {'loss': 0.6104391970634461, 'acc': 0.8152}
 ```
 
 ### 8. Terminate the aggregator and parties processes.
