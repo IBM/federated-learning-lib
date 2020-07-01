@@ -1,4 +1,4 @@
-#Quickstart
+# Quickstart
 
 ## Try out the step-by-step Keras classifier example.
 All commands are assumed to be run from the directory where the `.whl` file is located. 
@@ -36,8 +36,6 @@ model.compile(loss=keras.losses.categorical_crossentropy,
               metrics=['accuracy'])
 ```
 
-<img src="../assets/images/env_setup.jpeg">
-
 ### 1. Set up a running environment for IBM federated learning.
 
 We highly recommend using Conda installation for IBM federated learning.
@@ -47,7 +45,9 @@ If you already have Conda installed, create a new conda environment for IBM fede
 conda create -n <env_name> python=3.6
 ```     
 Follow the prompts to install all the required packages.
-The right figure is a screenshot of sample outputs from setting up such a conda environment named *fl-demo*.
+The figure below is a screenshot of sample outputs from setting up such a conda environment named *fl-demo*.
+
+<img src="./docs/assets/images/env_setup.jpg">
 
 Run `conda activate <env_name>` to activate the new Conda environment, and install the IBM federated learning package by running:
 ```commandline
