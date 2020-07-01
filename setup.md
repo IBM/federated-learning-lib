@@ -22,7 +22,7 @@ you can [install it here](https://docs.conda.io/projects/conda/en/latest/user-gu
 ## Split Sample Data
 
 You can use `generate_data.py` to generate sample data on any of the integrated datasets. For example, you could run:
-```
+```commandline
 python examples/generate_data.py -n 2 -d mnist -pp 200
 ```
 
@@ -41,7 +41,7 @@ You can generate these config files using the `generate_configs.py` script.
  
 For example, you could run:
 
-```
+```commandline
 python examples/generate_configs.py -m keras_classifier -n 2 -d mnist -p examples/data/mnist/random 
 ```
 
@@ -57,7 +57,7 @@ Run `python examples/generate_configs.py -h` for full descriptions of the differ
 To start the aggregator, open a terminal window running the IBM FL environment set up previously.
 
 1. In the terminal run:
-    ```
+    ```commandline
     python -m ibmfl.aggregator.aggregator examples/configs/keras_classifier/config_agg.yml
     ```  
 
@@ -70,7 +70,7 @@ To start the aggregator, open a terminal window running the IBM FL environment s
 To register new parties, open a new terminal window for each party, running the IBM FL environment set up previously.
 
 1. In the terminal run:
-     ```
+     ```commandline
     python -m ibmfl.party.party examples/configs/keras_classifier/config_party0.yml
     ``` 
 

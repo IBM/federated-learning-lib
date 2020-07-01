@@ -1,13 +1,4 @@
----
-permalink: /quickstart/
-title: "IBM Federated Learning 101"
-classes: wide
-read_time: true
-intro: 
-  - excerpt: 'New to IBM federated fearning? You can start with this step-by-step tutorial.'
----
-
-{% include feature_row id="intro" type="center" %}
+#Quickstart
 
 ## Try out the step-by-step Keras classifier example.
 All commands are assumed to be run from the directory where the `.whl` file is located. 
@@ -45,7 +36,7 @@ model.compile(loss=keras.losses.categorical_crossentropy,
               metrics=['accuracy'])
 ```
 
-![image-right]({{ site.url }}{{ site.baseurl }}/assets/images/env_setup.jpg){: .align-right}
+<img src="../assets/images/env_setup.jpeg">
 
 ### 1. Set up a running environment for IBM federated learning.
 
