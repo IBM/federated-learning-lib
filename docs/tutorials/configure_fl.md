@@ -105,7 +105,7 @@ protocol_handler:
 
 ## The party's configuration file.
 
-The folowing YAML file is an example of the party's configuration file. 
+The following YAML file is an example of the party's configuration file. 
 In this example, a flask connection is selected, therefore, 
 the aggregator server information will be provided in the `aggregator` section. 
 The party also specifies its data information in the `data` section, 
@@ -145,4 +145,4 @@ protocol_handler:
 ```
 
 To run a federated learning experiment, 
-one can follow our [step-by-step example](../_pages/quickstart.md) to set up the IBM FL environment and start the aggregator and parties.
+one can follow our [step-by-step example](../../quickstart.md) to set up the IBM FL environment and start the aggregator and parties.
