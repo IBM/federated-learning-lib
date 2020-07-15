@@ -20,12 +20,11 @@
 - "Adaptive Federated Learning in Resource Constrained Edge Computing Systems", Shiqiang Wang, Tiffany Tuor, Theodoros Salonidis, Kin K. Leung, Christian Makaya, Ting He, Kevin Chan, in IEEE Journal on Selected Areas in Communications, 2019. arXiv link: https://arxiv.org/abs/1804.05271
 - "Towards Taming the Resource and Data Heterogeneity in Federated Learning." Chai, Z., Fayyaz, H., Fayyaz, Z., Anwar, A., Zhou, Y., Baracaldo, N., Ludwig, H. and Cheng, Y., 2019.  In 2019 {USENIX} Conference on Operational Machine Learning (OpML 19) (pp. 19-21). https://www.usenix.org/system/files/opml19papers-chai.pdf 
 Communication Efficient Federated Learning
+
+## Communication Efficient Federated Learning
+
 - "Bayesian nonparametric federated learning of neural networks". M. Yurochkin, M. Agarwal, S. Ghosh, K. Greenewald, N. Hoang, and Y. Khazaeni. In International Conference on Machine Learning, pages 7252–7261, 2019. https://arxiv.org/abs/1905.12022
 - "Scalable inference of topic evolution via models for latent geometric structures" M. Yurochkin, Z. Fan, A. Guha, P. Koutris, and X. Nguyen. In Advances in Neural Information Processing Systems, 2019. https://arxiv.org/abs/1809.08738
 - "Statistical model aggregation via parameter matching" M. Yurochkin, M. Agarwal, S. Ghosh, K. Greenewald, and N. Hoang.  In Advances in Neural Information Processing Systems, 2019.  https://arxiv.org/abs/1911.00218
 - "Federated Learning with Matched Averaging" H. Wang, M. Yurochkin, Y. Sun, D. Papailiopoulos, and Y. Khazaeni. In International Conference on Learning Representations, 2020. https://arxiv.org/abs/2002.06440 
-
-
-## Communication Efficient Federated Learning
-
 - "Adaptive Gradient Sparsification for Efficient Federated Learning: An Online Learning Approach", P. Han, S. Wang, K. K. Leung, accepted at IEEE ICDCS 2020 - .  https://arxiv.org/abs/2001.04756
