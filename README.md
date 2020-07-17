@@ -57,7 +57,7 @@ There is a [docs folder](./docs) with tutorials and API documentation to learn h
 
 - Aggregator and Party [configuration tutorial](docs/tutorials/configure_fl.md)
 - [API documentation](http://ibmfl-api-docs.mybluemix.net/index.html)
-<!-- - Whitepaper (coming soon) -->
+- [White paper](docs/ibmfl.pdf)
 
 ## How to get in touch?
 
