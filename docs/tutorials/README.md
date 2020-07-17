@@ -6,3 +6,5 @@
 
 - Want to configure your own experiments in IBM federated learning? Try [Configuring IBM federated learning](../tutorials/configure_fl.md).
 
+- Learn how to create your own data handler in [Create a customized data handler](../tutorials/create_my_data_handler.md).
+
