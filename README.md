@@ -33,7 +33,7 @@ For a particular ML model, you can select multiple types of fusion algorithms:
 |                                     | Gradient Average              |
 |                                     | PFNM  [Yurochkin et al.](https://arxiv.org/abs/1905.12022) |
 |                                     | Krum [Blanchard et al.](https://papers.nips.cc/paper/6617-machine-learning-with-adversaries-byzantine-tolerant-gradient-descent.pdf)      |
-|                                     | Coordinated median [Goel et al.](http://www.its.caltech.edu/~whanncar/papers/median.pdf) |
+|                                     | Coordinated median [Yin et al.](https://arxiv.org/pdf/1803.01498.pdf) |
 |                                     | Zeno [Xie et al.](https://arxiv.org/abs/1805.10032)  |
 |                                     | SPAHM [Yurochkin et al.](https://arxiv.org/abs/1911.00218) |
 | ID3 Decision Tree	                  |	ID3 fusion  [Quinlan](https://link.springer.com/article/10.1007/BF00116251)             |

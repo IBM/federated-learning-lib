@@ -393,7 +393,7 @@ Epoch 3/3
 ```
 Outputs from party 2 will be similar as party 1.
 
-### 7. (Optional) Issue various commands to train, evaluate, and sync the models. 
+### 7. (Optional) Issue various commands to train again, evaluate, sync and save the models. 
 For a full list of supported commands, see `examples/README.md`.
 Sample outputs of issuing the `EVAL` command in one of the parties' terminal after the global training.
 ```buildoutcfg
@@ -405,6 +405,9 @@ x_train shape: (200, 28, 28, 1)
 5000/5000 [==============================] - 2s 303us/step
 2020-06-29 11:46:06,542 - ibmfl.party.party_protocol_handler - INFO - {'loss': 0.6104391970634461, 'acc': 0.8152}
 ```
+Users can also enter `TRAIN` again at the aggregator's terminal if they want to continue the FL training.
+Entering `SYNC` at the aggregator's terminal will trigger the synchronization of the current global model with parties, 
+and `SAVE` will trigger the parties to save their models at the local working directory.
 
 ### 8. Terminate the aggregator and parties processes.
 Remember to use `STOP` to terminate the aggregator's and parties' processes and exit.
