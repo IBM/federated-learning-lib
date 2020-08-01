@@ -1,5 +1,9 @@
 # Selected Papers
 
+## Overview
+
+- "IBM Federated Learning: an Enterprise Framework - White Paper V0.1". Heiko Ludwig, Nathalie Baracaldo, Gegi Thomas, Yi Zhou, Ali Anwar, Shashank Rajamoni, Yuya Ong, Jayaram Radhakrishnan, Ashish Verma, Mathieu Sinn, Mark Purcell, Ambrish Rawat, Tran Minh, Naoise Holohan, Supriyo Chakraborty, Shalisha Whitherspoon, Dean Steuer, Laura Wynter, Hifaz Hassan, Sean Laguna, Mikhail Yurochkin, Mayank Agarwal, Ebube Chuba, Annie Abay, 2020. https://arxiv.org/abs/2007.10987
+
 ## Secure and Private Federated Learning 
 
 - "A Hybrid Approach to Privacy-Preserving Federated Learning." (best paper award) Stacey Truex, Nathalie Baracaldo, Ali Anwar, Thomas Steinke, Heiko Ludwig, Rui Zhang. and Yi Zhou,  The 12th ACM Workshop on Artificial Intelligence and Security (AISec 2019). An arXiv preprint version can be found at https://arxiv.org/abs/1812.03224
