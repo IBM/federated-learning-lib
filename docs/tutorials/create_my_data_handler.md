@@ -14,7 +14,7 @@ In the config files, a section named `data` will be used to initialize the `Dat
 for the aggregator (if it has access to any dataset) and parties. 
 In particular, both the aggregator and each party can specify their own data handlers in their config files. 
 Note that the `data` section is optional in the config file for the aggregator. 
-If the aggregator has access to a dataset, for example, a global testset, 
+If the aggregator has access to a dataset, for example, a global testset or a validation set, 
 it can access the data via its data handler to monitor the global model's performance. 
 The data handlers for each party help them to access their own training and testing data.
 
@@ -22,11 +22,10 @@ The data handlers for each party help them to access their own training and test
 Below is one of our build-in data handlers for preparing [MNIST](http://yann.lecun.com/exdb/mnist/) data to train a Keras CNN model, 
 see our example [keras_classifier](../../examples/keras_classifier).
 
-The `get_data` method is where the party loads its local dataset to perform training and testing. 
+The `get_data` method is where the party accesses its local dataset to perform training and testing. 
 Specifically,  when local training is triggered, the party will load the training data from the first return argument of `get_data`. 
 When an evaluation of the model is triggered, the testing data is taken from the second return argument.
-If we observe this example code, we find that it loads and pre-processes the MNIST dataset the same way 
-we do in a centralized machine learning job. 
+If we observe this example code, we find that it loads and pre-processes the MNIST dataset the same way we do in a centralized machine learning job. 
 
 **Note that** this data handler assumes the local data is saved as a `.npz` file, and MNIST data has not been pre-processed yet.
 However, `.npz` format is not a mandatory format. One can load their local dataset from 
@@ -58,45 +57,50 @@ class MnistKerasDataHandler(DataHandler):
         
         if self.file_name is None:
             raise FLException('No data file name is provided to load the dataset.')
-
-    def get_data(self):
-        """
-        Gets pre-process mnist training and testing data. 
-
-        :return: training and testing data
-        :rtype: `tuple`
-        """
-        num_classes = 10
-        img_rows, img_cols = 28, 28
-        if self.file_name is None:
-            raise FLException('No data file name is provided to load the dataset.')
         else:
             try:
                 data_train = np.load(self.file_name)
-                x_train = data_train['x_train']
-                y_train = data_train['y_train']
-                x_test = data_train['x_test']
-                y_test = data_train['y_test']
+                self.x_train = data_train['x_train']
+                self.y_train = data_train['y_train']
+                self.x_test = data_train['x_test']
+                self.y_test = data_train['y_test']
             except Exception:
                 raise IOError('Unable to load training data from path '
                               'provided in config file: ' +
                               self.file_name)
+            self.preprocess_data()
 
+    def get_data(self):
+        """
+        Gets pre-processed mnist training and testing data. 
+
+        :return: training and testing data
+        :rtype: `tuple`
+        """
+        return (self.x_train, self.y_train), (self.x_test, self.y_test)
+
+    def preprocess_data(self):
+        """
+        Preprocesses the training and testing dataset.
+
+        :return: None
+        """
+        num_classes = 10
+        img_rows, img_cols = 28, 28
         if self.channels_first:
-            x_train = x_train.reshape(x_train.shape[0], 1, img_rows, img_cols)
-            x_test = x_test.reshape(x_test.shape[0], 1, img_rows, img_cols)
+            self.x_train = self.x_train.reshape(self.x_train.shape[0], 1, img_rows, img_cols)
+            self.x_test = self.x_test.reshape(self.x_test.shape[0], 1, img_rows, img_cols)
         else:
-            x_train = x_train.reshape(x_train.shape[0], img_rows, img_cols, 1)
-            x_test = x_test.reshape(x_test.shape[0], img_rows, img_cols, 1)
+            self.x_train = self.x_train.reshape(self.x_train.shape[0], img_rows, img_cols, 1)
+            self.x_test = self.x_test.reshape(self.x_test.shape[0], img_rows, img_cols, 1)
 
-        print('x_train shape:', x_train.shape)
-        print(x_train.shape[0], 'train samples')
-        print(x_test.shape[0], 'test samples')
+        print('x_train shape:', self.x_train.shape)
+        print(self.x_train.shape[0], 'train samples')
+        print(self.x_test.shape[0], 'test samples')
 
         # convert class vectors to binary class matrices
-        y_train = np.eye(num_classes)[y_train]
-        y_test = np.eye(num_classes)[y_test]
-        return (x_train, y_train), (x_test, y_test)
+        self.y_train = np.eye(num_classes)[self.y_train]
+        self.y_test = np.eye(num_classes)[self.y_test]
 ```
 Below is an example of the `data` section in the configuration files. 
 The name and path of the specified data handler must match its relative path in the working directory.
@@ -134,10 +138,21 @@ class MyDataHandler(DataHandler):
             if '<your_data_file_name>' in data_config:
                 self.file_name = data_config['<your_data_file_name>']
             # extract other additional parameters from `info` if any.
+
+        # load and preprocess the training and testing data
+        self.load_and_preprocess_data()
+
+
+    def load_and_preprocess_data(self):
+        """
+        Loads and pre-processeses local datasets, 
+        and updates self.x_train, self.y_train, self.x_test, self.y_test.
+        """
+        pass
     
     def get_data(self):
         """
-        Gets training and testing data and performs any pre-processing steps if needed.
+        Gets the prepared training and testing data.
         
         :return: ((x_train, y_train), (x_test, y_test)) # most build-in training modules expect data is returned in this format
         :rtype: `tuple` 
