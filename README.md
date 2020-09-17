@@ -67,6 +67,18 @@ We appreciate feedback and questions. Please post issues when you encounter them
 
 We have set up a Slack channel for ongoing discussion. Join the IBM federated learning workspace: https://ibm-fl.slack.com/
 
+
+## Citing IBM Federated Learning
+
+If you use IBM Federated Learning, please cite the following reference paper:
+
+@article{ludwig2020ibm,
+  title={IBM Federated Learning: an Enterprise Framework White Paper V0. 1},
+  author={Ludwig, Heiko and Baracaldo, Nathalie and Thomas, Gegi and Zhou, Yi and Anwar, Ali and Rajamoni, Shashank and Ong, Yuya and Radhakrishnan, Jayaram and Verma, Ashish and Sinn, Mathieu and others},
+  journal={arXiv preprint arXiv:2007.10987},
+  year={2020}
+}
+
 ## Ongoing effort 
 
 This is an ongoing effort. We plan to update this repo as new functionality is added frequently.
