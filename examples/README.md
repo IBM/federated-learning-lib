@@ -25,6 +25,8 @@
 ### Unsupervised learning in IBM FL:
 * [SPAHM with KMeans](spahm)
 
+### Jupyter Notebooks to run IBM FL:
+* [Keras Classifier](keras_classifier)
 
 ## IBM FL Command Reference
 

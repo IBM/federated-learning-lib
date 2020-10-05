@@ -1,0 +1,40 @@
+version: 1
+disable_existing_loggers: False
+formatters:
+    ffl_std:
+        format: "%(asctime)s -STD %(name)s - %(levelname)s - %(message)s"
+
+handlers:
+    console:
+        class: logging.StreamHandler
+        level: DEBUG
+        formatter: ffl_std
+        stream: ext://sys.stdout
+
+    info_file_handler:
+        class: logging.handlers.RotatingFileHandler
+        level: INFO
+        formatter: ffl_std
+        filename: info.log
+        maxBytes: 10485760
+        backupCount: 10
+        encoding: utf8
+        
+    error_file_handler:
+        class: logging.handlers.RotatingFileHandler
+        level: ERROR
+        formatter: ffl_std
+        filename: errors.log
+        maxBytes: 10485760 # 10MB
+        backupCount: 10
+        encoding: utf8
+
+loggers:
+    ibmfl:
+        level: INFO
+        handlers: [console, info_file_handler, error_file_handler]
+        propagate: no
+
+root:
+    level: INFO
+    handlers: [console, info_file_handler, error_file_handler]
