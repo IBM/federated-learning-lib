@@ -27,6 +27,7 @@
 
 ### Jupyter Notebooks to run IBM FL:
 * [Keras Classifier](keras_classifier)
+* [Reinforcement learning Cartpole](rl_cartpole)
 
 ## IBM FL Command Reference
 
