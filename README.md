@@ -85,5 +85,5 @@ This is an ongoing effort. We plan to update this repo as new functionality is a
 
 ## License
 
-IBM federated learning is distributed under this [license](LICENSE) for non-commercial and experimental use.
+Please make sure you read the [license](LICENSE)! IBM federated learning is distributed under this [license](LICENSE) for non-commercial and experimental use, which does not cover uses like packaging it with your own framework or including it in your product. If you like it and want to use it beyond this license, please get in touch on the Slack channel: https://ibm-fl.slack.com/
 
