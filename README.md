@@ -45,7 +45,7 @@ For a particular ML model, you can select multiple types of fusion algorithms:
 
 ## How to get started?
 
-Clone the repository. The main framework runtime is packaged in a [whl file](federated-learning-lib/federated_learning_lib-1.0-py3-none-any.whl). 
+Clone the repository. The main framework runtime is packaged in a [whl file](federated-learning-lib/). 
 
 Try the [set-up guide](setup.md) for a single-node federated learning setup. 
 
