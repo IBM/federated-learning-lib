@@ -1,5 +1,6 @@
 import os
 import pickle
+import numpy as np
 from sklearn.linear_model import SGDClassifier
 
 import examples.datahandlers as datahandlers
@@ -39,10 +40,12 @@ def get_hyperparams():
 
 def get_data_handler_config(party_id, dataset, folder_data, is_agg=False):
 
-    SUPPORTED_DATASETS = ['adult']
+    SUPPORTED_DATASETS = ['adult', 'mnist']
     if dataset in SUPPORTED_DATASETS:
         if dataset == 'adult':
             dataset = 'adult_sklearn'
+        elif dataset == 'mnist':
+            dataset = 'mnist_sklearn'
         data = datahandlers.get_datahandler_config(
             dataset, folder_data, party_id, is_agg)
     else:
@@ -56,6 +59,11 @@ def get_model_config(folder_configs, dataset, is_agg=False, party_id=0):
         return None
 
     model = SGDClassifier(loss='log', penalty='l2')
+
+    if dataset == 'adult':
+        model.classes_ = np.array([0, 1])
+    elif dataset == 'mnist':
+        model.classes_ = np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
 
     if not os.path.exists(folder_configs):
         os.makedirs(folder_configs)

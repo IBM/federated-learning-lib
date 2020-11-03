@@ -20,7 +20,6 @@ CONNECTION_TYPE_DESC = "type of connection to use; supported types are flask, ra
 FL_DATASETS = ["default", "mnist", "nursery", "adult", "federated-clustering",
                 "higgs", "airline", "diabetes", "binovf", "multovf", "linovf"]
 FL_EXAMPLES = ["id3_dt", "fedavg", "keras_classifier","pfnm",
-                "sklearn_logclassification", "sklearn_sgdclassifier",
-                "rl_cartpole", "rl_pendulum", "coordinate_median", "krum",
+                "sklearn_logclassification", "rl_cartpole", "rl_pendulum", "coordinate_median", "krum",
                 "naive_bayes", "keras_gradient_aggregation", "spahm", "zeno"]
 FL_CONN_TYPES = ["flask"]
