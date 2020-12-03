@@ -64,6 +64,19 @@ def get_datahandler_config(dh_name, folder_data, party_id, is_agg):
             data['info'] = {
                 'npz_file': os.path.join("examples", "datasets", "mnist.npz")
             }
+    elif dh_name == 'mnist_tf':
+        data = {
+            'name': 'MnistTFDataHandler',
+            'path': 'ibmfl.util.data_handlers.mnist_keras_data_handler',
+            'info': {
+                'npz_file': os.path.join(folder_data, 'data_party' + str(party_id) + '.npz')
+            }
+        }
+        if is_agg:
+            data['info'] = {
+                'npz_file': os.path.join("examples", "datasets", "mnist.npz")
+            }
+
     elif dh_name == 'adult':
         data = {
             'name': 'AdultDTDataHandler',
@@ -202,5 +215,18 @@ def get_datahandler_config(dh_name, folder_data, party_id, is_agg):
         }
         if is_agg:
             data['info'] = {}
+
+    elif dh_name == 'femnist':
+        data = {
+            'name': 'FemnistKerasDataHandler',
+            'path': 'ibmfl.util.data_handlers.femnist_keras_data_handler',
+            'info': {
+                'npz_file': os.path.join(folder_data, 'data_party' + str(party_id) + '.npz')
+            }
+        }
+        if is_agg:
+            data['info'] = {
+                'data_folder': os.path.join("examples", "datasets", "femnist")
+            }
 
     return data

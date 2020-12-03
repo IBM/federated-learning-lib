@@ -36,6 +36,7 @@ For a particular ML model, you can select multiple types of fusion algorithms:
 |                                     | Coordinated median [Yin et al.](https://arxiv.org/pdf/1803.01498.pdf) |
 |                                     | Zeno [Xie et al.](https://arxiv.org/abs/1805.10032)  |
 |                                     | SPAHM [Yurochkin et al.](https://arxiv.org/abs/1911.00218) |
+|                                     | Fed+ [Yu et al.](https://arxiv.org/abs/2009.06303) |                                                    
 | ID3 Decision Tree	                  |	ID3 fusion  [Quinlan](https://link.springer.com/article/10.1007/BF00116251)             |
 |	Reinforcement Learning RLLib models	|	Iterative Average        |
 |                                     |	FedAvg [McMahan et al.](https://arxiv.org/pdf/1602.05629.pdf)  |
@@ -85,5 +86,5 @@ This is an ongoing effort. We plan to update this repo as new functionality is a
 
 ## License
 
-Please make sure you read the [license](LICENSE)! IBM federated learning is distributed under this [license](LICENSE) for non-commercial and experimental use, which does not cover uses like packaging it with your own framework or including it in your product. If you like it and want to use it beyond this license, please get in touch on the Slack channel: https://ibm-fl.slack.com/
+The distribution of IBM federated learning in this repository is for non-commercial and experimental use under this [license](LICENSE). For commercial use IBM federated learning is available in [IBM CloudPak for Data](https://www.ibm.com/products/cloud-pak-for-data?_ga=2.110789637.1485356781.1606942871-1842160356.1605046314) and as a [service](https://dataplatform.cloud.ibm.com/docs/content/wsj/getting-started/whats-new.html?_ga=2.114396295.1485356781.1606942871-1842160356.1605046314).
 

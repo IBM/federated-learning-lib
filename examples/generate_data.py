@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 import os
 import sys
 import csv
@@ -10,11 +11,10 @@ fl_path = os.path.abspath('.')
 if fl_path not in sys.path:
     sys.path.append(fl_path)
 
-from ibmfl.util.datasets import load_nursery, load_mnist, load_adult, load_higgs, load_airline, \
-    load_diabetes, load_binovf, load_multovf, load_linovf, load_simulated_federated_clustering
 from examples.constants import GENERATE_DATA_DESC, NUM_PARTIES_DESC, DATASET_DESC, PATH_DESC, PER_PARTY, \
     STRATIFY_DESC, FL_DATASETS, NEW_DESC, PER_PARTY_ERR, NAME_DESC
-
+from ibmfl.util.datasets import load_nursery, load_mnist, load_adult, load_higgs, load_airline, \
+    load_diabetes, load_binovf, load_multovf, load_linovf, load_simulated_federated_clustering, load_leaf_femnist
 
 def setup_parser():
     """
@@ -487,6 +487,7 @@ def save_linovf_party_data(nb_dp_per_party, party_folder):
 
     print('Finished! :) Data saved in', party_folder)
 
+
 def save_federated_clustering_data(nb_dp_per_party, party_folder):
     """
     Saves simulated federated clustering dataset for unsupervised federated
@@ -526,6 +527,101 @@ def save_federated_clustering_data(nb_dp_per_party, party_folder):
         print('Finished! :) Data saved in ', party_folder)
 
 
+def save_femnist_party_data(nb_dp_per_party, should_stratify, party_folder):
+    """
+    Saves LEAF-FEMNIST party data
+
+    :param nb_dp_per_party: the number of data points each party should have
+    :type nb_dp_per_party: `list[int]`, if any value in list is -1, use femnist's default distribution
+    :param should_stratify: True if data should be assigned proportional to source class distributions
+    :type should_stratify: `bool`
+    :param party_folder: folder to save party data
+    :type party_folder: `str`
+    :return: None
+    :rtype: None
+    """
+    dataset_path = os.path.join("examples", "datasets", "femnist")
+    if not os.path.exists(dataset_path):
+        os.makedirs(dataset_path)
+    num_parties = len(nb_dp_per_party)
+    # FEMNIST's default data distribution based on LEAF
+    if -1 in nb_dp_per_party:
+        print("Generating dataset based on FEMNIST's default data distribution...")
+        partywise_data = load_leaf_femnist(
+            download_dir=dataset_path, orig_dist=True)
+        for idx, (_, data) in enumerate(partywise_data.items()):
+            if idx >= num_parties:
+                break
+            train_indices = np.random.choice(
+                len(data['x']), int(len(data['x']) * 0.9), replace=False)
+            test_indices = [i for i in range(
+                len(data['x'])) if i not in train_indices]
+            x_train_pi = np.array([data['x'][i] for i in train_indices])
+            y_train_pi = np.array([data['y'][i] for i in train_indices])
+            x_test_pi = np.array([data['x'][i] for i in test_indices])
+            y_test_pi = np.array([data['y'][i] for i in test_indices])
+
+            # Now put it all in an npz
+            name_file = 'data_party' + str(idx) + '.npz'
+            name_file = os.path.join(party_folder, name_file)
+            np.savez(name_file, x_train=x_train_pi, y_train=y_train_pi,
+                     x_test=x_test_pi, y_test=y_test_pi)
+            print_statistics(idx, x_test_pi, x_train_pi, 62, y_train_pi)
+            print('Finished! :) Data saved in ', party_folder)
+        return
+
+    (x_train, y_train), (x_test, y_test) = load_leaf_femnist(
+        download_dir=dataset_path)
+    labels, train_counts = np.unique(y_train, return_counts=True)
+    te_labels, test_counts = np.unique(y_test, return_counts=True)
+    if np.all(np.isin(labels, te_labels)):
+        print("Warning: test set and train set contain different labels")
+
+    num_train = np.shape(y_train)[0]
+    num_test = np.shape(y_test)[0]
+    num_labels = np.shape(np.unique(y_test))[0]
+
+    # Synthetically distributed FEMNIST
+    if should_stratify:
+        print("Generating non-iid FEMNIST distribution...")
+        # Sample according to source label distribution
+        train_probs = {
+            label: train_counts[label] / float(num_train) for label in labels}
+        test_probs = {label: test_counts[label] /
+                      float(num_test) for label in te_labels}
+    else:
+        print("Generating iid FEMNIST distribution...")
+        # Sample uniformly
+        train_probs = {label: 1.0 / len(labels) for label in labels}
+        test_probs = {label: 1.0 / len(te_labels) for label in te_labels}
+
+    for idx, dp in enumerate(nb_dp_per_party):
+        train_p = np.array([train_probs[y_train[idx]]
+                            for idx in range(num_train)])
+        train_p /= np.sum(train_p)
+        train_indices = np.random.choice(num_train, dp, p=train_p)
+        test_p = np.array([test_probs[y_test[idx]] for idx in range(num_test)])
+        test_p /= np.sum(test_p)
+
+        # Split test evenly
+        test_indices = np.random.choice(
+            num_test, int(dp * 0.1), p=test_p)
+
+        x_train_pi = x_train[train_indices]
+        y_train_pi = y_train[train_indices]
+        x_test_pi = x_test[test_indices]
+        y_test_pi = y_test[test_indices]
+        # Now put it all in an npz
+        name_file = 'data_party' + str(idx) + '.npz'
+        name_file = os.path.join(party_folder, name_file)
+        np.savez(name_file, x_train=x_train_pi, y_train=y_train_pi,
+                 x_test=x_test_pi, y_test=y_test_pi)
+
+        print_statistics(idx, x_test_pi, x_train_pi, num_labels, y_train_pi)
+
+        print('Finished! :) Data saved in ', party_folder)
+
+
 if __name__ == '__main__':
     # Parse command line options
     parser = setup_parser()
@@ -549,6 +645,8 @@ if __name__ == '__main__':
     # Create folder to save party data
     folder = os.path.join("examples", "data")
     strat = 'balanced' if stratify else 'random'
+    if args.dataset == 'femnist' and -1 in points_per_party:
+        strat = 'orig_dist'
 
     if create_new:
         folder = os.path.join(folder, exp_name if exp_name else str(
@@ -586,3 +684,5 @@ if __name__ == '__main__':
         save_linovf_party_data(points_per_party, folder)
     elif dataset == 'federated-clustering':
         save_federated_clustering_data(points_per_party, folder)
+    elif dataset == 'femnist':
+        save_femnist_party_data(points_per_party, stratify, folder)
