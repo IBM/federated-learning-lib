@@ -18,7 +18,7 @@ IBM federated learning comes with a large library of fusion algorithms for both 
 ## Supported functionality
 IBM federated learning supports the following machine learning model types: 
 
-- Neural networks (any neural network topology supported by Keras)
+- Neural networks (any neural network topology supported by Keras, PyTorch and Tensorflow)
 - Decision Tree ID3 
 - Linear classifiers/regressions (with regularizer): logistic regression, linear SVM, ridge regression, Kmeans and Naïve Bayes 
 - Deep Reinforcement Learning algorithms including DQN, DDPG, PPO and more
