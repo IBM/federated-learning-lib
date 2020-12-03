@@ -1,4 +1,4 @@
-# IBM Federated Learning
+# <d></d> <img src="docs/assets/images/hands_small_2.png?raw=true"> IBM Federated Learning  
 
 ## What is it?
 IBM federated learning is a Python framework for federated learning (FL) in an enterprise environment. FL is a distributed machine learning process, in which each participant node (or party) retains data locally and interacts with the other participants via a learning protocol. The main drivers behind FL are privacy and confidentiality concerns, regulatory compliance requirements, as well as the praciticality of moving data to one central learning location.
