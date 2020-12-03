@@ -21,8 +21,8 @@ you can [install it here](https://docs.conda.io/projects/conda/en/latest/user-gu
 You can use `generate_data.py` to generate sample data on any of FL's integrated datasets. For example, you could run:
 ```
 python examples/generate_data.py -n 2 -d femnist -pp -1
-Note: This might take some time to download and unpack the contents.
 ```
+Note: This might take some time to download and unpack the contents.
 
 LEAF FEMNIST has its own preset data distribution for each client. To use this distribution, we set the -pp to -1. If we
 set the -pp to a different number, it will be using stratified non-iid data distribution. In order to use IID distribution
