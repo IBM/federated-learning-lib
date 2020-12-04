@@ -13,6 +13,21 @@ you can [install it here](https://docs.conda.io/projects/conda/en/latest/user-gu
 
     `conda create -n <env_name> python=3.6`
 
+    Note: Lastest IBM FL library supports Keras model training with two different 
+    Tensorflow Backend versions(1.15 and 2.1). It is recommended to install IBM FL 
+    in different conda environment with different tf versions.
+    
+    a. While running Keras experiments with Tensorflow v1.15, create a new environment 
+    by running:
+
+        `conda create -n <env_name> python=3.6 tensorflow=1.15`
+
+    b. While running Keras experiments with Tensorflow v2.1, create a new environment
+    by running:
+
+        `conda create -n <env_name> python=3.6 tensorflow=2.1`
+
+
 2. Run `conda activate <env_name>` to activate the new Conda environment.
 
 3. Install the IBM FL package by running:
