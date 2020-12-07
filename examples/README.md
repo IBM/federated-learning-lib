@@ -1,13 +1,15 @@
 # Explore Available Examples
 
 ### Training Keras models with different fusion algorithms:
-* [Running Federated Averaging with Keras](fedavg)
+* [Running federated averaging (FedAvg) with Keras](fedavg)
 * [Simple average with Keras](keras_classifier)
+* [FedPlus with Keras](fedplus)
 * [Gradient aggregation with Keras](keras_gradient_aggregation)
 * [PFNM with Keras](pfnm)
 * [Coordinate median with Keras](coordinate_median)
 * [Krum with Keras](krum)
 * [Zeno with Keras](zeno)
+
 
 ### Training scikit-learn models in IBM FL:
 * [SGDClassifier](sklearn_sgdclassifier)
