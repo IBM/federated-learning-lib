@@ -42,7 +42,7 @@ We highly recommend using Conda installation for IBM federated learning.
 If you don't have Conda, you can install it [here](https://docs.conda.io/projects/conda/en/latest/user-guide/install/). 
 If you already have Conda installed, create a new conda environment for IBM federated learning by running:
 ```commandline
-conda create -n <env_name> python=3.6
+conda create -n <env_name> python=3.6 tensorflow=1.15
 ```     
 Follow the prompts to install all the required packages.
 The figure below is a screenshot of sample outputs from setting up such a conda environment named *fl-demo*.
@@ -53,6 +53,8 @@ Run `conda activate <env_name>` to activate the new Conda environment, and insta
 ```commandline
 pip install <IBM_federated_learning_whl_file>
 ```  
+
+**Note**: Lastest IBM FL library supports Keras model training with two different Tensorflow Backend versions (1.15 and 2.1). It is recommended to install IBM FL in different conda environment with different tf versions. See [here](setup.md#installation-with-conda-recommended) for details of how to set up IBM FL with a specific tensorflow backend.
 
 ### 2. Prepare datasets for each participating parties.
 

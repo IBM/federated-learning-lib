@@ -10,9 +10,14 @@
 * [Krum with Keras](krum)
 * [Zeno with Keras](zeno)
 
+### Training TensorFlow 2.1 models:
+* [TensorFlow 2.1 model (`.pb` format)](tf_classifier)
+* [Keras with TensorFlow 2.1 backend (`.h5` format)](tf_keras_classifier)
+
+### Training PyTorch models
+* [Running federated averaging (FedAvg) with PyTorch](pytorch_classifier)
 
 ### Training scikit-learn models in IBM FL:
-* [SGDClassifier](sklearn_sgdclassifier)
 * [Logistic classifier](sklearn_logclassification)
 * [SPAHM with KMeans](spahm)
 * [Differential private Naive Bayes models](naive_bayes)
