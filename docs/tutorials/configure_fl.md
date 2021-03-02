@@ -92,7 +92,6 @@ hyperparams:
     max_timeout: 60 # maximum time aggregator will wait to receive parties' replies
     parties: 2 # number of register parties
     rounds: 3 # global training round
-    termination_accuracy: 0.9 # target accuracy for the global model if a dataset is provided to the aggregator
   local:
     optimizer:
       lr: 0.01 # learning rate for local training
