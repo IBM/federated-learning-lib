@@ -41,6 +41,9 @@ For a particular ML model, you can select multiple types of fusion algorithms:
 |	Reinforcement Learning RLLib models	|	Iterative Average        |
 |                                     |	FedAvg [McMahan et al.](https://arxiv.org/pdf/1602.05629.pdf)  |
 |Linear classifiers with SGD | Iterative Average |
+|                            | Local Reweighing [Abay et al.](https://arxiv.org/abs/2012.02447)|
+|                            | Global Reweighing with Differetial Privacy [Abay et al.](https://arxiv.org/abs/2012.02447)|
+|Logistic Regression | Federated Prejudice Removal [Abay et al.](https://arxiv.org/abs/2012.02447) |
 |K-means | SPAHM [Yurochkin et al.](https://arxiv.org/abs/1911.00218) |
 |Naïve Bayes | Naive Bayes fusion with differential privacy|
 
