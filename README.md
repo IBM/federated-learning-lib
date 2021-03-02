@@ -36,16 +36,21 @@ For a particular ML model, you can select multiple types of fusion algorithms:
 |                                     | Coordinate-wise median [Yin et al.](https://arxiv.org/pdf/1803.01498.pdf) |
 |                                     | Zeno [Xie et al.](https://arxiv.org/abs/1805.10032)  |
 |                                     | SPAHM [Yurochkin et al.](https://arxiv.org/abs/1911.00218) |
-|                                     | Fed+ [Yu et al.](https://arxiv.org/abs/2009.06303) |                                                    
+|                                     | Fed+ [Yu et al.](https://arxiv.org/abs/2009.06303) |     
+|                                     | FedProx: [Tian Li et al.](https://arxiv.org/pdf/1812.06127.pdf). |
 | ID3 Decision Tree	                  |	ID3 fusion  [Quinlan](https://link.springer.com/article/10.1007/BF00116251)             |
 |	Reinforcement Learning RLLib models	|	Iterative Average        |
 |                                     |	FedAvg [McMahan et al.](https://arxiv.org/pdf/1602.05629.pdf)  |
 |Linear classifiers with SGD | Iterative Average |
-|                            | Local Reweighing [Abay et al.](https://arxiv.org/abs/2012.02447)|
-|                            | Global Reweighing with Differetial Privacy [Abay et al.](https://arxiv.org/abs/2012.02447)|
-|Logistic Regression | Federated Prejudice Removal [Abay et al.](https://arxiv.org/abs/2012.02447) |
 |K-means | SPAHM [Yurochkin et al.](https://arxiv.org/abs/1911.00218) |
 |Naïve Bayes | Naive Bayes fusion with differential privacy|
+
+We also support the following pre-processing techniques that can be coupled for multiple types of ML models: 
+| *Purpose* | *Pre-processing technique*   | 
+| Fairness  | Local Reweighing [Abay et al.](https://arxiv.org/abs/2012.02447)|
+| Fairness  | Global Reweighing with Differetial Privacy [Abay et al.](https://arxiv.org/abs/2012.02447)|
+| Fairness  | Federated Prejudice Removal [Abay et al.](https://arxiv.org/abs/2012.02447) |
+
 
 ## How to get started?
 
