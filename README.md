@@ -46,10 +46,11 @@ For a particular ML model, you can select multiple types of fusion algorithms:
 |Naïve Bayes | Naive Bayes fusion with differential privacy|
 
 We also support the following pre-processing techniques that can be coupled for multiple types of ML models: 
-| *Purpose* | *Pre-processing technique*   | 
-| Fairness  | Local Reweighing [Abay et al.](https://arxiv.org/abs/2012.02447)|
-| Fairness  | Global Reweighing with Differetial Privacy [Abay et al.](https://arxiv.org/abs/2012.02447)|
-| Fairness  | Federated Prejudice Removal [Abay et al.](https://arxiv.org/abs/2012.02447) |
+| *Pre-processing technique*   | *Purpose* | 
+|-------------------------------|-----------|
+|  Local Reweighing [Abay et al.](https://arxiv.org/abs/2012.02447)| Fairness  |
+| Global Reweighing with Differetial Privacy [Abay et al.](https://arxiv.org/abs/2012.02447)| Fairness |  
+| Federated Prejudice Removal [Abay et al.](https://arxiv.org/abs/2012.02447) | Fairness |
 
 
 ## How to get started?
