@@ -45,12 +45,13 @@ For a particular ML model, you can select multiple types of fusion algorithms:
 |K-means | SPAHM [Yurochkin et al.](https://arxiv.org/abs/1911.00218) |
 |Naïve Bayes | Naive Bayes fusion with differential privacy|
 
-We also support the following pre-processing techniques that can be coupled for multiple types of ML models: 
-| *Pre-processing technique*   | *Purpose* | 
+We also support the following fairness techniques that help to mitigate bias in federated learning. can be coupled for multiple types of ML models: 
+
+| *Fairness techniques*   | *Algorithm types* | *Supported ML models* | 
 |-------------------------------|-----------|
-|  Local Reweighing [Abay et al.](https://arxiv.org/abs/2012.02447)| Fairness  |
-| Global Reweighing with Differetial Privacy [Abay et al.](https://arxiv.org/abs/2012.02447)| Fairness |  
-| Federated Prejudice Removal [Abay et al.](https://arxiv.org/abs/2012.02447) | Fairness |
+| Local Reweighing [Abay et al.](https://arxiv.org/abs/2012.02447)| Pre-processing | All ML models |
+| Global Reweighing with Differetial Privacy [Abay et al.](https://arxiv.org/abs/2012.02447)| Pre-processing | All ML models |
+| Federated Prejudice Removal [Abay et al.](https://arxiv.org/abs/2012.02447) | In-processing | Logistic Regression |
 
 
 ## How to get started?
