@@ -13,7 +13,7 @@ you can [install it here](https://docs.conda.io/projects/conda/en/latest/user-gu
 
     `conda create -n <env_name> python=3.6`
 
-    **Note**: Lastest IBM FL library supports Keras model training with two different 
+    **Note**: Latest IBM FL library supports Keras model training with two different 
     Tensorflow Backend versions(1.15 and 2.1). It is recommended to install IBM FL 
     in different conda environment with different tf versions.
     
