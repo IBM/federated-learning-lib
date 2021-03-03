@@ -45,7 +45,7 @@ For a particular ML model, you can select multiple types of fusion algorithms:
 |K-means | SPAHM [Yurochkin et al.](https://arxiv.org/abs/1911.00218) |
 |Naïve Bayes | Naive Bayes fusion with differential privacy|
 
-We also support the following fairness techniques that help to mitigate bias in federated learning. can be coupled for multiple types of ML models: 
+We also support the following fairness techniques that help to mitigate bias in federated learning and can be coupled for multiple types of ML models: 
 
 | *Fairness techniques*   | *Algorithm types* | *Supported ML models* | 
 |-------------------------|-------------------|-------------------------|
