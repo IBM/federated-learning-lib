@@ -103,6 +103,33 @@ def get_datahandler_config(dh_name, folder_data, party_id, is_agg):
                 'txt_file': os.path.join("examples", "datasets", "adult.data")
             }
 
+    elif dh_name == 'adult_sklearn_grw':
+        data = {
+            'name': 'AdultSklearnDataHandler',
+            'path': 'ibmfl.util.data_handlers.adult_sklearn_data_handler',
+            'info': {
+                'txt_file': os.path.join(folder_data, 'data_party' + str(party_id) + '.csv'),
+                'epsilon': 1
+            }
+        }
+        if is_agg:
+            data['info'] = {
+                'txt_file': os.path.join("examples", "datasets", "adult.data")
+            }
+
+    elif dh_name == 'adult_pr':
+        data = {
+            'name': 'AdultPRDataHandler',
+            'path': 'ibmfl.util.data_handlers.adult_pr_data_handler',
+            'info': {
+                'txt_file': os.path.join(folder_data, 'data_party' + str(party_id) + '.csv')
+            }
+        }
+        if is_agg:
+            data['info'] = {
+                'txt_file': os.path.join("examples", "datasets", "adult.data")
+            }
+
     elif dh_name == 'nursery':
         data = {
             'name': 'NurseryDataHandler',
@@ -228,5 +255,73 @@ def get_datahandler_config(dh_name, folder_data, party_id, is_agg):
             data['info'] = {
                 'data_folder': os.path.join("examples", "datasets", "femnist")
             }
+
+    elif dh_name == 'compas_sklearn':
+        data = {
+            'name': 'CompasSklearnDataHandler',
+            'path': 'ibmfl.util.data_handlers.compas_sklearn_data_handler',
+            'info': {
+                'txt_file': os.path.join(folder_data, 'data_party' + str(party_id) + '.csv')
+            }
+        }
+        if is_agg:
+            data['info'] = {
+                'txt_file': os.path.join("examples", "datasets", "compas")
+            }
+
+    elif dh_name == 'compas_pr':
+        data = {
+            'name': 'CompasPRDataHandler',
+            'path': 'ibmfl.util.data_handlers.compas_pr_data_handler',
+            'info': {
+                'txt_file': os.path.join(folder_data, 'data_party' + str(party_id) + '.csv')
+            }
+        }
+        if is_agg:
+            data['info'] = {
+                'txt_file': os.path.join("examples", "datasets", "compas")
+            }
+
+    elif dh_name == 'compas_sklearn_grw':
+        data = {
+            'name': 'CompasSklearnDataHandler',
+            'path': 'ibmfl.util.data_handlers.compas_sklearn_data_handler',
+            'info': {
+                'txt_file': os.path.join(folder_data, 'data_party' + str(party_id) + '.csv'),
+                'epsilon': 1
+            }
+        }
+        if is_agg:
+            data['info'] = {
+                'txt_file': os.path.join("examples", "datasets", "compas")
+            }
+
+    elif dh_name == 'german_sklearn':
+        data = {
+            'name': 'GermanSklearnDataHandler',
+            'path': 'ibmfl.util.data_handlers.german_sklearn_data_handler',
+            'info': {
+                'txt_file': os.path.join(folder_data, 'data_party' + str(party_id) + '.csv')
+            }
+        }
+        if is_agg:
+            data['info'] = {
+                'txt_file': os.path.join("examples", "datasets", "german.data")
+            }
+
+    elif dh_name == 'german_sklearn_grw':
+        data = {
+            'name': 'GermanSklearnDataHandler',
+            'path': 'ibmfl.util.data_handlers.german_sklearn_data_handler',
+            'info': {
+                'txt_file': os.path.join(folder_data, 'data_party' + str(party_id) + '.csv'),
+                'epsilon': 1
+            }
+        }
+        if is_agg:
+            data['info'] = {
+                'txt_file': os.path.join("examples", "datasets", "german.data")
+            }
+
 
     return data

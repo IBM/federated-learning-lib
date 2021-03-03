@@ -14,7 +14,8 @@ if fl_path not in sys.path:
 from examples.constants import GENERATE_DATA_DESC, NUM_PARTIES_DESC, DATASET_DESC, PATH_DESC, PER_PARTY, \
     STRATIFY_DESC, FL_DATASETS, NEW_DESC, PER_PARTY_ERR, NAME_DESC
 from ibmfl.util.datasets import load_nursery, load_mnist, load_adult, load_higgs, load_airline, \
-    load_diabetes, load_binovf, load_multovf, load_linovf, load_simulated_federated_clustering, load_leaf_femnist
+    load_diabetes, load_binovf, load_multovf, load_linovf, load_simulated_federated_clustering, load_leaf_femnist, \
+    load_compas, load_german
 
 def setup_parser():
     """
@@ -141,6 +142,90 @@ def save_adult_party_data(nb_dp_per_party, should_stratify, party_folder):
 
     print('Finished! :) Data saved in', party_folder)
 
+def save_compas_party_data(nb_dp_per_party, should_stratify, party_folder):
+    """
+    Saves Compas party data
+
+    :param nb_dp_per_party: the number of data points each party should have
+    :type nb_dp_per_party: `list[int]`
+    :param should_stratify: True if data should be assigned proportional to source class distributions
+    :type should_stratify: `bool``
+    :param party_folder: folder to save party data
+    :type party_folder: `str`
+    """
+    dataset_path = os.path.join("examples", "datasets")
+    if not os.path.exists(dataset_path):
+        os.makedirs(dataset_path)
+    x_train = load_compas(download_dir=dataset_path)
+    num_train = len(x_train.index)
+    y_train = x_train['class'].values.tolist()
+    labels, counts = np.unique(y_train, return_counts=True)
+
+    if should_stratify:
+        probs = {label: counts[np.where(labels == label)[0][0]] / float(num_train) for label in labels}
+    else:
+        probs = {label: 1.0 / num_train for label in labels}
+
+    p_list = np.array([probs[y_train[idx]] for idx in range(num_train)])
+    p_list /= np.sum(p_list)
+    for i, dp in enumerate(nb_dp_per_party):
+        # Create variable for indices
+        indices = np.random.choice(num_train, dp, p=p_list)
+        indices = indices.tolist()
+        # Use indices for data/classification subset
+        x_train_pi = x_train.iloc[indices]
+
+        name_file = 'data_party' + str(i) + '.csv'
+        name_file = os.path.join(party_folder, name_file)
+        with open(name_file, 'w') as writeFile:
+            writer = csv.writer(writeFile)
+            writer.writerows(x_train_pi)
+
+        x_train_pi.to_csv(path_or_buf=name_file, index=None)
+
+    print('Finished! :) Data saved in', party_folder)
+
+def save_german_party_data(nb_dp_per_party, should_stratify, party_folder):
+    """
+    Saves German Credit Scorning party data
+    :param nb_dp_per_party: the number of data points each party should have
+    :type nb_dp_per_party: `list[int]`
+    :param should_stratify: True if data should be assigned proportional to source class distributions
+    :type should_stratify: `bool`
+    :param party_folder: folder to save party data
+    :type party_folder: `str`
+    """
+    dataset_path = os.path.join("examples", "datasets")
+    if not os.path.exists(dataset_path):
+        os.makedirs(dataset_path)
+    x_train = load_german(download_dir=dataset_path)
+    num_train = len(x_train.index)
+    y_train = x_train['class'].values.tolist()
+    labels, counts = np.unique(y_train, return_counts=True)
+
+    if should_stratify:
+        probs = {label: counts[np.where(labels == label)[0][0]] / float(num_train) for label in labels}
+    else:
+        probs = {label: 1.0 / num_train for label in labels}
+
+    p_list = np.array([probs[y_train[idx]] for idx in range(num_train)])
+    p_list /= np.sum(p_list)
+    for i, dp in enumerate(nb_dp_per_party):
+        # Create variable for indices
+        indices = np.random.choice(num_train, dp, p=p_list)
+        indices = indices.tolist()
+        # Use indices for data/classification subset
+        x_train_pi = x_train.iloc[indices]
+
+        name_file = 'data_party' + str(i) + '.csv'
+        name_file = os.path.join(party_folder, name_file)
+        with open(name_file, 'w') as writeFile:
+            writer = csv.writer(writeFile)
+            writer.writerows(x_train_pi)
+
+        x_train_pi.to_csv(path_or_buf=name_file, index=None)
+
+    print('Finished! :) Data saved in', party_folder)
 
 def save_mnist_party_data(nb_dp_per_party, should_stratify, party_folder):
     """
@@ -667,6 +752,10 @@ if __name__ == '__main__':
     if dataset == 'nursery':
         save_nursery_party_data(points_per_party, stratify, folder)
     elif dataset == 'adult':
+        save_adult_party_data(points_per_party, stratify, folder)
+    elif dataset == 'compas':
+        save_adult_party_data(points_per_party, stratify, folder)
+    elif dataset == 'german':
         save_adult_party_data(points_per_party, stratify, folder)
     elif args.dataset == 'mnist':
         save_mnist_party_data(points_per_party, stratify, folder)
