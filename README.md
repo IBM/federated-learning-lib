@@ -48,7 +48,7 @@ For a particular ML model, you can select multiple types of fusion algorithms:
 We also support the following fairness techniques that help to mitigate bias in federated learning. can be coupled for multiple types of ML models: 
 
 | *Fairness techniques*   | *Algorithm types* | *Supported ML models* | 
-|-------------------------------|-----------|
+|-------------------------|-------------------|-------------------------|
 | Local Reweighing [Abay et al.](https://arxiv.org/abs/2012.02447)| Pre-processing | All ML models |
 | Global Reweighing with Differetial Privacy [Abay et al.](https://arxiv.org/abs/2012.02447)| Pre-processing | All ML models |
 | Federated Prejudice Removal [Abay et al.](https://arxiv.org/abs/2012.02447) | In-processing | Logistic Regression |
