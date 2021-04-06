@@ -4,8 +4,13 @@ import argparse
 import os
 import time
 import yaml
+import json
 import sys
 from importlib import import_module
+
+import pycloudmessenger.ffl.abstractions as ffl
+import pycloudmessenger.ffl.fflapi as fflapi
+
 
 fl_path = os.path.abspath('.')
 if fl_path not in sys.path:
@@ -13,7 +18,7 @@ if fl_path not in sys.path:
 
 from examples.constants import GENERATE_CONFIG_DESC, NUM_PARTIES_DESC, \
     PATH_CONFIG_DESC, MODEL_CONFIG_DESC, NEW_DESC, NAME_DESC, \
-    FL_EXAMPLES, FL_CONN_TYPES, CONNECTION_TYPE_DESC
+    FL_EXAMPLES, FL_CONN_TYPES, CONNECTION_TYPE_DESC, TASK_NAME_DESC
 
 
 def check_valid_folder_structure(p):
@@ -50,11 +55,37 @@ def setup_parser():
     p.add_argument("--name", help=NAME_DESC)
     p.add_argument("--connection", "-c", choices=[os.path.basename(
         d) for d in FL_CONN_TYPES], help=CONNECTION_TYPE_DESC, required=False, default="flask")
-    
+    p.add_argument("--task_name", "-t", help=TASK_NAME_DESC, required=False)
     return p
 
 
-def generate_connection_config(conn_type, party_id=0, is_party=False):
+def rabbit_task(credentials: str, aggregator: str, password: str, task_name: str):
+    try:
+        ffl.Factory.register(
+            'cloud',
+            fflapi.Context,
+            fflapi.User,
+            fflapi.Aggregator,
+            fflapi.Participant
+        )
+
+        context = ffl.Factory.context(
+            'cloud',
+            credentials,
+            aggregator,
+            password
+        )
+
+        user = ffl.Factory.user(context)
+
+        with user:
+            result = user.create_task(task_name, ffl.Topology.star, {})
+            print(f"Task '{task_name}' created.")
+    except Exception as err:
+        print('error: %s', err)
+        raise
+
+def generate_connection_config(conn_type, party_id=0, is_party=False, task_name = None):
     connection = {}
 
     if conn_type == 'flask':
@@ -77,7 +108,46 @@ def generate_connection_config(conn_type, party_id=0, is_party=False):
                 'port': 5000
             }
         connection['info']['tls_config'] = tls_config
-    
+
+    if conn_type == 'rabbitmq':
+        credentials = os.environ.get('IBMFL_BROKER')
+        if not credentials:
+            raise Exception("IBMFL_BROKER: environment variable not available.")
+
+        credentials = yaml.load(credentials)
+        if 'rabbit' in credentials:
+            with open('ibmfl_broker_connection.json', 'w') as creds:
+                creds.write(json.dumps(credentials['rabbit']))
+
+        connection = {
+            'name': 'RabbitMQConnection',
+            'path': 'ibmfl.connection.rabbitmq_connection',
+            'sync': True
+        }
+
+        if is_party:
+            party = credentials[f'party{party_id}']['name']
+            password = credentials[f'party{party_id}']['password']
+
+            connection['info'] = {
+                'credentials': 'ibmfl_broker_connection.json',
+                'user': party,
+                'password': password,
+                'role': 'party',
+                'task_name': task_name
+            }
+        else:
+            aggregator = credentials['aggregator']['name']
+            password = credentials['aggregator']['password']
+            connection['info'] = {
+                'credentials': 'ibmfl_broker_connection.json',
+                'user': aggregator,
+                'password': password,
+                'role': 'aggregator',
+                'task_name': task_name
+            }
+
+            rabbit_task('ibmfl_broker_connection.json', aggregator, password, task_name)
 
     return connection
 
@@ -108,7 +178,9 @@ def generate_ph_config(conn_type, is_party=False):
             'path': 'ibmfl.aggregator.protohandler.proto_handler'
         }
 
-     
+    if conn_type == 'rabbitmq':
+        protocol_handler['name'] += 'RabbitMQ'
+
     return protocol_handler
 
 
@@ -148,14 +220,14 @@ def generate_datahandler_config(module, party_id, dataset, folder_data, is_agg=F
     return dh
 
 
-def generate_agg_config(module, num_parties, conn_type, dataset, folder_data, folder_configs, keys):
+def generate_agg_config(module, num_parties, conn_type, dataset, folder_data, folder_configs, keys, task_name = None):
 
     if not os.path.exists(folder_configs):
         os.makedirs(folder_configs)
     config_file = os.path.join(folder_configs, 'config_agg.yml')
 
     content = {
-        'connection': generate_connection_config(conn_type),
+        'connection': generate_connection_config(conn_type, task_name=task_name),
         'fusion': generate_fusion_config(module),
         'hyperparams': generate_hp_config(module, num_parties),
         'protocol_handler': generate_ph_config(conn_type)
@@ -175,7 +247,7 @@ def generate_agg_config(module, num_parties, conn_type, dataset, folder_data, fo
           os.path.abspath(os.path.join(folder_configs, 'config_agg.yml')))
 
 
-def generate_party_config(module, num_parties, conn_type, dataset, folder_data, folder_configs, keys):
+def generate_party_config(module, num_parties, conn_type, dataset, folder_data, folder_configs, keys, task_name = None):
 
     for i in range(num_parties):
         config_file = os.path.join(
@@ -186,7 +258,7 @@ def generate_party_config(module, num_parties, conn_type, dataset, folder_data, 
         
 
         content = {
-            'connection': generate_connection_config(conn_type, i, True),
+            'connection': generate_connection_config(conn_type, i, True, task_name=task_name),
             'data': generate_datahandler_config(module, i, dataset, folder_data),
             'model': generate_model_config(module, folder_configs, dataset, party_id=i),
             'protocol_handler': generate_ph_config(conn_type, True),
@@ -215,7 +287,7 @@ if __name__ == '__main__':
     create_new = args.create_new
     exp_name = args.name
     conn_type = args.connection
-
+    task_name = args.task_name
 
     # Create folder to save configs
     folder_configs = os.path.join("examples", "configs")
@@ -234,8 +306,8 @@ if __name__ == '__main__':
 
     generate_agg_config(config_model, num_parties, conn_type,
                         dataset, party_data_path, folder_configs,
-                        None)
+                        None, task_name)
     generate_party_config(config_model, num_parties, conn_type,
                           dataset, party_data_path, folder_configs,
-                          None)
+                          None, task_name)
 

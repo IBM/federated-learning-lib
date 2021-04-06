@@ -8,6 +8,7 @@ DATASET_DESC = "which data set to use"
 PATH_DESC = "directory to save the data"
 PER_PARTY = "the number of data points per party"
 STRATIFY_DESC = "proportionally stratify the data according to the source distribution"
+TASK_NAME_DESC = "task name, specified when using RabbitMQ connection"
 
 NEW_DESC = "create a new directory for this run based on current time instead of overriding"
 NAME_DESC = "the name of the run (default is current time)"
@@ -24,4 +25,4 @@ FL_EXAMPLES = ["id3_dt", "fedavg", "keras_classifier", "pfnm",
                "naive_bayes", "keras_gradient_aggregation", "spahm", "zeno", "pytorch_classifier",
                "tf_classifier", "tf_keras_classifier", "fedplus", "sklearn_logclassification_rw",
                "sklearn_logclassification_globalrw", "prej_remover", "fedprox"]
-FL_CONN_TYPES = ["flask"]
+FL_CONN_TYPES = ["flask", "rabbitmq"]
