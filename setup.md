@@ -36,6 +36,29 @@ you can [install it here](https://docs.conda.io/projects/conda/en/latest/user-gu
     
     `pip install <IBM_federated_learning_whl_file>`
 
+
+#### Installation with pip
+
+1. Create a virtual environment by running:
+
+    ```commandline
+    python -m pip install --user virtualenv
+    virtualenv venv
+    source venv/bin/activate
+    python -m pip install --upgrade pip
+    ```
+
+    **Then run 'source/venv/bin/activate' to enable the virtual environment.**
+
+2. Install basic dependencies:
+
+    `pip install -r requirements.txt`
+
+3. Install the IBM FL package by running:
+    
+    `pip install <IBM_federated_learning_whl_file>`
+
+
 ## Split Sample Data
 
 You can use `generate_data.py` to generate sample data on any of the integrated datasets. For example, you could run:
@@ -66,6 +89,15 @@ This command would generate the configs for the `keras_classifier` model, assumi
 You must also specify the party data path via `-p`. 
 
 Run `python examples/generate_configs.py -h` for full descriptions of the different options.
+
+If the RabbitMQ connection is available, ensure that the environment variable `IBMFL_BROKER` is available and use the `-c` option with the `generate_configs.py` script, e.g. `-c rabbitmq`.
+
+The IBMFL_BROKER variable takes the following form:
+
+`"{'aggregator': {'name': '', 'password': ''}, 'party0' : {'name': '', 'password': ''}, ..., 'partyn': {'name': '', 'password': ''}, 'rabbit' : {from the IBM team}}"`
+
+The aggregator field is only used when in aggregator mode, and the party0...n fields for the appropriate party.
+
 
 ## Initiate Learning
 
