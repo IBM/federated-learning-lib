@@ -1,9 +1,7 @@
 import os
+from importlib import import_module
 
-import keras
-from keras import backend as K
-from keras.layers import Dense, Dropout, Reshape
-from keras.models import Sequential
+import numpy as np
 
 import examples.datahandlers as datahandlers
 
@@ -24,29 +22,32 @@ def get_local_training_config():
     return local_training_handler
 
 
-def get_hyperparams():
+def get_hyperparams(model):
     hyperparams = {
         'global': {
-            'rounds': 3,
-            'termination_accuracy': 0.9
-        },
-        'local': {
-            'training': {
-                'epochs': 3
-            },
-            'optimizer': {
-                'lr': 0.01
+                'rounds': 3,
+                'termination_accuracy': 0.9,
+                'max_timeout': 60
             }
-        }
     }
+    current_module = globals().get('__package__')
+    
+    model_module = import_module('{}.model_{}'.format(current_module, model))
+    local_params_method = getattr(model_module, 'get_hyperparams')
 
+    local_params = local_params_method()
+    hyperparams['local'] = local_params
+    
     return hyperparams
 
 
-def get_data_handler_config(party_id, dataset, folder_data, is_agg=False):
+def get_data_handler_config(party_id, dataset, folder_data, is_agg=False, model='keras'):
 
     SUPPORTED_DATASETS = ['mnist']
     if dataset in SUPPORTED_DATASETS:
+        if model not in 'keras':
+            dataset = dataset + "_" + model
+
         data = datahandlers.get_datahandler_config(
             dataset, folder_data, party_id, is_agg)
     else:
@@ -55,42 +56,16 @@ def get_data_handler_config(party_id, dataset, folder_data, is_agg=False):
     return data
 
 
-def get_model_config(folder_configs, dataset, is_agg=False, party_id=0):
-    num_classes = 10
-    img_rows, img_cols = 28, 28
-    if K.image_data_format() == 'channels_first':
-        input_shape = (1, img_rows, img_cols)
-    else:
-        input_shape = (img_rows, img_cols, 1)
+def get_model_config(folder_configs, dataset, is_agg=False, party_id=0, model='keras'):
+    SUPPORTED_MODELS = ['keras', 'pytorch', 'tf']
 
-    model = Sequential()
-    model.add(Reshape((784,), input_shape=input_shape))
-    model.add(Dense(256, activation='relu'))
-    model.add(Dropout(0.25))
-    model.add(Dense(128, activation='relu'))
-    model.add(Dropout(0.5))
-    model.add(Dense(num_classes, activation='softmax'))
+    if model not in SUPPORTED_MODELS:
+        raise Exception("Invalid model config for this fusion algorithm")
 
-    model.compile(loss=keras.losses.categorical_crossentropy,
-                  optimizer=keras.optimizers.Adadelta(),
-                  metrics=['accuracy'])
+    current_module = globals().get('__package__')
+    
+    model_module = import_module('{}.model_{}'.format(current_module, model))
+    method = getattr(model_module, 'get_model_config')
 
-    # Save model
-    fname = os.path.join(folder_configs, 'compiled_keras_global.h5')
-    model.save(fname)
+    return method(folder_configs, dataset, is_agg=is_agg, party_id=0)
 
-    K.clear_session()
-
-    # Generate model spec:
-    spec = {
-        'model_name': 'keras-fc',
-        'model_definition': fname
-    }
-
-    model = {
-        'name': 'KerasFLModel',
-        'path': 'ibmfl.model.keras_fl_model',
-        'spec': spec
-    }
-
-    return model

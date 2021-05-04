@@ -71,11 +71,11 @@ The following preprocessing was performed before training:
 - Split data by running:
 
     ```
-    python examples/generate_data.py -n <num_parties> -d <dataset> -pp <points_per_party>
+    python examples/generate_data.py -n <num_parties> -d adult -pp 500
     ```
 - Generate config files by running:
     ```
-    python examples/generate_configs.py -n <num_parties> -m id3_dt  -d <dataset> -p <path>
+    python examples/generate_configs.py -n 3 -f id3_dt  -d adult -p examples/data/adult/random
     ```
 - In a terminal running an activated IBM FL environment 
 (refer to Quickstart in our website to learn more about how to set up the running environment), start the aggregator by running:

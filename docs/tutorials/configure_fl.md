@@ -58,7 +58,7 @@ a protocol handler class name and location.
 
 We now provide an example of the configuration files to start training a convolutional neural network defined in Keras 
 on the MNIST dataset in IBM FL. 
-For sample code of how to generate these configuration files, one can refer to `examples/keras_classifier` 
+For sample code of how to generate these configuration files, one can refer to `examples/iter_avg` 
 in our git repository.
 
 ## The aggregator's configuration file.
@@ -92,6 +92,7 @@ hyperparams:
     max_timeout: 60 # maximum time aggregator will wait to receive parties' replies
     parties: 2 # number of register parties
     rounds: 3 # global training round
+    termination_accuracy: 0.9 # target accuracy for the global model if a dataset is provided to the aggregator
   local:
     optimizer:
       lr: 0.01 # learning rate for local training
@@ -136,7 +137,7 @@ model:
   name: KerasFLModel # A Keras model is selected for training
   path: ibmfl.model.keras_fl_model
   spec:
-    model_definition: examples/configs/keras_classifier/compiled_keras.h5 # path to the Keras model file
+    model_definition: examples/configs/iter_avg/keras/compiled_keras.h5 # path to the Keras model file
     model_name: keras-cnn # a customized model name
 protocol_handler:
   name: PartyProtocolHandler

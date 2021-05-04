@@ -20,7 +20,7 @@ The data handlers for each party help them to access their own training and test
 
 ## What's inside our build-in data handlers?
 Below is one of our build-in data handlers for preparing [MNIST](http://yann.lecun.com/exdb/mnist/) data to train a Keras CNN model, 
-see our example [keras_classifier](../../examples/keras_classifier).
+see our example [iter_avg](../../examples/iter_avg).
 
 The `get_data` method is where the party accesses its local dataset to perform training and testing. 
 Specifically,  when local training is triggered, the party will load the training data from the first return argument of `get_data`. 

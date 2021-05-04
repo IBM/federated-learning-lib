@@ -17,7 +17,7 @@ of SPAHM on this problem, please refer to
     ```
 - Generate config files by running:
     ```
-    python examples/generate_configs.py -n <num_parties> -m spahm -d federated-clustering -p <path>
+    python examples/generate_configs.py -n <num_parties> -f spahm -m sklearn -d federated-clustering -p <path>
     ```
 - In a terminal running an activated IBM FL environment 
 (refer to Quickstart in our website to learn more about how to set up the running environment), start the aggregator by running:

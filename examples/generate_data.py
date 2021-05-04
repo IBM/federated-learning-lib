@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-
 import os
 import sys
 import csv
@@ -11,11 +10,12 @@ fl_path = os.path.abspath('.')
 if fl_path not in sys.path:
     sys.path.append(fl_path)
 
+from ibmfl.util.datasets import load_nursery, load_mnist, load_adult, load_compas, load_german, \
+    load_higgs, load_airline, load_diabetes, load_binovf, load_multovf, load_linovf, \
+    load_simulated_federated_clustering, load_leaf_femnist, load_cifar10
 from examples.constants import GENERATE_DATA_DESC, NUM_PARTIES_DESC, DATASET_DESC, PATH_DESC, PER_PARTY, \
     STRATIFY_DESC, FL_DATASETS, NEW_DESC, PER_PARTY_ERR, NAME_DESC
-from ibmfl.util.datasets import load_nursery, load_mnist, load_adult, load_higgs, load_airline, \
-    load_diabetes, load_binovf, load_multovf, load_linovf, load_simulated_federated_clustering, load_leaf_femnist, \
-    load_compas, load_german
+
 
 def setup_parser():
     """
@@ -29,8 +29,7 @@ def setup_parser():
                    type=int, required=True)
     p.add_argument("--dataset", "-d", choices=FL_DATASETS,
                    help=DATASET_DESC, required=True)
-    p.add_argument("--data_path", "-p", help=PATH_DESC,
-                   default=os.path.join("examples", "data"))
+    p.add_argument("--data_path", "-p", help=PATH_DESC)
     p.add_argument("--points_per_party", "-pp", help=PER_PARTY,
                    nargs="+", type=int, required=True)
     p.add_argument("--stratify", "-s", help=STRATIFY_DESC, action="store_true")
@@ -47,7 +46,7 @@ def print_statistics(i, x_test_pi, x_train_pi, nb_labels, y_train_pi):
         print('* Label ', l, ' samples: ', (y_train_pi == l).sum())
 
 
-def save_nursery_party_data(nb_dp_per_party, should_stratify, party_folder):
+def save_nursery_party_data(nb_dp_per_party, should_stratify, party_folder, dataset_folder):
     """
     Saves Nursery party data
 
@@ -57,11 +56,12 @@ def save_nursery_party_data(nb_dp_per_party, should_stratify, party_folder):
     :type should_stratify: `bool`
     :param party_folder: folder to save party data
     :type party_folder: `str`
+    :param dataset_foler: folder to save dataset
+    :type dataset_folder: `str`
     """
-    dataset_path = os.path.join("examples", "datasets")
-    if not os.path.exists(dataset_path):
-        os.makedirs(dataset_path)
-    x_train = load_nursery(download_dir=dataset_path)
+    if not os.path.exists(dataset_folder):
+        os.makedirs(dataset_folder)
+    x_train = load_nursery(download_dir=dataset_folder)
     num_train = len(x_train.index)
     y_train = x_train['class'].values.tolist()
     labels, counts = np.unique(y_train, return_counts=True)
@@ -92,7 +92,7 @@ def save_nursery_party_data(nb_dp_per_party, should_stratify, party_folder):
     print('Finished! :) Data saved in', party_folder)
 
 
-def save_adult_party_data(nb_dp_per_party, should_stratify, party_folder):
+def save_adult_party_data(nb_dp_per_party, should_stratify, party_folder, dataset_folder):
     """
     Saves Adult party data
 
@@ -102,11 +102,12 @@ def save_adult_party_data(nb_dp_per_party, should_stratify, party_folder):
     :type should_stratify: `bool`
     :param party_folder: folder to save party data
     :type party_folder: `str`
+    :param dataset_foler: folder to save dataset
+    :type dataset_folder: `str`
     """
-    dataset_path = os.path.join("examples", "datasets")
-    if not os.path.exists(dataset_path):
-        os.makedirs(dataset_path)
-    x_train = load_adult(download_dir=dataset_path)
+    if not os.path.exists(dataset_folder):
+        os.makedirs(dataset_folder)
+    x_train = load_adult(download_dir=dataset_folder)
     num_train = len(x_train.index)
     y_train = x_train['class'].values.tolist()
     labels, counts = np.unique(y_train, return_counts=True)
@@ -142,7 +143,52 @@ def save_adult_party_data(nb_dp_per_party, should_stratify, party_folder):
 
     print('Finished! :) Data saved in', party_folder)
 
-def save_compas_party_data(nb_dp_per_party, should_stratify, party_folder):
+
+def save_german_party_data(nb_dp_per_party, should_stratify, party_folder, dataset_folder):
+    """
+    Saves German Credit Scorning party data
+    :param nb_dp_per_party: the number of data points each party should have
+    :type nb_dp_per_party: `list[int]`
+    :param should_stratify: True if data should be assigned proportional to source class distributions
+    :type should_stratify: `bool`
+    :param party_folder: folder to save party data
+    :type party_folder: `str`
+    :param dataset_foler: folder to save dataset
+    :type dataset_folder: `str`
+    """
+    if not os.path.exists(dataset_folder):
+        os.makedirs(dataset_folder)
+    x_train = load_german(download_dir=dataset_folder)
+    num_train = len(x_train.index)
+    y_train = x_train['class'].values.tolist()
+    labels, counts = np.unique(y_train, return_counts=True)
+
+    if should_stratify:
+        probs = {label: counts[np.where(labels == label)[0][0]] / float(num_train) for label in labels}
+    else:
+        probs = {label: 1.0 / num_train for label in labels}
+
+    p_list = np.array([probs[y_train[idx]] for idx in range(num_train)])
+    p_list /= np.sum(p_list)
+    for i, dp in enumerate(nb_dp_per_party):
+        # Create variable for indices
+        indices = np.random.choice(num_train, dp, p=p_list)
+        indices = indices.tolist()
+        # Use indices for data/classification subset
+        x_train_pi = x_train.iloc[indices]
+
+        name_file = 'data_party' + str(i) + '.csv'
+        name_file = os.path.join(party_folder, name_file)
+        with open(name_file, 'w') as writeFile:
+            writer = csv.writer(writeFile)
+            writer.writerows(x_train_pi)
+
+        x_train_pi.to_csv(path_or_buf=name_file, index=None)
+
+    print('Finished! :) Data saved in', party_folder)
+
+
+def save_compas_party_data(nb_dp_per_party, should_stratify, party_folder, dataset_folder):
     """
     Saves Compas party data
 
@@ -152,11 +198,12 @@ def save_compas_party_data(nb_dp_per_party, should_stratify, party_folder):
     :type should_stratify: `bool``
     :param party_folder: folder to save party data
     :type party_folder: `str`
+    :param dataset_foler: folder to save dataset
+    :type dataset_folder: `str`
     """
-    dataset_path = os.path.join("examples", "datasets")
-    if not os.path.exists(dataset_path):
-        os.makedirs(dataset_path)
-    x_train = load_compas(download_dir=dataset_path)
+    if not os.path.exists(dataset_folder):
+        os.makedirs(dataset_folder)
+    x_train = load_compas(download_dir=dataset_folder)
     num_train = len(x_train.index)
     y_train = x_train['class'].values.tolist()
     labels, counts = np.unique(y_train, return_counts=True)
@@ -185,49 +232,69 @@ def save_compas_party_data(nb_dp_per_party, should_stratify, party_folder):
 
     print('Finished! :) Data saved in', party_folder)
 
-def save_german_party_data(nb_dp_per_party, should_stratify, party_folder):
+def save_cifar10_party_data(nb_dp_per_party, should_stratify, party_folder, dataset_folder):
     """
-    Saves German Credit Scorning party data
+    Saves Cifar10 party data
+
     :param nb_dp_per_party: the number of data points each party should have
     :type nb_dp_per_party: `list[int]`
     :param should_stratify: True if data should be assigned proportional to source class distributions
     :type should_stratify: `bool`
     :param party_folder: folder to save party data
     :type party_folder: `str`
+    :param dataset_foler: folder to save dataset
+    :type dataset_folder: `str`
     """
-    dataset_path = os.path.join("examples", "datasets")
-    if not os.path.exists(dataset_path):
-        os.makedirs(dataset_path)
-    x_train = load_german(download_dir=dataset_path)
-    num_train = len(x_train.index)
-    y_train = x_train['class'].values.tolist()
-    labels, counts = np.unique(y_train, return_counts=True)
+    (x_train, y_train), (x_test, y_test) = load_cifar10()
+    labels, train_counts = np.unique(y_train, return_counts=True)
+    te_labels, test_counts = np.unique(y_test, return_counts=True)
+    if np.all(np.isin(labels, te_labels)):
+        print("Warning: test set and train set contain different labels")
+
+    num_train = np.shape(y_train)[0]
+    num_test = np.shape(y_test)[0]
+    num_labels = np.shape(np.unique(y_test))[0]
+    nb_parties = len(nb_dp_per_party)
 
     if should_stratify:
-        probs = {label: counts[np.where(labels == label)[0][0]] / float(num_train) for label in labels}
+        # Sample according to source label distribution
+        train_probs = {
+            label: train_counts[label] / float(num_train) for label in labels}
+        test_probs = {label: test_counts[label] /
+                      float(num_test) for label in te_labels}
     else:
-        probs = {label: 1.0 / num_train for label in labels}
+        # Sample uniformly
+        train_probs = {label: 1.0 / len(labels) for label in labels}
+        test_probs = {label: 1.0 / len(te_labels) for label in te_labels}
+    for idx, dp in enumerate(nb_dp_per_party):
+        train_p = np.array([train_probs[y_train[idx]]
+                            for idx in range(num_train)])
+        train_p = np.array(train_p)
+        train_p /= np.sum(train_p)
+        train_indices = np.random.choice(num_train, dp, p=train_p)
+        test_p = np.array([test_probs[y_test[idx]] for idx in range(num_test)])
+        test_p /= np.sum(test_p)
 
-    p_list = np.array([probs[y_train[idx]] for idx in range(num_train)])
-    p_list /= np.sum(p_list)
-    for i, dp in enumerate(nb_dp_per_party):
-        # Create variable for indices
-        indices = np.random.choice(num_train, dp, p=p_list)
-        indices = indices.tolist()
-        # Use indices for data/classification subset
-        x_train_pi = x_train.iloc[indices]
+        # Split test evenly
+        test_indices = np.random.choice(
+            num_test, int(num_test / nb_parties), p=test_p)
 
-        name_file = 'data_party' + str(i) + '.csv'
+        x_train_pi = x_train[train_indices]
+        y_train_pi = y_train[train_indices]
+        x_test_pi = x_test[test_indices]
+        y_test_pi = y_test[test_indices]
+
+        # Now put it all in an npz
+        name_file = 'data_party' + str(idx) + '.npz'
         name_file = os.path.join(party_folder, name_file)
-        with open(name_file, 'w') as writeFile:
-            writer = csv.writer(writeFile)
-            writer.writerows(x_train_pi)
+        np.savez(name_file, x_train=x_train_pi, y_train=y_train_pi,
+                 x_test=x_test_pi, y_test=y_test_pi)
 
-        x_train_pi.to_csv(path_or_buf=name_file, index=None)
+        print_statistics(idx, x_test_pi, x_train_pi, num_labels, y_train_pi)
 
-    print('Finished! :) Data saved in', party_folder)
+        print('Finished! :) Data saved in ', party_folder)
 
-def save_mnist_party_data(nb_dp_per_party, should_stratify, party_folder):
+def save_mnist_party_data(nb_dp_per_party, should_stratify, party_folder, dataset_folder):
     """
     Saves MNIST party data
 
@@ -237,11 +304,14 @@ def save_mnist_party_data(nb_dp_per_party, should_stratify, party_folder):
     :type should_stratify: `bool`
     :param party_folder: folder to save party data
     :type party_folder: `str`
+    :param dataset_folder: folder to save dataset
+    :type data_path: `str`
+    :param dataset_foler: folder to save dataset
+    :type dataset_folder: `str`
     """
-    dataset_path = os.path.join("examples", "datasets")
-    if not os.path.exists(dataset_path):
-        os.makedirs(dataset_path)
-    (x_train, y_train), (x_test, y_test) = load_mnist(download_dir=dataset_path)
+    if not os.path.exists(dataset_folder):
+        os.makedirs(dataset_folder)
+    (x_train, y_train), (x_test, y_test) = load_mnist(download_dir=dataset_folder)
     labels, train_counts = np.unique(y_train, return_counts=True)
     te_labels, test_counts = np.unique(y_test, return_counts=True)
     if np.all(np.isin(labels, te_labels)):
@@ -291,7 +361,7 @@ def save_mnist_party_data(nb_dp_per_party, should_stratify, party_folder):
         print('Finished! :) Data saved in ', party_folder)
 
 
-def save_higgs_party_data(nb_dp_per_party, should_stratify, party_folder):
+def save_higgs_party_data(nb_dp_per_party, should_stratify, party_folder, dataset_folder):
     """
     Saves Higgs Boson party data
 
@@ -301,12 +371,13 @@ def save_higgs_party_data(nb_dp_per_party, should_stratify, party_folder):
     :type should_stratify: `bool`
     :param party_folder: folder to save party data
     :type party_folder: `str`
+    :param dataset_foler: folder to save dataset
+    :type dataset_folder: `str`
     """
-    dataset_path = os.path.join("examples", "datasets")
-    if not os.path.exists(dataset_path):
-        os.makedirs(dataset_path)
+    if not os.path.exists(dataset_folder):
+        os.makedirs(dataset_folder)
 
-    x, y = load_higgs(dataset_path)
+    x, y = load_higgs(dataset_folder)
     num_train = len(x)
     labels, counts = np.unique(y, return_counts=True)
 
@@ -338,7 +409,7 @@ def save_higgs_party_data(nb_dp_per_party, should_stratify, party_folder):
     print('Finished! :) Data saved in', party_folder)
 
 
-def save_airline_party_data(nb_dp_per_party, should_stratify, party_folder):
+def save_airline_party_data(nb_dp_per_party, should_stratify, party_folder, dataset_folder):
     """
     Saves Airline Delay party data
 
@@ -348,12 +419,13 @@ def save_airline_party_data(nb_dp_per_party, should_stratify, party_folder):
     :type should_stratify: `bool`
     :param party_folder: folder to save party data
     :type party_folder: `str`
+    :param dataset_foler: folder to save dataset
+    :type dataset_folder: `str`
     """
-    dataset_path = os.path.join("examples", "datasets")
-    if not os.path.exists(dataset_path):
-        os.makedirs(dataset_path)
+    if not os.path.exists(dataset_folder):
+        os.makedirs(dataset_folder)
 
-    X, y = load_airline(dataset_path)
+    X, y = load_airline(dataset_folder)
     num_train = len(X)
     labels, counts = np.unique(y, return_counts=True)
 
@@ -363,10 +435,25 @@ def save_airline_party_data(nb_dp_per_party, should_stratify, party_folder):
     else:
         probs = {label: 1.0 / num_train for label in labels}
 
-    p_list = np.array([probs[y[idx]] for idx in range(num_train)])
-    p_list /= np.sum(p_list)
     for i, dp in enumerate(nb_dp_per_party):
-        # Create variable for indices
+        '''
+        # Even Parties Have Biased Dataset, Odd Are Randomly Sampled
+        if not should_stratify and i % 2 == 0:
+            # Unbalanced Dataset
+            niid_prob = {label: 1.0 / num_train * 2 for label in labels}
+
+            p_list = np.array([niid_prob[y[idx]] for idx in range(num_train)])
+            p_list /= np.sum(p_list)
+        else:
+            # Regular Dataset
+            p_list = np.array([probs[y[idx]] for idx in range(num_train)])
+            p_list /= np.sum(p_list)
+        '''
+        
+        # Regular Dataset
+        p_list = np.array([probs[y[idx]] for idx in range(num_train)])
+        p_list /= np.sum(p_list)
+
         indices = np.random.choice(num_train, dp, p=p_list)
         indices = indices.tolist()
 
@@ -385,7 +472,7 @@ def save_airline_party_data(nb_dp_per_party, should_stratify, party_folder):
     print('Finished! :) Data saved in', party_folder)
 
 
-def save_diabetes_party_data(nb_dp_per_party, should_stratify, party_folder):
+def save_diabetes_party_data(nb_dp_per_party, should_stratify, party_folder, dataset_folder):
     """
     Saves Diabetes party data
 
@@ -395,12 +482,13 @@ def save_diabetes_party_data(nb_dp_per_party, should_stratify, party_folder):
     :type should_stratify: `bool`
     :param party_folder: folder to save party data
     :type party_folder: `str`
+    :param dataset_foler: folder to save dataset
+    :type dataset_folder: `str`
     """
-    dataset_path = os.path.join("examples", "datasets")
-    if not os.path.exists(dataset_path):
-        os.makedirs(dataset_path)
+    if not os.path.exists(dataset_folder):
+        os.makedirs(dataset_folder)
 
-    x_train = load_diabetes(dataset_path)
+    x_train = load_diabetes(dataset_folder)
     num_train = len(x_train)
     y_train = x_train['readmitted'].values.tolist()
     labels, counts = np.unique(y_train, return_counts=True)
@@ -438,7 +526,7 @@ def save_diabetes_party_data(nb_dp_per_party, should_stratify, party_folder):
     print('Finished! :) Data saved in', party_folder)
 
 
-def save_binovf_party_data(nb_dp_per_party, should_stratify, party_folder):
+def save_binovf_party_data(nb_dp_per_party, should_stratify, party_folder, dataset_folder):
     """
     Saves Binary Overfit party data
 
@@ -448,10 +536,11 @@ def save_binovf_party_data(nb_dp_per_party, should_stratify, party_folder):
     :type should_stratify: `bool`
     :param party_folder: folder to save party data
     :type party_folder: `str`
+    :param dataset_foler: folder to save dataset
+    :type dataset_folder: `str`
     """
-    dataset_path = os.path.join("examples", "datasets")
-    if not os.path.exists(dataset_path):
-        os.makedirs(dataset_path)
+    if not os.path.exists(dataset_folder):
+        os.makedirs(dataset_folder)
 
     X, y = load_binovf()
     num_train = len(X)
@@ -485,7 +574,7 @@ def save_binovf_party_data(nb_dp_per_party, should_stratify, party_folder):
     print('Finished! :) Data saved in', party_folder)
 
 
-def save_multovf_party_data(nb_dp_per_party, should_stratify, party_folder):
+def save_multovf_party_data(nb_dp_per_party, should_stratify, party_folder, dataset_folder):
     """
     Saves Multiclass Overfit party data
 
@@ -495,10 +584,11 @@ def save_multovf_party_data(nb_dp_per_party, should_stratify, party_folder):
     :type should_stratify: `bool`
     :param party_folder: folder to save party data
     :type party_folder: `str`
+    :param dataset_foler: folder to save dataset
+    :type dataset_folder: `str`
     """
-    dataset_path = os.path.join("examples", "datasets")
-    if not os.path.exists(dataset_path):
-        os.makedirs(dataset_path)
+    if not os.path.exists(dataset_folder):
+        os.makedirs(dataset_folder)
 
     x_train, y_train = load_multovf()
     num_train = len(x_train)
@@ -537,7 +627,7 @@ def save_multovf_party_data(nb_dp_per_party, should_stratify, party_folder):
     print('Finished! :) Data saved in', party_folder)
 
 
-def save_linovf_party_data(nb_dp_per_party, party_folder):
+def save_linovf_party_data(nb_dp_per_party, party_folder, dataset_folder):
     """
     Saves Linear Overfit party data (For Regression)
     Data stratification is not supported in this function.
@@ -546,10 +636,11 @@ def save_linovf_party_data(nb_dp_per_party, party_folder):
     :type nb_dp_per_party: `list[int]`
     :param party_folder: folder to save party data
     :type party_folder: `str`
+    :param dataset_foler: folder to save dataset
+    :type dataset_folder: `str`
     """
-    dataset_path = os.path.join("examples", "datasets")
-    if not os.path.exists(dataset_path):
-        os.makedirs(dataset_path)
+    if not os.path.exists(dataset_folder):
+        os.makedirs(dataset_folder)
 
     x_train, y_train = load_linovf()
     num_train = len(x_train)
@@ -572,47 +663,7 @@ def save_linovf_party_data(nb_dp_per_party, party_folder):
 
     print('Finished! :) Data saved in', party_folder)
 
-
-def save_federated_clustering_data(nb_dp_per_party, party_folder):
-    """
-    Saves simulated federated clustering dataset for unsupervised federated
-    learning setting
-
-    :param nb_dp_per_party: the number of data points each party should have
-    :type nb_dp_per_party: `list[int]`
-    :param party_folder: folder to save party data
-    :type party_folder: `str`
-    """
-
-    num_clients = len(nb_dp_per_party)
-    # Same number of data points are generated for each party
-    nb_datapoints = nb_dp_per_party[0]
-    # use true clusters depending on the number of clients
-    # this prevents creating too many global centroids but fewer
-    # cumulative local centroids
-    true_clusters = 5 * num_clients
-
-    kwargs = {
-        "J": num_clients,
-        "M": nb_datapoints,
-        "L": true_clusters
-    }
-
-    # data returned is (J, M, D=100) dimensions
-    data = load_simulated_federated_clustering(**kwargs)
-
-    for idx in range(num_clients):
-        x_train_np = np.array(data[idx])
-        x_test_np = x_train_np      # Duplicating x_train to x_test
-
-        name_file = 'data_party' + str(idx) + '.npz'
-        name_file = os.path.join(party_folder, name_file)
-        np.savez(name_file, x_train=x_train_np, x_test=x_test_np)
-
-        print('Finished! :) Data saved in ', party_folder)
-
-
-def save_femnist_party_data(nb_dp_per_party, should_stratify, party_folder):
+def save_femnist_party_data(nb_dp_per_party, should_stratify, party_folder, dataset_folder):
     """
     Saves LEAF-FEMNIST party data
 
@@ -624,23 +675,23 @@ def save_femnist_party_data(nb_dp_per_party, should_stratify, party_folder):
     :type party_folder: `str`
     :return: None
     :rtype: None
+    :param dataset_foler: folder to save dataset
+    :type dataset_folder: `str`
     """
-    dataset_path = os.path.join("examples", "datasets", "femnist")
-    if not os.path.exists(dataset_path):
-        os.makedirs(dataset_path)
+    dataset_folder = os.path.join(dataset_folder, "femnist")
+
+    if not os.path.exists(dataset_folder):
+        os.makedirs(dataset_folder)
     num_parties = len(nb_dp_per_party)
     # FEMNIST's default data distribution based on LEAF
-    if -1 in nb_dp_per_party:
+    if -1 in nb_dp_per_party :
         print("Generating dataset based on FEMNIST's default data distribution...")
-        partywise_data = load_leaf_femnist(
-            download_dir=dataset_path, orig_dist=True)
+        partywise_data = load_leaf_femnist(download_dir=dataset_folder, orig_dist=True)
         for idx, (_, data) in enumerate(partywise_data.items()):
             if idx >= num_parties:
                 break
-            train_indices = np.random.choice(
-                len(data['x']), int(len(data['x']) * 0.9), replace=False)
-            test_indices = [i for i in range(
-                len(data['x'])) if i not in train_indices]
+            train_indices = np.random.choice(len(data['x']), int(len(data['x']) * 0.9), replace=False)
+            test_indices = [i for i in range(len(data['x'])) if i not in train_indices]
             x_train_pi = np.array([data['x'][i] for i in train_indices])
             y_train_pi = np.array([data['y'][i] for i in train_indices])
             x_test_pi = np.array([data['x'][i] for i in test_indices])
@@ -650,13 +701,12 @@ def save_femnist_party_data(nb_dp_per_party, should_stratify, party_folder):
             name_file = 'data_party' + str(idx) + '.npz'
             name_file = os.path.join(party_folder, name_file)
             np.savez(name_file, x_train=x_train_pi, y_train=y_train_pi,
-                     x_test=x_test_pi, y_test=y_test_pi)
+                    x_test=x_test_pi, y_test=y_test_pi)
             print_statistics(idx, x_test_pi, x_train_pi, 62, y_train_pi)
             print('Finished! :) Data saved in ', party_folder)
         return
 
-    (x_train, y_train), (x_test, y_test) = load_leaf_femnist(
-        download_dir=dataset_path)
+    (x_train, y_train), (x_test, y_test) = load_leaf_femnist(download_dir=dataset_folder)
     labels, train_counts = np.unique(y_train, return_counts=True)
     te_labels, test_counts = np.unique(y_test, return_counts=True)
     if np.all(np.isin(labels, te_labels)):
@@ -706,6 +756,44 @@ def save_femnist_party_data(nb_dp_per_party, should_stratify, party_folder):
 
         print('Finished! :) Data saved in ', party_folder)
 
+def save_federated_clustering_data(nb_dp_per_party, party_folder):
+    """
+    Saves simulated federated clustering dataset for unsupervised federated
+    learning setting
+
+    :param nb_dp_per_party: the number of data points each party should have
+    :type nb_dp_per_party: `list[int]`
+    :param party_folder: folder to save party data
+    :type party_folder: `str`
+    """
+
+    num_clients = len(nb_dp_per_party)
+    # Same number of data points are generated for each party
+    nb_datapoints = nb_dp_per_party[0]
+    # use true clusters depending on the number of clients
+    # this prevents creating too many global centroids but fewer
+    # cumulative local centroids
+    true_clusters = 5 * num_clients
+
+    kwargs = {
+        "J": num_clients,
+        "M": nb_datapoints,
+        "L": true_clusters
+    }
+
+    # data returned is (J, M, D=100) dimensions
+    data = load_simulated_federated_clustering(**kwargs)
+
+    for idx in range(num_clients):
+        x_train_np = np.array(data[idx])
+        x_test_np = x_train_np      # Duplicating x_train to x_test
+
+        name_file = 'data_party' + str(idx) + '.npz'
+        name_file = os.path.join(party_folder, name_file)
+        np.savez(name_file, x_train=x_train_np, x_test=x_test_np)
+
+        print('Finished! :) Data saved in ', party_folder)
+
 
 if __name__ == '__main__':
     # Parse command line options
@@ -727,51 +815,66 @@ if __name__ == '__main__':
     elif len(points_per_party) != num_parties:
         parser.error(PER_PARTY_ERR)
 
-    # Create folder to save party data
-    folder = os.path.join("examples", "data")
+    if data_path is not None:
+        if not os.path.exists(data_path):
+                print('Data Path:{} does not exist.'.format(data_path))
+                print('Creating {}'.format(data_path))
+                try:
+                    os.makedirs(data_path, exist_ok=True)
+                except OSError:
+                    print('Creating directory {} failed'.format(data_path))
+                    sys.exit(1)
+        folder_party_data = os.path.join(data_path, "data")
+        folder_dataset = os.path.join(data_path, "datasets")
+    else:
+        folder_party_data = os.path.join("examples", "data")
+        folder_dataset = os.path.join("examples", "datasets")
+
     strat = 'balanced' if stratify else 'random'
     if args.dataset == 'femnist' and -1 in points_per_party:
         strat = 'orig_dist'
 
     if create_new:
-        folder = os.path.join(folder, exp_name if exp_name else str(
+        folder_party_data = os.path.join(folder_party_data, exp_name if exp_name else str(
             int(time.time())) + '_' + strat)
     else:
-        folder = os.path.join(folder, dataset, strat)
+        folder_party_data = os.path.join(folder_party_data, dataset, strat)
 
-    if not os.path.exists(folder):
-        os.makedirs(folder)
+    if not os.path.exists(folder_party_data):
+        os.makedirs(folder_party_data)
     else:
         # clear folder of old data
-        for f_name in os.listdir(folder):
-            f_path = os.path.join(folder, f_name)
+        for f_name in os.listdir(folder_party_data):
+            f_path = os.path.join(folder_party_data, f_name)
             if os.path.isfile(f_path):
                 os.unlink(f_path)
 
     # Save new files
     if dataset == 'nursery':
-        save_nursery_party_data(points_per_party, stratify, folder)
+        save_nursery_party_data(points_per_party, stratify, folder_party_data, folder_dataset)
     elif dataset == 'adult':
-        save_adult_party_data(points_per_party, stratify, folder)
-    elif dataset == 'compas':
-        save_adult_party_data(points_per_party, stratify, folder)
+        save_adult_party_data(points_per_party, stratify, folder_party_data, folder_dataset)
     elif dataset == 'german':
-        save_adult_party_data(points_per_party, stratify, folder)
+        save_german_party_data(points_per_party, stratify, folder_party_data, folder_dataset)
     elif args.dataset == 'mnist':
-        save_mnist_party_data(points_per_party, stratify, folder)
+        save_mnist_party_data(points_per_party, stratify, folder_party_data, folder_dataset)
+    elif args.dataset == 'compas':
+        save_compas_party_data(points_per_party, stratify, folder_party_data, folder_dataset)
     elif dataset == 'higgs':
-        save_higgs_party_data(points_per_party, stratify, folder)
+        save_higgs_party_data(points_per_party, stratify, folder_party_data, folder_dataset)
     elif dataset == 'airline':
-        save_airline_party_data(points_per_party, stratify, folder)
+        save_airline_party_data(points_per_party, stratify, folder_party_data, folder_dataset)
     elif dataset == 'diabetes':
-        save_diabetes_party_data(points_per_party, stratify, folder)
+        save_diabetes_party_data(points_per_party, stratify, folder_party_data, folder_dataset)
     elif dataset == 'binovf':
-        save_binovf_party_data(points_per_party, stratify, folder)
+        save_binovf_party_data(points_per_party, stratify, folder_party_data, folder_dataset)
     elif dataset == 'multovf':
-        save_multovf_party_data(points_per_party, stratify, folder)
+        save_multovf_party_data(points_per_party, stratify, folder_party_data, folder_dataset)
     elif dataset == 'linovf':
-        save_linovf_party_data(points_per_party, folder)
+        save_linovf_party_data(points_per_party, folder_party_data, folder_dataset)
     elif dataset == 'federated-clustering':
-        save_federated_clustering_data(points_per_party, folder)
+        save_federated_clustering_data(points_per_party, folder_party_data)
     elif dataset == 'femnist':
-        save_femnist_party_data(points_per_party, stratify, folder)
+        save_femnist_party_data(points_per_party, stratify, folder_party_data, folder_dataset)
+    elif dataset == 'cifar10':
+        save_cifar10_party_data(points_per_party, stratify, folder_party_data, folder_dataset)

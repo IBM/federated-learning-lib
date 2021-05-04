@@ -1,5 +1,6 @@
 import os
 import pickle
+from importlib import import_module
 
 from sklearn.cluster import KMeans
 import examples.datahandlers as datahandlers
@@ -21,7 +22,7 @@ def get_local_training_config():
     return local_training_handler
 
 
-def get_hyperparams():
+def get_hyperparams(model='sklearn'):
     hyperparams = {
         'global': {
             'rounds': 1,
@@ -39,7 +40,7 @@ def get_hyperparams():
     return hyperparams
 
 
-def get_data_handler_config(party_id, dataset, folder_data, is_agg=False):
+def get_data_handler_config(party_id, dataset, folder_data, is_agg=False, model='sklearn'):
 
     SUPPORTED_DATASETS = ['federated-clustering']
     if dataset in SUPPORTED_DATASETS:
@@ -51,24 +52,17 @@ def get_data_handler_config(party_id, dataset, folder_data, is_agg=False):
     return data
 
 
-def get_model_config(folder_configs, dataset, is_agg=False, party_id=0):
+def get_model_config(folder_configs, dataset, is_agg=False, party_id=0, model='sklearn'):
 
-    model = KMeans()
+    SUPPORTED_MODELS = ['sklearn']
 
-    # Save model
-    fname = os.path.join(folder_configs, 'kmeans-central-model.pickle')
-    with open(fname, 'wb') as f:
-        pickle.dump(model, f)
-    # Generate model spec:
-    spec = {
-        'model_name': 'sklearn-kmeans',
-        'model_definition': fname
-    }
+    if model not in SUPPORTED_MODELS:
+        raise Exception("Invalid model config for this fusion algorithm")
 
-    model = {
-        'name': 'SklearnKMeansFLModel',
-        'path': 'ibmfl.model.sklearn_kmeans_fl_model',
-        'spec': spec
-    }
+    current_module = globals().get('__package__')
+    
+    model_module = import_module('{}.model_{}'.format(current_module, model))
+    method = getattr(model_module, 'get_model_config')
 
-    return model
+    return method(folder_configs, dataset, is_agg=is_agg, party_id=0)
+

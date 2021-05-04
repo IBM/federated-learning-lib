@@ -9,6 +9,20 @@ perceptrons (fully-connected networks) implemented with Keras training on
 preprocessed by scaling down to range from `[0, 255]` to `[0, 1]`.
 No other preprocessing is performed.
 
+
+## Model Setup
+
+This experiment can be run using models with different underlying framework. By default, configs with keras(tf 1.15) 
+based model are generated, but other models like PYTORCH, Keras(tf 2.1) can be creating by changing -m param.
+
+
+|       Model Type             |  Params   |
+|:----------------------------:|:--------: |
+|   Keras (with tf 1.15)       |  keras    |
+|         Pytorch              |  pytorch  |
+|   Tensorflow/keras( tf 2.1)  |    tf     |
+
+
 - Split data by running:
 
     ```
@@ -16,7 +30,7 @@ No other preprocessing is performed.
     ```
 - Generate config files by running:
     ```
-    python examples/generate_configs.py -n <num_parties> -m pfnm  -d mnist -p <path>
+    python examples/generate_configs.py -f pfnm -m keras -d mnist -n <num_parties> -p <path>
     ```
 - In a terminal running an activated IBM FL environment 
 (refer to Quickstart in our website to learn more about how to set up the running environment), start the aggregator by running:

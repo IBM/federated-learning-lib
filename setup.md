@@ -82,7 +82,7 @@ You can generate these config files using the `generate_configs.py` script.
 For example, you could run:
 
 ```commandline
-python examples/generate_configs.py -m keras_classifier -n 2 -d mnist -p examples/data/mnist/random 
+python examples/generate_configs.py -f iter_avg -m keras -n 2 -d mnist -p examples/data/mnist/random 
 ```
 
 This command would generate the configs for the `keras_classifier` model, assuming 2 parties.
@@ -107,7 +107,7 @@ To start the aggregator, open a terminal window running the IBM FL environment s
 
 1. In the terminal run:
     ```commandline
-    python -m ibmfl.aggregator.aggregator examples/configs/keras_classifier/config_agg.yml
+    python -m ibmfl.aggregator.aggregator examples/configs/iter_avg/keras/config_agg.yml
     ```  
 
     where the path provided is the aggregator config file path.
@@ -120,7 +120,7 @@ To register new parties, open a new terminal window for each party, running the 
 
 1. In the terminal run:
      ```commandline
-    python -m ibmfl.party.party examples/configs/keras_classifier/config_party0.yml
+    python -m ibmfl.party.party examples/configs/iter_avg/keras/config_party0.yml
     ``` 
 
     where the path provided is the path to the party config file.

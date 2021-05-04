@@ -1,63 +1,25 @@
-import os
-
+import os 
 import keras
 from keras import backend as K
 from keras.layers import Conv2D, MaxPooling2D
 from keras.layers import Dense, Dropout, Flatten
 from keras.models import Sequential
 
-import examples.datahandlers as datahandlers
-
-
-def get_fusion_config():
-    fusion = {
-        'name': 'IterAvgFusionHandler',
-        'path': 'ibmfl.aggregator.fusion.iter_avg_fusion_handler'
-    }
-    return fusion
-
-
-def get_local_training_config():
-    local_training_handler = {
-        'name': 'LocalTrainingHandler',
-        'path': 'ibmfl.party.training.local_training_handler'
-    }
-    return local_training_handler
-
 
 def get_hyperparams():
-    hyperparams = {
-        'global': {
-            'rounds': 3,
-            'termination_accuracy': 0.9,
-            'max_timeout': 60
+    local_params = {
+        'training': {
+            'epochs': 3
         },
-        'local': {
-            'training': {
-                'epochs': 3
-            },
-            'optimizer': {
-                'lr': 0.01
-            }
+        'optimizer': {
+            'lr': 0.01
         }
     }
-
-    return hyperparams
-
-
-def get_data_handler_config(party_id, dataset, folder_data, is_agg=False):
-
-    SUPPORTED_DATASETS = ['mnist']
-    if dataset in SUPPORTED_DATASETS:
-        data = datahandlers.get_datahandler_config(
-            dataset, folder_data, party_id, is_agg)
-    else:
-        raise Exception(
-            "The dataset {} is a wrong combination for fusion/model".format(dataset))
-    return data
-
+    
+    return local_params
 
 def get_model_config(folder_configs, dataset, is_agg=False, party_id=0):
+
     if is_agg:
         return None
 

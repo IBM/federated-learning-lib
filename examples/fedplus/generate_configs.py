@@ -1,4 +1,5 @@
 import os
+from importlib import import_module
 
 import keras
 from keras import backend as K
@@ -28,10 +29,10 @@ def get_local_training_config():
     return local_training_handler
 
 
-def get_hyperparams():
+def get_hyperparams(model='keras'):
     hyperparams = {
         'global': {
-            'rounds': 20,
+            'rounds': 2000,
             'termination_accuracy': 0.83,
             'max_timeout': 600
         },
@@ -49,7 +50,7 @@ def get_hyperparams():
     return hyperparams
 
 
-def get_data_handler_config(party_id, dataset, folder_data, is_agg=False):
+def get_data_handler_config(party_id, dataset, folder_data, is_agg=False, model='keras'):
 
     SUPPORTED_DATASETS = ['femnist']
     if dataset in SUPPORTED_DATASETS:
@@ -61,10 +62,13 @@ def get_data_handler_config(party_id, dataset, folder_data, is_agg=False):
     return data
 
 
-def get_model_config(folder_configs, dataset, is_agg=False, party_id=0):
+def get_model_config(folder_configs, dataset, is_agg=False, party_id=0, model='keras'):
     if is_agg:
         return None
 
+    if model is None or model is 'default':
+        model = 'keras'
+        
     num_classes = 62
     img_rows, img_cols = 28, 28
     if K.image_data_format() == 'channels_first':

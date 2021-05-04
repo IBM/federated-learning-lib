@@ -37,10 +37,10 @@ of the different options.
 - Generate config files by running:
 
 ```
-python examples/generate_configs.py -m fedplus -n 2 -d femnist -p  examples/data/femnist/orig_dist
+python examples/generate_configs.py -f fedplus -m keras -n 2 -d femnist -p  examples/data/femnist/orig_dist
 ```
 
-This command would generate the configs for the `keras_classifier_femnist` model, assuming 2 parties.
+This command would generate the configs for the `keras` model with with (fedplus)[https://arxiv.org/pdf/2009.06303.pdf] fusion algorithm, assuming 2 parties.
 You must also specify the party data path. 
 
 Run `python examples/generate_configs.py -h` for full descriptions of the different options.

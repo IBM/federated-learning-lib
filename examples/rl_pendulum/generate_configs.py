@@ -20,7 +20,7 @@ def get_local_training_config():
     return local_training_handler
 
 
-def get_hyperparams():
+def get_hyperparams(model):
     hyperparams = {
         'global': {
             'rounds': 1
@@ -30,7 +30,7 @@ def get_hyperparams():
     return hyperparams
 
 
-def get_data_handler_config(party_id, dataset, folder_data, is_agg=False):
+def get_data_handler_config(party_id, dataset, folder_data, is_agg=False, model="default"):
 
     if is_agg:
         return None
@@ -42,7 +42,7 @@ def get_data_handler_config(party_id, dataset, folder_data, is_agg=False):
     return data
 
 
-def get_model_config(folder_configs, dataset, is_agg=False, party_id=0):
+def get_model_config(folder_configs, dataset, is_agg=False, party_id=0, model="default"):
     if is_agg:
         return None
 
@@ -61,8 +61,7 @@ def get_model_config(folder_configs, dataset, is_agg=False, party_id=0):
                         'model_config': {
                             'actor_lr': 0.0001,
                             'num_gpus': 0,
-                            'num_workers': 3,
-                            'eager': False
+                            'num_workers': 3
                         }
                     },
                     'evaluation': {
@@ -89,8 +88,7 @@ def get_model_config(folder_configs, dataset, is_agg=False, party_id=0):
                         'model_config': {
                             'actor_lr': 0.0001,
                             'num_gpus': 0,
-                            'num_workers': 3,
-                            'eager': False
+                            'num_workers': 3
                         }
                     },
                     'evaluation': {
