@@ -1,0 +1,9 @@
+machines:
+- 9.192.244.87
+- 9.192.244.33
+- 9.192.244.60
+usernames:
+- slaguna
+- slaguna
+- slaguna
+local_staging_dir: /home/sean/sandbox/IBMFL/test_mnist

@@ -1,0 +1,5 @@
+machines:
+- 127.0.0.1
+usernames:
+- sean
+local_staging_dir: /home/sean/sandbox/IBMFL/test_notebook_loc
