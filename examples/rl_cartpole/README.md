@@ -7,7 +7,7 @@ using RLlib.
 
 - Generate config files by running:
     ```
-    python examples/generate_configs.py -n <num_parties> -m rl_cartpole -p '' -d 'default'
+    python examples/generate_configs.py -n <num_parties> -f rl_cartpole -p '' -d 'default'
     ```
 - In a terminal running an activated IBM FL environment 
 (refer to Quickstart in our website to learn more about how to set up the running environment), start the aggregator by running:

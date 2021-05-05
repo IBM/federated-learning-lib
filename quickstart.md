@@ -99,23 +99,23 @@ For a full description of the different options to prepare datasets, run `python
 
 For example, run:
 ```commandline
-python examples/generate_configs.py -n <num_parties> -m keras_classifier -d mnist -p <path>
+python examples/generate_configs.py -n <num_parties> -f iter_avg -m keras -d mnist -p <path>
 ```
 This command performs two tasks:
 
 1) It specifies the machine learning model to be trained, in this case, a Keras CNN classifier.  
 
-2) It generates the configuration files necessary to train a `keras_classifier` model, assuming `<num_parties>` parties join the federated learning training.
+2) It generates the configuration files necessary to train a `keras` model via fusion algorithm iter_avg, assuming `<num_parties>` parties join the federated learning training.
 You must also specify the dataset name via `-d` and the party data path via `-p`. 
 
 In this example, we run:
 ```commandline
-python  examples/generate_configs.py -n 2 -m keras_classifier -d mnist -p examples/data/mnist/random/
+python  examples/generate_configs.py -n 2 -f iter_avg -m keras -d mnist -p examples/data/mnist/random/
 ```
 Hence, we generate 2 parties in our example, using the `mnist` dataset and `examples/data/mnist/random` as our data path.
 ```buildoutcfg
-Finished generating config file for aggregator. Files can be found in:  <whl_directory>/examples/configs/keras_classifier/config_agg.yml
-Finished generating config file for parties. Files can be found in:  <whl_directory>/examples/configs/keras_classifier/config_party*.yml
+Finished generating config file for aggregator. Files can be found in:  <whl_directory>/examples/configs/iter_avg/keras/config_agg.yml
+Finished generating config file for parties. Files can be found in:  <whl_directory>/examples/configs/iter_avg/keras/config_party*.yml
 ```
 You may also see warning messages which are fine.
 For a full description of the different options, run `python examples/generate_configs.py -h`.
@@ -181,7 +181,7 @@ model:
   name: KerasFLModel
   path: ibmfl.model.keras_fl_model
   spec:
-    model_definition: examples/configs/keras_classifier/compiled_keras.h5
+    model_definition: examples/configs/iter_avg/keras/compiled_keras.h5
     model_name: keras-cnn
 protocol_handler:
   name: PartyProtocolHandler
@@ -194,7 +194,7 @@ Notice that the configuration files contain a `data` section that is different f
 To start the aggregator, open a terminal window running the IBM federated fearning environment set up beforehand,
 and check that you are in the correct directory.  In the terminal run:
 ```commandline
-python -m ibmfl.aggregator.aggregator examples/configs/keras_classifier/config_agg.yml
+python -m ibmfl.aggregator.aggregator examples/configs/iter_avg/keras/config_agg.yml
 ```
 where the path provided is the aggregator configuration file path.
 ```buildoutcfg
@@ -226,7 +226,7 @@ START
 To start and register a new party, open one new terminal window for each party, running the IBM federated learning environment set up beforehand,
 and make sure you are in the correct directory. In the terminal run:
 ```commandline
-python -m ibmfl.party.party examples/configs/keras_classifier/config_party<idx>.yml
+python -m ibmfl.party.party examples/configs/iter_avg/keras/config_party<idx>.yml
 ```
 where the path provided is the path to the party's configuration file.
 
@@ -234,7 +234,7 @@ where the path provided is the path to the party's configuration file.
 in our example, it is noted by changing `config_party<idx>.yml`.
 For instance, to start the 1st party, one would run:
 ```commandline
-python -m ibmfl.party.party examples/configs/keras_classifier/config_party0.yml
+python -m ibmfl.party.party examples/configs/iter_avg/keras/config_party0.yml
 ```
 ```buildoutcfg
 2020-06-29 11:40:30,420 - ibmfl.util.config - INFO - Getting config from file

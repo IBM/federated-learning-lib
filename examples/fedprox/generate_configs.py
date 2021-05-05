@@ -1,4 +1,5 @@
 import os
+from importlib import import_module
 
 import examples.datahandlers as datahandlers
 from examples.fedprox.model import MyModel
@@ -20,7 +21,7 @@ def get_local_training_config():
     return local_training_handler
 
 
-def get_hyperparams():
+def get_hyperparams(model='tf'):
     hyperparams = {
         'global': {
             'rounds': 10,
@@ -37,7 +38,7 @@ def get_hyperparams():
     return hyperparams
 
 
-def get_data_handler_config(party_id, dataset, folder_data, is_agg=False):
+def get_data_handler_config(party_id, dataset, folder_data, is_agg=False, model='tf'):
     SUPPORTED_DATASETS = ['mnist']
     if dataset in SUPPORTED_DATASETS:
         if dataset == 'mnist':
@@ -50,10 +51,12 @@ def get_data_handler_config(party_id, dataset, folder_data, is_agg=False):
     return data
 
 
-def get_model_config(folder_configs, dataset, is_agg=False, party_id=0):
+def get_model_config(folder_configs, dataset, is_agg=False, party_id=0, model='tf'):
     if is_agg:
         return None
 
+    if model is None or model is 'default' :
+        model = 'tf'
     # Create an instance of the model
     model = MyModel()
 

@@ -23,7 +23,7 @@ def get_local_training_config():
     return local_training_handler
 
 
-def get_hyperparams():
+def get_hyperparams(model=None):
     hyperparams = {
         'global': {
         }
@@ -32,7 +32,7 @@ def get_hyperparams():
     return hyperparams
 
 
-def get_data_handler_config(party_id, dataset, folder_data, is_agg=False):
+def get_data_handler_config(party_id, dataset, folder_data, is_agg=False, model='sklearn'):
 
     SUPPORTED_DATASETS = ['adult']
     if dataset in SUPPORTED_DATASETS:
@@ -46,7 +46,7 @@ def get_data_handler_config(party_id, dataset, folder_data, is_agg=False):
     return data
 
 
-def get_model_config(folder_configs, dataset, is_agg=False, party_id=0):
+def get_model_config(folder_configs, dataset, is_agg=False, party_id=0, model='sklearn'):
     if is_agg:
         return None
 

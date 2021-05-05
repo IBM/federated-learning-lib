@@ -8,7 +8,6 @@ Currently, for Federated Prejudice Removal we support following datasets:
 # Running Federated Prejudice Removal in FL
 
 This example provides the implementation for Federated Prejudice Removal presented in [Mitigating Bias in Federated Learning](https://arxiv.org/abs/2012.02447).
-
 This example requires the `gensim` library. Run the following:
     ```
     pip install gensim
@@ -56,7 +55,7 @@ No other preprocessing is performed.
     ```
 - Generate config files by running:
     ```
-    python examples/generate_configs.py -n <num_parties> -m prej_remover -d <dataset_name> -p <path>
+    python examples/generate_configs.py -n <num_parties> -f prej_remover -d <dataset_name> -p <path>
     ```
 - In a terminal running an activated FL environment, start the aggregator by running:
     ```

@@ -1,7 +1,16 @@
 import os
+from pathlib import Path
 
 
 def get_datahandler_config(dh_name, folder_data, party_id, is_agg):
+    path = Path(folder_data)
+    staging_dir = ''
+    if 'data' in path.parts:
+        # always holds given how generate_data.py appends "data" before generating datasets
+        staging_dir_parts = path.parts[:path.parts.index('data')]
+        for folder in staging_dir_parts:
+            staging_dir = os.path.join(staging_dir, folder)
+
     if dh_name == 'mnist':
         data = {
             'name': 'MnistKerasDataHandler',
@@ -11,9 +20,33 @@ def get_datahandler_config(dh_name, folder_data, party_id, is_agg):
             }
         }
         if is_agg:
-            data['info'] = {
-                'npz_file': os.path.join("examples", "datasets", "mnist.npz")
+            if os.path.exists(os.path.join(staging_dir, "datasets", "mnist.npz")):
+                data['info'] = {
+                    'npz_file': os.path.join(staging_dir, "datasets", "mnist.npz")
+                }
+            else:
+                data['info'] = {
+                    'npz_file': os.path.join("examples", "datasets", "mnist.npz")
+                }
+
+    elif dh_name == 'mnist_tf':
+        data = {
+            'name': 'MnistTFDataHandler',
+            'path': 'ibmfl.util.data_handlers.mnist_keras_data_handler',
+            'info': {
+                'npz_file': os.path.join(folder_data, 'data_party' + str(party_id) + '.npz')
             }
+        }
+        if is_agg:
+            if os.path.exists(os.path.join(staging_dir, "datasets", "mnist.npz")):
+                data['info'] = {
+                    'npz_file': os.path.join(staging_dir, "datasets", "mnist.npz")
+                }
+            else:
+                data['info'] = {
+                    'npz_file': os.path.join("examples", "datasets", "mnist.npz")
+                }
+
     elif dh_name == 'mnist_dp':
         data = {
             'name': 'MnistDPKerasDataHandler',
@@ -23,9 +56,14 @@ def get_datahandler_config(dh_name, folder_data, party_id, is_agg):
             }
         }
         if is_agg:
-            data['info'] = {
-                'npz_file': os.path.join("examples", "datasets", "mnist.npz")
-            }
+            if os.path.exists(os.path.join(staging_dir, "datasets", "mnist.npz")):
+                data['info'] = {
+                    'npz_file': os.path.join(staging_dir, "datasets", "mnist.npz")
+                }
+            else:
+                data['info'] = {
+                    'npz_file': os.path.join("examples", "datasets", "mnist.npz")
+                }
 
     elif dh_name == 'mnist_sklearn':
         data = {
@@ -36,22 +74,15 @@ def get_datahandler_config(dh_name, folder_data, party_id, is_agg):
             }
         }
         if is_agg:
-            data['info'] = {
-                'npz_file': os.path.join("examples", "datasets", "mnist.npz")
-            }
+            if os.path.exists(os.path.join(staging_dir, "datasets", "mnist.npz")):
+                data['info'] = {
+                    'npz_file': os.path.join(staging_dir, "datasets", "mnist.npz")
+                }
+            else:
+                data['info'] = {
+                    'npz_file': os.path.join("examples", "datasets", "mnist.npz")
+                }
 
-    elif dh_name == 'mnist_unsupervised':
-        data = {
-            'name': 'MnistSklearnUnsupervisedDataHandler',
-            'path': 'ibmfl.util.data_handlers.mnist_sklearn_data_handler',
-            'info': {
-                'npz_file': os.path.join(folder_data, 'data_party' + str(party_id) + '.npz')
-            }
-        }
-        if is_agg:
-            data['info'] = {
-                'npz_file': os.path.join("examples", "datasets", "mnist.npz")
-            }
     elif dh_name == 'mnist_pytorch':
         data = {
             'name': 'MnistPytorchDataHandler',
@@ -61,21 +92,14 @@ def get_datahandler_config(dh_name, folder_data, party_id, is_agg):
             }
         }
         if is_agg:
-            data['info'] = {
-                'npz_file': os.path.join("examples", "datasets", "mnist.npz")
-            }
-    elif dh_name == 'mnist_tf':
-        data = {
-            'name': 'MnistTFDataHandler',
-            'path': 'ibmfl.util.data_handlers.mnist_keras_data_handler',
-            'info': {
-                'npz_file': os.path.join(folder_data, 'data_party' + str(party_id) + '.npz')
-            }
-        }
-        if is_agg:
-            data['info'] = {
-                'npz_file': os.path.join("examples", "datasets", "mnist.npz")
-            }
+            if os.path.exists(os.path.join(staging_dir, "datasets", "mnist.npz")):
+                data['info'] = {
+                    'npz_file': os.path.join(staging_dir, "datasets", "mnist.npz")
+                }
+            else:
+                data['info'] = {
+                    'npz_file': os.path.join("examples", "datasets", "mnist.npz")
+                }
 
     elif dh_name == 'adult':
         data = {
@@ -86,9 +110,32 @@ def get_datahandler_config(dh_name, folder_data, party_id, is_agg):
             }
         }
         if is_agg:
-            data['info'] = {
-                'txt_file': os.path.join("examples", "datasets", "adult.data")
+            if os.path.exists(os.path.join(staging_dir, "datasets", "adult.data")):
+                data['info'] = {
+                    'txt_file': os.path.join(staging_dir, "datasets", "adult.data")
+                }
+            else:
+                data['info'] = {
+                    'txt_file': os.path.join("examples", "datasets", "adult.data")
+                }
+
+    elif dh_name == 'adult_pr':
+        data = {
+            'name': 'AdultPRDataHandler',
+            'path': 'ibmfl.util.data_handlers.adult_pr_data_handler',
+            'info': {
+                'txt_file': os.path.join(folder_data, 'data_party' + str(party_id) + '.csv')
             }
+        }
+        if is_agg:
+            if os.path.exists(os.path.join(staging_dir, "datasets", "adult.data")):
+                data['info'] = {
+                    'txt_file': os.path.join(staging_dir, "datasets", "adult.data")
+                }
+            else:
+                data['info'] = {
+                    'txt_file': os.path.join("examples", "datasets", "adult.data")
+                }
 
     elif dh_name == 'adult_sklearn':
         data = {
@@ -99,9 +146,14 @@ def get_datahandler_config(dh_name, folder_data, party_id, is_agg):
             }
         }
         if is_agg:
-            data['info'] = {
-                'txt_file': os.path.join("examples", "datasets", "adult.data")
-            }
+            if os.path.exists(os.path.join(staging_dir, "datasets", "adult.data")):
+                data['info'] = {
+                    'txt_file': os.path.join(staging_dir, "datasets", "adult.data")
+                }
+            else:
+                data['info'] = {
+                    'txt_file': os.path.join("examples", "datasets", "adult.data")
+                }
 
     elif dh_name == 'adult_sklearn_grw':
         data = {
@@ -113,22 +165,14 @@ def get_datahandler_config(dh_name, folder_data, party_id, is_agg):
             }
         }
         if is_agg:
-            data['info'] = {
-                'txt_file': os.path.join("examples", "datasets", "adult.data")
-            }
-
-    elif dh_name == 'adult_pr':
-        data = {
-            'name': 'AdultPRDataHandler',
-            'path': 'ibmfl.util.data_handlers.adult_pr_data_handler',
-            'info': {
-                'txt_file': os.path.join(folder_data, 'data_party' + str(party_id) + '.csv')
-            }
-        }
-        if is_agg:
-            data['info'] = {
-                'txt_file': os.path.join("examples", "datasets", "adult.data")
-            }
+            if os.path.exists(os.path.join(staging_dir, "datasets", "adult.data")):
+                data['info'] = {
+                    'txt_file': os.path.join(staging_dir, "datasets", "adult.data")
+                }
+            else:
+                data['info'] = {
+                    'txt_file': os.path.join("examples", "datasets", "adult.data")
+                }
 
     elif dh_name == 'nursery':
         data = {
@@ -139,9 +183,14 @@ def get_datahandler_config(dh_name, folder_data, party_id, is_agg):
             }
         }
         if is_agg:
-            data['info'] = {
-                'txt_file': os.path.join("examples", "datasets", "nursery.data")
-            }
+            if os.path.exists(os.path.join(staging_dir, "datasets", "nursery.data")):
+                data['info'] = {
+                    'txt_file': os.path.join(staging_dir, "datasets", "nursery.data")
+                }
+            else:
+                data['info'] = {
+                    'txt_file': os.path.join("examples", "datasets", "nursery.data")
+                }
 
     elif dh_name == 'higgs':
         data = {
@@ -230,19 +279,6 @@ def get_datahandler_config(dh_name, folder_data, party_id, is_agg):
             'path': 'ibmfl.util.data_handlers.pendulum_env_data_handler'
         }
 
-    elif dh_name == 'federated-clustering':
-        data = {
-            'name': 'FederatedClusteringDataHandler',
-            'path': 'ibmfl.util.data_handlers.federated_clustering_data_handler',
-            'info': {
-                'npz_file': os.path.join(folder_data,
-                                         'data_party' + str(
-                                             party_id) + '.npz')
-            }
-        }
-        if is_agg:
-            data['info'] = {}
-
     elif dh_name == 'femnist':
         data = {
             'name': 'FemnistKerasDataHandler',
@@ -252,9 +288,32 @@ def get_datahandler_config(dh_name, folder_data, party_id, is_agg):
             }
         }
         if is_agg:
-            data['info'] = {
-                'data_folder': os.path.join("examples", "datasets", "femnist")
+            if os.path.exists(os.path.join(staging_dir, "datasets", "femnist")):
+                data['info'] = {
+                    'data_folder': os.path.join(staging_dir, "datasets", "femnist")
+                }
+            else:
+                data['info'] = {
+                    'data_folder': os.path.join("examples", "datasets", "femnist")
+                }
+
+    elif dh_name == 'cifar10':
+        data = {
+            'name': 'Cifar10KerasDataHandler',
+            'path': 'ibmfl.util.data_handlers.cifar10_keras_data_handler',
+            'info': {
+                'npz_file': os.path.join(folder_data, 'data_party' + str(party_id) + '.npz')
             }
+        }
+        if is_agg:
+            if os.path.exists(os.path.join(staging_dir, "datasets", "cifar10", "all_data")):
+                data['info'] = {
+                    'data_folder': os.path.join(staging_dir, "datasets", "cifar10", "all_data")
+                }
+            else:
+                data['info'] = {
+                    'data_folder': os.path.join("examples", "datasets", "cifar10", "all_data")
+                }
 
     elif dh_name == 'compas_sklearn':
         data = {
@@ -265,9 +324,14 @@ def get_datahandler_config(dh_name, folder_data, party_id, is_agg):
             }
         }
         if is_agg:
-            data['info'] = {
-                'txt_file': os.path.join("examples", "datasets", "compas")
-            }
+            if os.path.exists(os.path.join(staging_dir, "datasets", "compas")):
+                data['info'] = {
+                    'txt_file': os.path.join(staging_dir, "datasets", "compas")
+                }
+            else:
+                data['info'] = {
+                    'txt_file': os.path.join("examples", "datasets", "compas")
+                }
 
     elif dh_name == 'compas_pr':
         data = {
@@ -278,9 +342,14 @@ def get_datahandler_config(dh_name, folder_data, party_id, is_agg):
             }
         }
         if is_agg:
-            data['info'] = {
-                'txt_file': os.path.join("examples", "datasets", "compas")
-            }
+            if os.path.exists(os.path.join(staging_dir, "datasets", "compas")):
+                data['info'] = {
+                    'txt_file': os.path.join(staging_dir, "datasets", "compas")
+                }
+            else:
+                data['info'] = {
+                    'txt_file': os.path.join("examples", "datasets", "compas")
+                }
 
     elif dh_name == 'compas_sklearn_grw':
         data = {
@@ -292,9 +361,14 @@ def get_datahandler_config(dh_name, folder_data, party_id, is_agg):
             }
         }
         if is_agg:
-            data['info'] = {
-                'txt_file': os.path.join("examples", "datasets", "compas")
-            }
+            if os.path.exists(os.path.join(staging_dir, "datasets", "compas")):
+                data['info'] = {
+                    'txt_file': os.path.join(staging_dir, "datasets", "compas")
+                }
+            else:
+                data['info'] = {
+                    'txt_file': os.path.join("examples", "datasets", "compas")
+                }
 
     elif dh_name == 'german_sklearn':
         data = {
@@ -305,9 +379,14 @@ def get_datahandler_config(dh_name, folder_data, party_id, is_agg):
             }
         }
         if is_agg:
-            data['info'] = {
-                'txt_file': os.path.join("examples", "datasets", "german.data")
-            }
+            if os.path.exists(os.path.join(staging_dir, "datasets", "german.data")):
+                data['info'] = {
+                    'txt_file': os.path.join(staging_dir, "datasets", "german.data")
+                }
+            else:
+                data['info'] = {
+                    'txt_file': os.path.join("examples", "datasets", "german.data")
+                }
 
     elif dh_name == 'german_sklearn_grw':
         data = {
@@ -319,9 +398,25 @@ def get_datahandler_config(dh_name, folder_data, party_id, is_agg):
             }
         }
         if is_agg:
-            data['info'] = {
-                'txt_file': os.path.join("examples", "datasets", "german.data")
-            }
+            if os.path.exists(os.path.join(staging_dir, "datasets", "german.data")):
+                data['info'] = {
+                    'txt_file': os.path.join(staging_dir, "datasets", "german.data")
+                }
+            else:
+                data['info'] = {
+                    'txt_file': os.path.join("examples", "datasets", "german.data")
+                }
 
+    elif dh_name == 'federated-clustering':
+        data = {
+            'name': 'FederatedClusteringDataHandler',
+            'path': 'ibmfl.util.data_handlers.federated_clustering_data_handler',
+            'info': {
+                'npz_file': os.path.join(folder_data,
+                                         'data_party' + str(party_id) + '.npz')
+            }
+        }
+        if is_agg:
+            data['info'] = {}
 
     return data

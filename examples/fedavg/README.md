@@ -7,6 +7,23 @@ This example explains how to run the federated averaging algorithm on CNNs imple
 on [MNIST](http://yann.lecun.com/exdb/mnist/) data. Data in this example is preprocessed by scaling down to range from `[0, 255]` to `[0, 1]`.
 No other preprocessing is performed.
 
+## Model Setup
+
+This experiment can be run using models with different underlying framework. By default, configs with keras(tf 1.15) 
+based model are generated, but other models like PYTORCH, Scikit Learn, keras(tf 2.1) can be creating by changing -m param.
+
+
+|       Model Type           |  Params   |
+|:--------------------------:|:--------: |
+|   Keras (with tf 1.15)     |  keras    |
+|         Pytorch            |  pytorch  |
+|      Scikit learn          |  sklearn  |
+|   Tensorflow/keras( tf 2.1) |  tf   |
+
+
+## Setup
+
+
 - Split data by running:
 
     ```
@@ -14,7 +31,7 @@ No other preprocessing is performed.
     ```
 - Generate config files by running:
     ```
-    python examples/generate_configs.py -n <num_parties> -m fedavg  -d <dataset> -p <path>
+    python examples/generate_configs.py -n <num_parties> -f fedavg -m keras -d <dataset> -p <path>
     ```
 - In a terminal running an activated IBM FL environment 
 (refer to Quickstart in our website to learn more about how to set up the running environment), start the aggregator by running:

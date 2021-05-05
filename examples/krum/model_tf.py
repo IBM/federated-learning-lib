@@ -1,67 +1,23 @@
 import os
+import numpy as np
 import tensorflow as tf
 from tensorflow.keras.layers import Dense, Flatten, Conv2D
 from tensorflow.keras import Model
-import numpy as np
-
-import examples.datahandlers as datahandlers
-
-
-def get_fusion_config():
-    fusion = {
-        'name': 'IterAvgFusionHandler',
-        'path': 'ibmfl.aggregator.fusion.iter_avg_fusion_handler'
-    }
-    return fusion
-
-
-def get_local_training_config():
-    local_training_handler = {
-        'name': 'LocalTrainingHandler',
-        'path': 'ibmfl.party.training.local_training_handler'
-    }
-    return local_training_handler
 
 
 def get_hyperparams():
-    hyperparams = {
-        'global': {
-            'rounds': 3,
-            'termination_accuracy': 0.9,
-            'max_timeout': 60
-        },
-        'local': {
-            'training': {
-                'epochs': 3
-            }
+    local_params = {
+        'training': {
+            'epochs': 3
         }
     }
-
-    return hyperparams
-
-
-def get_data_handler_config(party_id, dataset, folder_data, is_agg=False):
-
-    SUPPORTED_DATASETS = ['mnist']
-    if dataset in SUPPORTED_DATASETS:
-        if dataset == 'mnist':
-            dataset = 'mnist_tf'
-        data = datahandlers.get_datahandler_config(
-            dataset, folder_data, party_id, is_agg)
-    else:
-        raise Exception(
-            "The dataset {} is a wrong combination for fusion/model".format(dataset))
-    return data
+    
+    return local_params
 
 
 def get_model_config(folder_configs, dataset, is_agg=False, party_id=0):
     if is_agg:
         return None
-
-    img_rows, img_cols = 28, 28
-    batch_size = 28
-    input_shape = (batch_size, img_rows, img_cols, 1)
-    sample_input = np.zeros(shape=input_shape)
 
     class MyModel(Model):
         def __init__(self):
@@ -84,7 +40,10 @@ def get_model_config(folder_configs, dataset, is_agg=False, party_id=0):
     optimizer = tf.keras.optimizers.Adam()
     acc = tf.keras.metrics.SparseCategoricalAccuracy(name='accuracy')
     model.compile(optimizer=optimizer, loss=loss_object, metrics=[acc])
-    model._set_inputs(sample_input)
+
+    img_rows, img_cols = 28, 28
+    input_shape = (None, img_rows, img_cols, 1)
+    model.compute_output_shape(input_shape=input_shape)
 
     if not os.path.exists(folder_configs):
         os.makedirs(folder_configs)
@@ -101,3 +60,4 @@ def get_model_config(folder_configs, dataset, is_agg=False, party_id=0):
     }
 
     return model
+

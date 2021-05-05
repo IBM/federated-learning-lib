@@ -39,7 +39,7 @@ model:
   name: KerasFLModel
   path: ibmfl.model.keras_fl_model
   spec:
-    model_definition: examples/configs/keras_classifier/compiled_keras.h5
+    model_definition: examples/configs/iter_avg/keras/compiled_keras.h5
     model_name: keras-cnn
   info:
     gpu:

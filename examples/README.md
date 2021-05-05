@@ -1,26 +1,19 @@
 # Explore Available Examples
 
-### Training Keras models with different fusion algorithms:
-* [Running federated averaging (FedAvg) with Keras](fedavg)
-* [Simple average with Keras](keras_classifier)
+### Training Keras, TensorFlow 2.1 and PyTorch models with different fusion algorithms:
+* [Running federated averaging (FedAvg)](fedavg)
+* [Simple average](iter_avg)
 * [FedPlus with Keras](fedplus)
-* [Gradient aggregation with Keras](keras_gradient_aggregation)
+* [Gradient aggregation](gradient_aggregation)
 * [PFNM with Keras](pfnm)
 * [Coordinate median with Keras](coordinate_median)
 * [Krum with Keras](krum)
 * [Zeno with Keras](zeno)
 
-### Training TensorFlow 2.1 models:
-* [TensorFlow 2.1 model (`.pb` format)](tf_classifier)
-* [Keras with TensorFlow 2.1 backend (`.h5` format)](tf_keras_classifier)
-
-### Training PyTorch models
-* [Running federated averaging (FedAvg) with PyTorch](pytorch_classifier)
-
 ### Training scikit-learn models in IBM FL:
-* [Logistic classifier](sklearn_logclassification)
+* [Logistic classifier](iter_avg)
 * [SPAHM with KMeans](spahm)
-* [Differential private Naive Bayes models](naive_bayes)
+* [Differential private Naive Bayes models](naive_bayes_dp)
 
 ### ID3 Decision trees:
 * [Training ID3 decision trees](id3_dt)
@@ -33,8 +26,8 @@
 * [SPAHM with KMeans](spahm)
 
 ### Jupyter Notebooks to run IBM FL:
-* [Keras Classifier](keras_classifier)
-* [Reinforcement learning Cartpole](rl_cartpole)
+* [Keras Classifier](../Notebooks/keras_classifier)
+* [Reinforcement learning Cartpole](../Notebooks/cartpole)
 
 ## IBM FL Command Reference
 

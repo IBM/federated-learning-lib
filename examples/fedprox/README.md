@@ -31,7 +31,7 @@ No other preprocessing is performed.
     ```
 - Generate config files by running:
     ```
-    python examples/generate_configs.py -n <num_parties> -m fedprox  -d mnist -p <path>
+    python examples/generate_configs.py -f fedprox -m tf -d mnist -n <num_parties> -p <path>
     ```
 - In a terminal running an activated FL environment, start the aggregator by running:
     ```

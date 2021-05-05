@@ -6,7 +6,7 @@ This example explains how to run federated learning on Pendulum problem
 
 - Generate config files by running:
     ```
-    python examples/generate_configs.py -n <num_parties> -m rl_pendulum -p '' -d 'default'
+    python examples/generate_configs.py -n <num_parties> -f rl_pendulum  -p '' -d 'default'
     ```
 - In a terminal running an activated IBM FL environment 
 (refer to Quickstart in our website to learn more about how to set up the running environment), start the aggregator by running:

@@ -60,16 +60,16 @@ No other preprocessing is performed.
     ```
 - Generate config files by running:
     ```
-    python examples/generate_configs.py -n <num_parties> -m sklearn_logclassification_rw -d <dataset_name> -p <path>
+    python examples/generate_configs.py -n <num_parties> -f sklearn_logclassification_rw -d <dataset_name> -p <path>
     ```
 - In a terminal running an activated FL environment, start the aggregator by running:
     ```
-    python -m ibmfl.aggregator.aggregator <agg_config>
+    python ibmfl/aggregator/aggregator.py <agg_config>
     ```
     Type `START` and press enter to start accepting connections
 - In a terminal running an activated FL environment, start each party by running:
     ```
-    python -m ibmfl.party.party <party_config>
+    python ibmfl/party/party.py <party_config>
     ```
     Type `START` and press enter to start accepting connections.
 

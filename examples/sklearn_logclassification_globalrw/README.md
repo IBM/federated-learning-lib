@@ -60,7 +60,7 @@ The value of `epsilon` is, at default, set to 1, and can be modified via the dat
     ```
 - Generate config files by running:
     ```
-    python examples/generate_configs.py -n <num_parties> -m sklearn_logclassification_globalrw -d <dataset_name> -p <path>
+    python examples/generate_configs.py -n <num_parties> -f sklearn_logclassification_rw -d <dataset_name> -p <path>
     ```
 - In a terminal running an activated FL environment, start the aggregator by running:
     ```
