@@ -4,4 +4,4 @@ Here you can find scripts which allow us to easily set up and run tests for IBMF
 
 ### 
 * [Experiment Manager](exp_manager/usage_guide.md)
-* [Command Line runner](runner/runner_cli.md)
+* [Command Line runner](runner_cli.md)
