@@ -1,0 +1,53 @@
+machines:
+  default:
+    ssh_username: slaguna
+    port_number: 8086
+    staging_dir: /data/slaguna/sandbox/IBMFL/test_mnist
+    ibmfl_dir: /data/slaguna/repos/IBMFL
+    venv_dir: .venv
+    venv_uses_conda: False
+  syl2:
+    ip_address: 9.192.210.210
+    port_number: 5000
+  syl23:
+    ip_address: 9.192.244.87
+  syl24:
+    ip_address: 9.192.244.33
+  syl25:
+    ip_address: 9.192.244.60
+  local_agg:
+    ssh_username: sean
+    ip_address: 127.0.0.1
+    port_number: 5000
+    staging_dir: /tmp/IBMFL/test_mnist_staging
+    ibmfl_dir: /home/sean/repos/IBMFL
+  local_p1:
+    ssh_username: sean
+    ip_address: 127.0.0.1
+    port_number: 5001
+    staging_dir: /tmp/IBMFL/test_mnist_staging
+    ibmfl_dir: /home/sean/repos/IBMFL
+  local_p2:
+    ssh_username: sean
+    ip_address: 127.0.0.1
+    port_number: 5002
+    staging_dir: /tmp/IBMFL/test_mnist_staging
+    ibmfl_dir: /home/sean/repos/IBMFL
+
+experiments:
+  - local_staging_dir: /home/sean/sandbox/IBMFL/test_mnist
+    local_ibmfl_dir: /home/sean/repos/IBMFL
+    agg_machine: syl23
+    n_parties: 2
+    party_machines: [ syl24, syl25 ]
+    shuffle_party_machines: False
+    n_trials: 2
+    n_rounds: 5
+    postproc_fn: gen_reward_vs_time_plots
+    postproc_x_key: 'post_train:ts'
+    postproc_y_keys: [
+      'post_train:eval:loss',
+      'post_train:eval:acc',
+      'post_train:eval:precision weighted',
+      'post_train:eval:recall weighted'
+    ]
