@@ -53,6 +53,8 @@ We also support the following fairness techniques that help to mitigate bias in 
 | Global Reweighing with Differetial Privacy [Abay et al.](https://arxiv.org/abs/2012.02447)| Pre-processing | All ML models |
 | Federated Prejudice Removal [Abay et al.](https://arxiv.org/abs/2012.02447) | In-processing | Logistic Regression |
 
+In order to aid orchestration of Federated Learning experiments using the IBMFL library, we also provide a Jupyter Notebook based UI interface, [Experiment Manager Dashboard](runner/exp_manager/Experiment_Manager_dashboard.ipynb) where users can choose the model, fusion algorithm, number of parties and other (hyper) parameters for a run. This orchestration can be done on the machine where the notebook is hosted, i.e., locally or even across remote machines. As of now, only limited models and datasets are supported, but more will be added in the near future.
+The dashboard uses a [runner](runner/) module, and there's a [usage guide](runner/exp_manager/usage_guide.md) on how to go about using the dashboard.
 
 ## How to get started?
 
