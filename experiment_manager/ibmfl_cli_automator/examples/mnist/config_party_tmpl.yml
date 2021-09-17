@@ -1,0 +1,38 @@
+aggregator:
+  ip: ${agg_ip}
+  port: ${agg_port}
+connection:
+  info:
+    ip: ${party_ip}
+    port: ${party_port}
+    tls_config:
+      enable: false
+  name: FlaskConnection
+  path: ibmfl.connection.flask_connection
+  sync: false
+data:
+  info:
+    npz_file: examples/data/mnist/random/data_party${id}.npz
+  name: MnistKerasDataHandler
+  path: ibmfl.util.data_handlers.mnist_keras_data_handler
+local_training:
+  name: LocalTrainingHandler
+  path: ibmfl.party.training.local_training_handler
+model:
+  name: KerasFLModel
+  path: ibmfl.model.keras_fl_model
+  spec:
+    model_definition: examples/configs/keras_classifier/compiled_keras.h5
+    model_name: keras-cnn
+protocol_handler:
+  name: PartyProtocolHandler
+  path: ibmfl.party.party_protocol_handler
+metrics_recorder:
+  name: MetricsRecorder
+  path: ibmfl.party.metrics.metrics_recorder
+  output_file: ${staging_dir}/${ts}/metrics_party${id}
+  output_type: json
+  compute_pre_train_eval: False
+  compute_post_train_eval: True
+privacy:
+  metrics: true

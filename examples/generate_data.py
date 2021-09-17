@@ -5,6 +5,7 @@ import csv
 import time
 import argparse
 import numpy as np
+import pandas as pd
 
 fl_path = os.path.abspath('.')
 if fl_path not in sys.path:
@@ -27,7 +28,7 @@ def setup_parser():
     p = argparse.ArgumentParser(description=GENERATE_DATA_DESC)
     p.add_argument("--num_parties", "-n", help=NUM_PARTIES_DESC,
                    type=int, required=True)
-    p.add_argument("--dataset", "-d", choices=FL_DATASETS,
+    p.add_argument("--dataset", "-d",
                    help=DATASET_DESC, required=True)
     p.add_argument("--data_path", "-p", help=PATH_DESC)
     p.add_argument("--points_per_party", "-pp", help=PER_PARTY,
@@ -56,7 +57,7 @@ def save_nursery_party_data(nb_dp_per_party, should_stratify, party_folder, data
     :type should_stratify: `bool`
     :param party_folder: folder to save party data
     :type party_folder: `str`
-    :param dataset_foler: folder to save dataset
+    :param dataset_folder: folder to save dataset
     :type dataset_folder: `str`
     """
     if not os.path.exists(dataset_folder):
@@ -102,7 +103,7 @@ def save_adult_party_data(nb_dp_per_party, should_stratify, party_folder, datase
     :type should_stratify: `bool`
     :param party_folder: folder to save party data
     :type party_folder: `str`
-    :param dataset_foler: folder to save dataset
+    :param dataset_folder: folder to save dataset
     :type dataset_folder: `str`
     """
     if not os.path.exists(dataset_folder):
@@ -153,7 +154,7 @@ def save_german_party_data(nb_dp_per_party, should_stratify, party_folder, datas
     :type should_stratify: `bool`
     :param party_folder: folder to save party data
     :type party_folder: `str`
-    :param dataset_foler: folder to save dataset
+    :param dataset_folder: folder to save dataset
     :type dataset_folder: `str`
     """
     if not os.path.exists(dataset_folder):
@@ -198,7 +199,7 @@ def save_compas_party_data(nb_dp_per_party, should_stratify, party_folder, datas
     :type should_stratify: `bool``
     :param party_folder: folder to save party data
     :type party_folder: `str`
-    :param dataset_foler: folder to save dataset
+    :param dataset_folder: folder to save dataset
     :type dataset_folder: `str`
     """
     if not os.path.exists(dataset_folder):
@@ -242,10 +243,12 @@ def save_cifar10_party_data(nb_dp_per_party, should_stratify, party_folder, data
     :type should_stratify: `bool`
     :param party_folder: folder to save party data
     :type party_folder: `str`
-    :param dataset_foler: folder to save dataset
+    :param dataset_folder: folder to save dataset
     :type dataset_folder: `str`
     """
-    (x_train, y_train), (x_test, y_test) = load_cifar10()
+    if not os.path.exists(dataset_folder):
+        os.makedirs(dataset_folder)
+    (x_train, y_train), (x_test, y_test) = load_cifar10(download_dir=dataset_folder)
     labels, train_counts = np.unique(y_train, return_counts=True)
     te_labels, test_counts = np.unique(y_test, return_counts=True)
     if np.all(np.isin(labels, te_labels)):
@@ -306,7 +309,7 @@ def save_mnist_party_data(nb_dp_per_party, should_stratify, party_folder, datase
     :type party_folder: `str`
     :param dataset_folder: folder to save dataset
     :type data_path: `str`
-    :param dataset_foler: folder to save dataset
+    :param dataset_folder: folder to save dataset
     :type dataset_folder: `str`
     """
     if not os.path.exists(dataset_folder):
@@ -371,7 +374,7 @@ def save_higgs_party_data(nb_dp_per_party, should_stratify, party_folder, datase
     :type should_stratify: `bool`
     :param party_folder: folder to save party data
     :type party_folder: `str`
-    :param dataset_foler: folder to save dataset
+    :param dataset_folder: folder to save dataset
     :type dataset_folder: `str`
     """
     if not os.path.exists(dataset_folder):
@@ -419,7 +422,7 @@ def save_airline_party_data(nb_dp_per_party, should_stratify, party_folder, data
     :type should_stratify: `bool`
     :param party_folder: folder to save party data
     :type party_folder: `str`
-    :param dataset_foler: folder to save dataset
+    :param dataset_folder: folder to save dataset
     :type dataset_folder: `str`
     """
     if not os.path.exists(dataset_folder):
@@ -482,7 +485,7 @@ def save_diabetes_party_data(nb_dp_per_party, should_stratify, party_folder, dat
     :type should_stratify: `bool`
     :param party_folder: folder to save party data
     :type party_folder: `str`
-    :param dataset_foler: folder to save dataset
+    :param dataset_folder: folder to save dataset
     :type dataset_folder: `str`
     """
     if not os.path.exists(dataset_folder):
@@ -536,7 +539,7 @@ def save_binovf_party_data(nb_dp_per_party, should_stratify, party_folder, datas
     :type should_stratify: `bool`
     :param party_folder: folder to save party data
     :type party_folder: `str`
-    :param dataset_foler: folder to save dataset
+    :param dataset_folder: folder to save dataset
     :type dataset_folder: `str`
     """
     if not os.path.exists(dataset_folder):
@@ -584,7 +587,7 @@ def save_multovf_party_data(nb_dp_per_party, should_stratify, party_folder, data
     :type should_stratify: `bool`
     :param party_folder: folder to save party data
     :type party_folder: `str`
-    :param dataset_foler: folder to save dataset
+    :param dataset_folder: folder to save dataset
     :type dataset_folder: `str`
     """
     if not os.path.exists(dataset_folder):
@@ -636,7 +639,7 @@ def save_linovf_party_data(nb_dp_per_party, party_folder, dataset_folder):
     :type nb_dp_per_party: `list[int]`
     :param party_folder: folder to save party data
     :type party_folder: `str`
-    :param dataset_foler: folder to save dataset
+    :param dataset_folder: folder to save dataset
     :type dataset_folder: `str`
     """
     if not os.path.exists(dataset_folder):
@@ -675,7 +678,7 @@ def save_femnist_party_data(nb_dp_per_party, should_stratify, party_folder, data
     :type party_folder: `str`
     :return: None
     :rtype: None
-    :param dataset_foler: folder to save dataset
+    :param dataset_folder: folder to save dataset
     :type dataset_folder: `str`
     """
     dataset_folder = os.path.join(dataset_folder, "femnist")
@@ -794,6 +797,69 @@ def save_federated_clustering_data(nb_dp_per_party, party_folder):
 
         print('Finished! :) Data saved in ', party_folder)
 
+def save_party_data(nb_dp_per_party, should_stratify, party_folder, dataset_folder, dataset):
+    """
+    Loads a generate dataset saved as in csv format and creates parties local datasets
+    as specified.
+
+    :param nb_dp_per_party: the number of data points each party should have
+    :type nb_dp_per_party: `list[int]`
+    :param should_stratify: True if data should be assigned proportional to source class distributions
+    :type should_stratify: `bool`
+    :param party_folder: folder to save party data
+    :type party_folder: `str`
+    :param dataset_folder: folder to save dataset
+    :type dataset_folder: `str`
+    :param dataset: the name of the csv file
+    :type dataset: `str`
+    """
+    dataset_folder = os.path.join(dataset_folder, dataset) + '.csv'
+    print("Loading the original dataset from: " + dataset_folder)
+
+    try:
+        # if no header
+        data = pd.read_csv(dataset_folder, header=None).to_numpy()
+        X, y = data[:, :-1], data[:, -1].astype('int')
+    except Exception as ex:
+        print(ex)
+        print("Warning: please ensure the provided dataset is in .csv format.")
+        print("Please ensure that the class labels are provided in the last column.")
+        print("Warning: please ensure that the class labels are provided as numbers.")
+        print("Loading the dataset assuming the header is provided in the 1st column.")
+        data = pd.read_csv(dataset_folder, header=1).to_numpy()
+        X, y = data[:, :-1], data[:, -1].astype('int')
+        
+    num_train = len(X)
+    labels, counts = np.unique(y, return_counts=True)
+
+    if should_stratify:
+        probs = {label: counts[np.where(labels == label)[
+            0][0]] / float(num_train) for label in labels}
+    else:
+        probs = {label: 1.0 / num_train for label in labels}
+
+    for i, dp in enumerate(nb_dp_per_party):
+
+        # Regular Dataset
+        p_list = np.array([probs[y[idx]] for idx in range(num_train)])
+        p_list /= np.sum(p_list)
+
+        indices = np.random.choice(num_train, dp, p=p_list)
+        indices = indices.tolist()
+
+        # Use indices for data/classification subset
+        x_part = [','.join(item) for item in X[indices, :].astype(str)]
+        y_part = y[indices]
+
+        # Write to File
+        name_file = 'data_party' + str(i) + '.csv'
+        name_file = os.path.join(party_folder, name_file)
+        out = open(name_file, 'w')
+        for i in range(len(x_part)):
+            out.write(x_part[i]+','+str(int(y_part[i]))+'\n')
+        out.close()
+
+    print('Finished! :) Data saved in', party_folder)
 
 if __name__ == '__main__':
     # Parse command line options
@@ -878,3 +944,6 @@ if __name__ == '__main__':
         save_femnist_party_data(points_per_party, stratify, folder_party_data, folder_dataset)
     elif dataset == 'cifar10':
         save_cifar10_party_data(points_per_party, stratify, folder_party_data, folder_dataset)
+    else:
+        print("Loading a non-default dataset, redircting to general data split method...")
+        save_party_data(points_per_party, stratify, folder_party_data, folder_dataset, dataset)

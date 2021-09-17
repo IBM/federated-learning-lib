@@ -32,3 +32,6 @@ dm-tree
 GPUtil
 paramiko
 http://github.com/IBM/pycloudmessenger/archive/v0.7.1.tar.gz
+jupyter
+kubernetes
+openshift

@@ -15,7 +15,7 @@ def get_fusion_config():
     return fusion
 
 
-def get_local_training_config():
+def get_local_training_config(configs_folder=None):
     local_training_handler = {
         'name': 'LocalTrainingHandler',
         'path': 'ibmfl.party.training.local_training_handler'

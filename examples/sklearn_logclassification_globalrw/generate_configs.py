@@ -13,7 +13,7 @@ def get_fusion_config():
     return fusion
 
 
-def get_local_training_config():
+def get_local_training_config(configs_folder=None):
     local_training_handler = {
         'name': 'ReweighLocalTrainingHandler',
         'path': 'ibmfl.party.training.reweigh_local_training_handler'
@@ -39,7 +39,7 @@ def get_hyperparams(model):
 
 def get_data_handler_config(party_id, dataset, folder_data, is_agg=False, model='sklearn'):
 
-    SUPPORTED_DATASETS = ['adult', 'compas', 'german']
+    SUPPORTED_DATASETS = ['adult', 'compas', 'german', 'custom_dataset']
 
     if dataset in SUPPORTED_DATASETS:
         if dataset == 'adult':

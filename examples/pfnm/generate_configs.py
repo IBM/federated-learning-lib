@@ -14,7 +14,7 @@ def get_fusion_config():
     return fusion
 
 
-def get_local_training_config():
+def get_local_training_config(configs_folder=None):
     local_training_handler = {
         'name': 'PFNMLocalTrainingHandler',
         'path': 'ibmfl.party.training.pfnm_local_training_handler'
@@ -43,7 +43,7 @@ def get_hyperparams(model):
 
 def get_data_handler_config(party_id, dataset, folder_data, is_agg=False, model='keras'):
 
-    SUPPORTED_DATASETS = ['mnist']
+    SUPPORTED_DATASETS = ['mnist', 'custom_dataset']
     if dataset in SUPPORTED_DATASETS:
         if model not in 'keras':
             dataset = dataset + "_" + model

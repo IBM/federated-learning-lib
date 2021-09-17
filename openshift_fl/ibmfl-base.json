@@ -1,0 +1,30 @@
+{
+    "kind": "List",
+    "apiVersion": "v1",
+    "items": [
+        {
+            "kind": "ImageStream",
+            "apiVersion": "image.openshift.io/v1",
+            "metadata": {
+                "name": "ibmfl"
+            },
+            "spec": {
+                "lookupPolicy": {
+                    "local": true
+                },
+                "tags": [
+                    {
+                        "name": "latest",
+                        "from": {
+                            "kind": "DockerImage",
+                            "name": "us.icr.io/ibmfl-openshift/ffl-base:latest"
+                        },
+                        "referencePolicy": {
+                            "type": "Local"
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

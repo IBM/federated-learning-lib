@@ -7,7 +7,8 @@ Currently, for Federated Prejudice Removal we support following datasets:
 
 # Running Federated Prejudice Removal in FL
 
-This example provides the implementation for Federated Prejudice Removal presented in [Mitigating Bias in Federated Learning](https://arxiv.org/abs/2012.02447).
+This example explains how to run Federated Prejudice Removal, a federated learning implementation of the [Kamishima Algorithm](https://github.com/algofairness/fairness-comparison/tree/master/fairness/algorithms/kamishima). We use this algorithm in our paper on bias mitigation and federated learning; see it [here]()https://arxiv.org/abs/2012.02447).
+
 This example requires the `gensim` library. Run the following:
     ```
     pip install gensim

@@ -2,7 +2,7 @@ DEFAULT_CONNECTION = 'default'
 DEFAULT_SERVER = 'default'
 
 # Examples helper descriptions
-GENERATE_DATA_DESC = "generates data for running IBM FL examples"
+GENERATE_DATA_DESC = "generates data for running FL examples"
 NUM_PARTIES_DESC = "the number of parties to split the data into"
 DATASET_DESC = "which data set to use"
 PATH_DESC = "directory to save the data"
@@ -19,18 +19,22 @@ FUSION_CONFIG_DESC = "which fusion example to run"
 MODEL_CONFIG_DESC = "which model to use for fusion example"
 TASK_NAME_DESC = "task name, specified when using RabbitMQ connection"
 
-EXAMPLES_WARNING = "WARNING:: Usage of -m keras_classifier option  is deprecated and replaced with -m keras -f iter_avg. Ref https://github.com/IBM/federated-learning-lib/blob/main/setup.md for more information"
-CONNECTION_TYPE_DESC = "type of connection to use; supported types are flask, rabbitmq and websockets"
+CONNECTION_TYPE_DESC = "type of connection to use; supported types are flask and rabbitmq"
+
+CONTEXT_PATH = "context directory to import the generate script from different folders other that examples"
 
 # Integration
 FL_DATASETS = ["default", "mnist", "nursery", "adult", "federated-clustering", "compas", "german",
-               "higgs", "airline", "diabetes", "binovf", "multovf", "linovf", "femnist", "cifar10"]
-
+               "higgs", "airline", "diabetes", "binovf", "multovf", "linovf", "femnist", "cifar10", "custom_dataset"]
+               
 FL_EXAMPLES = ["iter_avg", "fedavg", "coordinate_median", "gradient_aggregation", "krum", "pfnm", 
-                "zeno", "fedprox", "fedplus", "differential_privacy_sgd", "rl_cartpole", 
-                "rl_pendulum", "sklearn_logclassification_rw", "spahm", "id3_dt", "prej_remover",
-                "sklearn_logclassification_globalrw", "naive_bayes_dp"]
-
-FL_MODELS = ["keras", "pytorch", "tf", "sklearn", "None", "keras_classifier"]
+                "zeno", "fedprox", "fedavgplus", 
+                "differential_privacy_sgd", 
+                "rl_cartpole", "rl_pendulum", "sklearn_logclassification_rw", "spahm",
+                "sklearn_logclassification_globalrw", "naive_bayes_dp", "id3_dt", "prej_remover", "iter_avg_openshift", "shuffle_iter_avg",
+                "coordinate_median_plus", "geometric_median_plus"]
+FL_MODELS = ["keras", "pytorch", "tf", "sklearn", "None"]
 
 FL_CONN_TYPES = ["flask", "rabbitmq"]
+
+FL_CONTEXT = {'openshift':'openshift_fl.examples'}

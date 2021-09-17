@@ -75,7 +75,7 @@ The following preprocessing was performed before training:
     ```
 - Generate config files by running:
     ```
-    python examples/generate_configs.py -n <num_parties> -f id3_dt  -d adult -p examples/data/adult/random
+    python examples/generate_configs.py -n 3 -f id3_dt  -d adult -p examples/data/adult/random
     ```
 - In a terminal running an activated IBM FL environment 
 (refer to Quickstart in our website to learn more about how to set up the running environment), start the aggregator by running:

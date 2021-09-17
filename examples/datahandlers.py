@@ -11,7 +11,18 @@ def get_datahandler_config(dh_name, folder_data, party_id, is_agg):
         for folder in staging_dir_parts:
             staging_dir = os.path.join(staging_dir, folder)
 
-    if dh_name == 'mnist':
+    if dh_name == 'custom_dataset' or dh_name == 'custom_dataset_pytorch' or dh_name == 'custom_dataset_tf' \
+            or dh_name == 'custom_dataset_sklearn':
+        data = {
+            'name': 'MyDataHandler',  # the datahandler class provided at runtime
+            'path': 'custom_data_handler.py',
+            'info': {
+            }
+        }
+        if is_agg:
+            return None
+
+    elif dh_name == 'mnist':
         data = {
             'name': 'MnistKerasDataHandler',
             'path': 'ibmfl.util.data_handlers.mnist_keras_data_handler',
@@ -110,14 +121,7 @@ def get_datahandler_config(dh_name, folder_data, party_id, is_agg):
             }
         }
         if is_agg:
-            if os.path.exists(os.path.join(staging_dir, "datasets", "adult.data")):
-                data['info'] = {
-                    'txt_file': os.path.join(staging_dir, "datasets", "adult.data")
-                }
-            else:
-                data['info'] = {
-                    'txt_file': os.path.join("examples", "datasets", "adult.data")
-                }
+            data['info'] = {}
 
     elif dh_name == 'adult_pr':
         data = {
@@ -146,14 +150,15 @@ def get_datahandler_config(dh_name, folder_data, party_id, is_agg):
             }
         }
         if is_agg:
-            if os.path.exists(os.path.join(staging_dir, "datasets", "adult.data")):
-                data['info'] = {
-                    'txt_file': os.path.join(staging_dir, "datasets", "adult.data")
-                }
-            else:
-                data['info'] = {
-                    'txt_file': os.path.join("examples", "datasets", "adult.data")
-                }
+            # if os.path.exists(os.path.join(staging_dir, "datasets", "adult.data")):
+            #     data['info'] = {
+            #         'txt_file': os.path.join(staging_dir, "datasets", "adult.data")
+            #     }
+            # else:
+            #     data['info'] = {
+            #         'txt_file': os.path.join("examples", "datasets", "adult.data")
+            #     }
+            return None
 
     elif dh_name == 'adult_sklearn_grw':
         data = {
@@ -165,14 +170,7 @@ def get_datahandler_config(dh_name, folder_data, party_id, is_agg):
             }
         }
         if is_agg:
-            if os.path.exists(os.path.join(staging_dir, "datasets", "adult.data")):
-                data['info'] = {
-                    'txt_file': os.path.join(staging_dir, "datasets", "adult.data")
-                }
-            else:
-                data['info'] = {
-                    'txt_file': os.path.join("examples", "datasets", "adult.data")
-                }
+            return None
 
     elif dh_name == 'nursery':
         data = {
@@ -306,13 +304,49 @@ def get_datahandler_config(dh_name, folder_data, party_id, is_agg):
             }
         }
         if is_agg:
-            if os.path.exists(os.path.join(staging_dir, "datasets", "cifar10", "all_data")):
+            if os.path.exists(os.path.join(staging_dir, "datasets", "cifar10.npz")):
                 data['info'] = {
-                    'data_folder': os.path.join(staging_dir, "datasets", "cifar10", "all_data")
+                    'npz_file': os.path.join(staging_dir, "datasets", "cifar10.npz")
                 }
             else:
                 data['info'] = {
-                    'data_folder': os.path.join("examples", "datasets", "cifar10", "all_data")
+                    'data_folder': os.path.join("examples", "datasets", "cifar10.npz")
+                }
+
+    elif dh_name == 'cifar10_pytorch':
+        data = {
+            'name': 'Cifar10PytorchDataHandler',
+            'path': 'ibmfl.util.data_handlers.cifar10_pytorch_data_handler',
+            'info': {
+                'npz_file': os.path.join(folder_data, 'data_party' + str(party_id) + '.npz')
+            }
+        }
+        if is_agg:
+            if os.path.exists(os.path.join(staging_dir, "datasets", "cifar10.npz")):
+                data['info'] = {
+                    'data_folder': os.path.join(staging_dir, "datasets", "cifar10.npz")
+                }
+            else:
+                data['info'] = {
+                    'data_folder': os.path.join("examples", "datasets", "cifar10.npz")
+                }
+
+    elif dh_name == 'cifar10_tf':
+        data = {
+            'name': 'Cifar10TFDataHandler',
+            'path': 'ibmfl.util.data_handlers.cifar10_keras_data_handler',
+            'info': {
+                'npz_file': os.path.join(folder_data, 'data_party' + str(party_id) + '.npz')
+            }
+        }
+        if is_agg:
+            if os.path.exists(os.path.join(staging_dir, "datasets", "cifar10.npz")):
+                data['info'] = {
+                    'data_folder': os.path.join(staging_dir, "datasets", "cifar10.npz")
+                }
+            else:
+                data['info'] = {
+                    'data_folder': os.path.join("examples", "datasets", "cifar10.npz")
                 }
 
     elif dh_name == 'compas_sklearn':
@@ -324,13 +358,13 @@ def get_datahandler_config(dh_name, folder_data, party_id, is_agg):
             }
         }
         if is_agg:
-            if os.path.exists(os.path.join(staging_dir, "datasets", "compas")):
+            if os.path.exists(os.path.join(staging_dir, "datasets", "compas-scores-two-years.csv")):
                 data['info'] = {
-                    'txt_file': os.path.join(staging_dir, "datasets", "compas")
+                    'txt_file': os.path.join(staging_dir, "datasets", "compas-scores-two-years.csv")
                 }
             else:
                 data['info'] = {
-                    'txt_file': os.path.join("examples", "datasets", "compas")
+                    'txt_file': os.path.join("examples", "datasets", "compas-scores-two-years.csv")
                 }
 
     elif dh_name == 'compas_pr':
@@ -342,13 +376,13 @@ def get_datahandler_config(dh_name, folder_data, party_id, is_agg):
             }
         }
         if is_agg:
-            if os.path.exists(os.path.join(staging_dir, "datasets", "compas")):
+            if os.path.exists(os.path.join(staging_dir, "datasets", "compas-scores-two-years.csv")):
                 data['info'] = {
-                    'txt_file': os.path.join(staging_dir, "datasets", "compas")
+                    'txt_file': os.path.join(staging_dir, "datasets", "compas-scores-two-years.csv")
                 }
             else:
                 data['info'] = {
-                    'txt_file': os.path.join("examples", "datasets", "compas")
+                    'txt_file': os.path.join("examples", "datasets", "compas-scores-two-years.csv")
                 }
 
     elif dh_name == 'compas_sklearn_grw':
@@ -361,13 +395,13 @@ def get_datahandler_config(dh_name, folder_data, party_id, is_agg):
             }
         }
         if is_agg:
-            if os.path.exists(os.path.join(staging_dir, "datasets", "compas")):
+            if os.path.exists(os.path.join(staging_dir, "datasets", "compas-scores-two-years.csv")):
                 data['info'] = {
-                    'txt_file': os.path.join(staging_dir, "datasets", "compas")
+                    'txt_file': os.path.join(staging_dir, "datasets", "compas-scores-two-years.csv")
                 }
             else:
                 data['info'] = {
-                    'txt_file': os.path.join("examples", "datasets", "compas")
+                    'txt_file': os.path.join("examples", "datasets", "compas-scores-two-years.csv")
                 }
 
     elif dh_name == 'german_sklearn':

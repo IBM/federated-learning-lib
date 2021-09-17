@@ -10,9 +10,6 @@ def get_hyperparams():
     local_params = {
         'training': {
             'epochs': 3
-        },
-        'optimizer': {
-            'lr': 0.01
         }
     }
     
@@ -31,6 +28,10 @@ def get_model_config(folder_configs, dataset, is_agg=False, party_id=0):
 
     elif dataset == 'femnist':
         return get_femnist_model_config(folder_configs)
+
+    elif dataset == 'custom_dataset':
+        print('Using the same model as with MNIST, provide model file to replace if needed.')
+        return get_mnist_model_config(folder_configs)
     else:
         raise Exception(
             "The dataset {} is a wrong combination for fusion/model".format(dataset))
