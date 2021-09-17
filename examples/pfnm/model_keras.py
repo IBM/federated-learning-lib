@@ -10,9 +10,6 @@ def get_hyperparams():
     local_params = {
         'training': {
             'epochs': 3
-        },
-        'optimizer': {
-            'lr': 0.01
         }
     }
     

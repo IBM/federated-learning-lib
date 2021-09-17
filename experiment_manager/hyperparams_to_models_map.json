@@ -1,0 +1,607 @@
+[
+	{	"model_identifier": "coordinate_median_keras",
+		"hyperparams": {
+			"global": {
+				"rounds": 3,
+				"termination_accuracy": 0.9,
+				"max_timeout": 60
+			},
+			"local": {
+				"training": {
+					"epochs": 3
+				}
+			}
+		}
+	},
+	{	"model_identifier": "coordinate_median_pytorch",
+		"hyperparams": {
+			"global": {
+				"rounds": 3,
+				"termination_accuracy": 0.9,
+				"max_timeout": 60
+			},
+			"local": {
+				"training": {
+					"epochs": 3,
+					"lr": 1
+				},
+				"optimizer": "optim.Adadelta"
+			}
+		}
+	},
+	{	"model_identifier": "coordinate_median_sklearn",
+		"hyperparams": {
+			"global": {
+				"rounds": 3,
+				"termination_accuracy": 0.9,
+				"max_timeout": 60
+			},
+			"local": {
+				"training": {
+					"max_iter": 2
+				}
+			}
+		}
+	},
+	{	"model_identifier": "coordinate_median_tf",
+		"hyperparams": {
+			"global": {
+				"rounds": 3,
+				"termination_accuracy": 0.9,
+				"max_timeout": 60
+			},
+			"local": {
+				"training": {
+					"epochs": 3
+				}
+			}
+		}
+	},
+	{
+		"model_identifier": "coordinate_median_plus_tf",
+		"hyperparams": {
+			"global": {
+				"rounds": 3,
+				"termination_accuracy": 0.8,
+				"max_timeout": 600,
+				"rho": 10
+			},
+			"local": {
+				"training": {
+					"epochs": 10,
+					"batch_size": 10,
+					"alpha": 0.01
+				},
+				"optimizer": {
+					"lr": 0.003
+				}
+			}
+		}
+	},
+	{
+		"model_identifier": "geometric_median_plus_tf",
+		"hyperparams": {
+			"global": {
+				"rounds": 3,
+				"termination_accuracy": 0.8,
+				"max_timeout": 600,
+				"rho": 10
+			},
+			"local": {
+				"training": {
+					"epochs": 10,
+					"batch_size": 10,
+					"alpha": 0.01
+				},
+				"optimizer": {
+					"lr": 0.003
+				}
+			}
+		}
+	},
+	{	"model_identifier": "crypto_iter_avg_keras",
+		"hyperparams": {
+			"global": {
+				"rounds": 3,
+				"termination_accuracy": 0.9
+			},
+			"local": {
+				"training": {
+					"epochs": 3
+				}
+			}
+		}
+	},
+	{	"model_identifier": "differential_privacy_sgd_keras",
+		"hyperparams": {
+			"global": {
+				"rounds": 3,
+				"termination_accuracy": 0.9,
+				"privacy": {
+					"l2_norm_clip": 1.0,
+					"noise_multiplier": 1.1,
+					"epsilon": 10.0,
+					"delta": 1e-5,
+					"trust_rate": 1.0,
+					"noise_schedule": "uniform",
+					"accountant": "renyi"
+				}
+			},
+			"local": {
+				"training": {
+					"epochs": 3,
+					"privacy": {}
+				}
+			}
+		}
+	},
+	{	"model_identifier": "fedavg_keras",
+		"hyperparams": {
+			"global": {
+				"rounds": 3,
+				"termination_accuracy": 0.9,
+				"max_timeout": 60
+			},
+			"local": {
+				"training": {
+					"epochs": 3
+				}
+			}
+		}
+	},
+	{	"model_identifier": "fedavg_pytorch",
+		"hyperparams": {
+			"global": {
+				"rounds": 3,
+				"termination_accuracy": 0.9,
+				"max_timeout": 60
+			},
+			"local": {
+				"training": {
+					"epochs": 3,
+					"lr": 1
+				},
+				"optimizer": "optim.Adadelta"
+			}
+		}
+	},
+	{	"model_identifier": "fedavg_sklearn",
+		"hyperparams": {
+			"global": {
+				"rounds": 3,
+				"termination_accuracy": 0.9,
+				"max_timeout": 60
+			},
+			"local": {
+				"training": {
+					"max_iter": 2
+				}
+			}
+		}
+	},
+	{	"model_identifier": "fedavg_tf",
+		"hyperparams": {
+			"global": {
+				"rounds": 3,
+				"termination_accuracy": 0.9
+			},
+			"local": {
+				"training": {
+					"epochs": 3
+				},
+				"optimizer": {
+					"lr": 0.01
+				}
+			}
+		}
+	},
+	{	"model_identifier": "fedavgplus_tf",
+		"hyperparams": {
+			"global": {
+				"rounds": 3,
+				"termination_accuracy": 0.8,
+				"max_timeout": 600,
+				"rho": 1000
+			},
+			"local": {
+				"training": {
+					"epochs": 10,
+					"batch_size": 10,
+					"alpha": 0.01
+				},
+				"optimizer": {
+					"lr": 0.003
+				}
+			}
+		}
+	},
+	{	"model_identifier": "fedprox_tf",
+		"hyperparams": {
+			"global": {
+				"rounds": 10,
+				"termination_accuracy": 0.9,
+				"max_timeout": 60
+			},
+			"local": {
+				"training": {
+					"epochs": 3
+				}
+			}
+		}
+	},
+	{	"model_identifier": "gradient_aggregation_keras",
+		"hyperparams": {
+			"global": {
+				"rounds": 3,
+				"termination_accuracy": 0.9,
+				"max_timeout": 60
+			},
+			"local": {
+				"training": {
+					"epochs": 3
+				}
+			}
+		}
+	},
+	{	"model_identifier": "gradient_aggregation_pytorch",
+		"hyperparams": {
+			"global": {
+				"rounds": 10,
+				"termination_accuracy": 0.9,
+				"max_timeout": 60
+			},
+			"local": {
+				"training": {
+					"epochs": 3,
+					"lr": 1
+				},
+				"optimizer": "optim.Adadelta"
+			}
+		}
+	},
+	{	"model_identifier": "gradient_aggregation_tf",
+		"hyperparams": {
+			"global": {
+				"rounds": 10,
+				"termination_accuracy": 0.9,
+				"max_timeout": 60
+			},
+			"local": {
+				"training": {
+					"epochs": 3
+				}
+			}
+		}
+	},
+	{	"model_identifier": "id3_dt_None",
+		"hyperparams": {
+			"global": {
+				"max_depth": 3
+			}
+		}
+	},
+	{	"model_identifier": "iter_avg_keras",
+		"hyperparams": {
+			"global": {
+				"rounds": 3,
+				"termination_accuracy": 0.9,
+				"max_timeout": 60
+			},
+			"local": {
+				"training": {
+					"epochs": 3
+				}
+			}
+		}
+	},
+	{	"model_identifier": "iter_avg_pytorch",
+		"hyperparams": {
+			"global": {
+				"rounds": 3,
+				"termination_accuracy": 0.9,
+				"max_timeout": 60
+			},
+			"local": {
+				"training": {
+					"epochs": 3,
+					"lr": 1
+				},
+				"optimizer": "optim.Adadelta"
+			}
+		}
+	},
+	{	"model_identifier": "iter_avg_sklearn",
+		"hyperparams": {
+			"global": {
+				"rounds": 3,
+				"termination_accuracy": 0.9,
+				"max_timeout": 60
+			},
+			"local": {
+				"training": {
+					"max_iter": 2
+				}
+			}
+		}
+	},
+	{	"model_identifier": "iter_avg_tf",
+		"hyperparams": {
+			"global": {
+				"rounds": 3,
+				"termination_accuracy": 0.9,
+				"max_timeout": 60
+			},
+			"local": {
+				"training": {
+					"epochs": 3
+				}
+			}
+		}
+	},
+	{	"model_identifier": "krum_keras",
+		"hyperparams": {
+			"global": {
+				"rounds": 3,
+				"max_timeout": 60,
+				"byzantine_threshold": 1
+			},
+			"local": {
+				"training": {
+					"epochs": 3
+				}
+			}
+		}
+	},
+	{	"model_identifier": "krum_pytorch",
+		"hyperparams": {
+			"global": {
+				"rounds": 3,
+				"max_timeout": 60,
+				"byzantine_threshold": 1
+			},
+			"local": {
+				"training": {
+					"epochs": 3,
+					"lr": 1
+				},
+				"optimizer": "optim.Adadelta"
+			}
+		}
+	},
+	{	"model_identifier": "krum_tf",
+		"hyperparams": {
+			"global": {
+				"rounds": 3,
+				"max_timeout": 60,
+				"byzantine_threshold": 1
+			},
+			"local": {
+				"training": {
+					"epochs": 3
+				}
+			}
+		}
+	},
+	{	"model_identifier": "pfnm_keras",
+		"hyperparams": {
+			"global": {
+				"rounds": 3,
+				"termination_accuracy": 0.9,
+				"max_timeout": 60
+			},
+			"local": {
+				"training": {
+					"epochs": 3
+				}
+			}
+		}
+	},
+	{	"model_identifier": "pfnm_pytorch",
+		"hyperparams": {
+			"global": {
+				"rounds": 3,
+				"termination_accuracy": 0.9,
+				"max_timeout": 60
+			},
+			"local": {
+				"training": {
+					"epochs": 3,
+					"lr": 1
+				},
+				"optimizer": "optim.Adadelta"
+			}
+		}
+	},
+	{	"model_identifier": "pfnm_tf",
+		"hyperparams": {
+			"global": {
+				"rounds": 3,
+				"termination_accuracy": 0.9,
+				"max_timeout": 60
+			},
+			"local": {
+				"training": {
+					"epochs": 3
+				}
+			}
+		}
+	},
+	{
+		"model_identifier": "prej_remover_None",
+		"hyperparams": {
+			"global": {
+				"rounds": 3,
+				"termination_accuracy": 0.9
+			},
+			"local": {
+				"training": {
+					"max_iter": 2
+				}
+			}
+		}
+	},
+	{
+		"model_identifier":  "shuffle_iter_avg_keras",
+		"hyperparams": {
+			"global": {
+                "rounds": 3,
+                "termination_accuracy": 0.9,
+                "max_timeout": 60
+            },
+			"local": {
+				"training": {
+					"epochs": 3
+				}
+			}
+		}
+	},
+	{
+		"model_identifier":  "shuffle_iter_avg_pytorch",
+		"hyperparams": {
+			"global": {
+                "rounds": 3,
+                "termination_accuracy": 0.9,
+                "max_timeout": 60
+            },
+			"local": {
+				"training": {
+					"epochs": 3,
+					"lr": 1
+				},
+				"optimizer": "optim.Adadelta"
+			}
+		}
+	},
+	{
+		"model_identifier":  "shuffle_iter_avg_sklearn",
+		"hyperparams": {
+			"global": {
+                "rounds": 3,
+                "termination_accuracy": 0.9,
+                "max_timeout": 60
+            },
+			"local": {
+				"training": {
+					"max_iter": 2
+				}
+			}
+		}
+	},
+	{
+		"model_identifier":  "shuffle_iter_avg_tf",
+		"hyperparams": {
+			"global": {
+                "rounds": 3,
+                "termination_accuracy": 0.9,
+                "max_timeout": 60
+            },
+			"local": {
+				"training": {
+					"epochs": 3
+				}
+			}
+		}
+
+	},
+	{	"model_identifier": "sklearn_logclassification_globalrw_sklearn",
+		"hyperparams": {
+			"global": {
+				"rounds": 3,
+				"termination_accuracy": 0.9
+			},
+			"local": {
+				"training": {
+					"max_iter": 2
+				}
+			}
+		}
+	},
+	{	"model_identifier": "sklearn_logclassification_rw_sklearn",
+		"hyperparams": {
+			"global": {
+				"rounds": 3,
+				"termination_accuracy": 0.9
+			},
+			"local": {
+				"training": {
+					"max_iter": 2
+				}
+			}
+		}
+	},
+	{	"model_identifier": "spahm_sklearn",
+		"hyperparams": {
+			"global": {
+				"rounds": 1,
+				"iters": 50,
+				"optimize_hyperparams": true
+			},
+			"local": {
+				"training": {
+					"max_iter": 500,
+					"n_clusters": 10
+				}
+			}
+		}
+	},
+	{	"model_identifier": "xgboost_None",
+		"hyperparams": {
+			"global": {
+				"learning_rate": 0.1,
+				"loss": "binary_crossentropy",
+				"max_bins": 255,
+				"max_depth": null,
+				"max_iter": 50,
+				"n_iter_no_change": 1,
+				"scoring": "loss",
+				"tol": 1e-7,
+				"validation_fraction": null,
+				"verbose": true
+			}
+		}
+	},
+	{	"model_identifier": "zeno_keras",
+		"hyperparams": {
+			"global": {
+				"rounds": 3,
+				"termination_accuracy": 0.9,
+				"max_timeout": 60
+			},
+			"local": {
+				"training": {
+					"epochs": 3
+				}
+			}
+		}
+	},
+	{	"model_identifier": "zeno_pytorch",
+		"hyperparams": {
+			"global": {
+				"rounds": 3,
+				"termination_accuracy": 0.9,
+				"max_timeout": 60
+			},
+			"local": {
+				"training": {
+					"epochs": 3,
+					"lr": 1
+				},
+				"optimizer": "optim.Adadelta"
+			}
+		}
+	},
+	{	"model_identifier": "zeno_tf",
+		"hyperparams": {
+			"global": {
+				"rounds": 3,
+				"termination_accuracy": 0.9,
+				"max_timeout": 60
+			},
+			"local": {
+				"training": {
+					"epochs": 3
+				}
+			}
+		}
+	}
+]

@@ -10,16 +10,13 @@ def get_hyperparams():
     local_params = {
         'training': {
             'epochs': 3
-        },
-        'optimizer': {
-            'lr': 0.01
         }
     }
     
     return local_params
 
-def get_model_config(folder_configs, dataset, is_agg=False, party_id=0):
 
+def get_model_config(folder_configs, dataset, is_agg=False, party_id=0):
     num_classes = 10
     img_rows, img_cols = 28, 28
     if K.image_data_format() == 'channels_first':

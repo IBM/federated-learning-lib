@@ -14,7 +14,7 @@ def get_fusion_config():
     return fusion
 
 
-def get_local_training_config():
+def get_local_training_config(configs_folder=None):
     local_training_handler = {
         'name': 'LocalTrainingHandler',
         'path': 'ibmfl.party.training.local_training_handler'
@@ -42,7 +42,7 @@ def get_hyperparams(model='sklearn'):
 
 def get_data_handler_config(party_id, dataset, folder_data, is_agg=False, model='sklearn'):
 
-    SUPPORTED_DATASETS = ['federated-clustering']
+    SUPPORTED_DATASETS = ['federated-clustering', 'custom_dataset']
     if dataset in SUPPORTED_DATASETS:
         data = datahandlers.get_datahandler_config(
             dataset, folder_data, party_id, is_agg)

@@ -2,8 +2,8 @@ FROM centos/python-36-centos7:latest
 USER root
 RUN ls
 
-WORKDIR /app
-COPY . /app
+WORKDIR /FL
+COPY . /FL
 
 RUN pip3 install --upgrade pip
 RUN pip3 install --upgrade setuptools

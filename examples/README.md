@@ -3,10 +3,13 @@
 ### Training Keras, TensorFlow 2.1 and PyTorch models with different fusion algorithms:
 * [Running federated averaging (FedAvg)](fedavg)
 * [Simple average](iter_avg)
-* [FedPlus with Keras](fedplus)
+* [Shuffle iterative average](shuffle_iter_avg)
+* [FedAvgPlus with Tensorflow and PyTorch](fedavgplus)
 * [Gradient aggregation](gradient_aggregation)
 * [PFNM with Keras](pfnm)
-* [Coordinate median with Keras](coordinate_median)
+* [Coordinate median](coordinate_median)
+* [Coordinate median plus](coordinate_median_plus)
+* [Geometric median plus](geometric_median_plus)
 * [Krum with Keras](krum)
 * [Zeno with Keras](zeno)
 

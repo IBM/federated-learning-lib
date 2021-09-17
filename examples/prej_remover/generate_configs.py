@@ -8,7 +8,7 @@ def get_fusion_config():
     return fusion
 
 
-def get_local_training_config():
+def get_local_training_config(configs_folder=None):
     local_training_handler = {
         'name': 'PRLocalTrainingHandler',
         'path': 'ibmfl.party.training.pr_local_training_handler'
@@ -33,7 +33,7 @@ def get_hyperparams(model):
 
 def get_data_handler_config(party_id, dataset, folder_data, is_agg=False, model='None'):
 
-    SUPPORTED_DATASETS = ['adult', 'compas']
+    SUPPORTED_DATASETS = ['adult', 'compas', 'custom_dataset']
 
     if dataset in SUPPORTED_DATASETS:
         if dataset == 'adult':

@@ -1,7 +1,0 @@
-fusion_identifier, fusion_algo, dataset, model_spec_name, fl_model, model_ui
-coordinate_median, Coordinate-wise Median, mnist, keras-cnn, KerasFLModel, Keras
-fedavg, Federated Averaging, mnist, keras-cnn, KerasFLModel, Keras
-gradient_aggregation, Gradient Averaging, mnist, keras-cnn, KerasFLModel, Keras
-iter_avg, Iterative Averaging, mnist, keras-cnn, KerasFLModel, Keras
-krum, Krum, mnist, keras-cnn, KerasFLModel, Keras
-pfnm, Probabilistic Federated Neural Matching, mnist, keras-fc, KerasFLModel, Keras

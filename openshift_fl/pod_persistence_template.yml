@@ -1,0 +1,31 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: {}
+  labels:
+    app: {}
+spec:
+  containers:
+    - name: ibmfl
+      image: image-registry.openshift-image-registry.svc:5000/{}/{}
+      volumeMounts:
+        - name: datasets-storage
+          mountPath: {}
+      resources:
+        limits:
+          cpu: "{}"
+          memory: "{}"
+        requests:
+          cpu: "0.5"
+          memory: "2Gi"
+      ports:
+        - name: ibmfl
+          containerPort: 80
+          protocol: TCP
+      command: {}
+  volumes:
+    - name: datasets-storage
+      persistentVolumeClaim:
+                  claimName: {}
+
+

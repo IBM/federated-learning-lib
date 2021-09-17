@@ -1,0 +1,11 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: {}
+spec:
+  to:
+    kind: Service
+    name: {}
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect

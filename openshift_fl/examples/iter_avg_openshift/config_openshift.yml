@@ -1,0 +1,23 @@
+cluster:
+  agg_pod:
+      cpu: 2
+      memory: 3Gi
+  party_pod:
+      cpu: 2
+      memory: 4Gi
+  kube_config_location: [Path to Kube Config File]
+experiments:
+  default:
+    exec_mode: seq
+    image_name: ibmfl:latest
+    commands:
+      aggregator: ['START', 'TRAIN', 'EVAL', 'STOP']
+  experiment_list:
+    - staging_dir: absolute staging dir path where keras experiment config and mnist data files are stored>
+      name: kerasexp
+      num_trials: 1
+      cluster_list:
+        - context_name: <Context Name of OpenShift Cluster defined in the Kube Config file>
+          namespace: <Namespace of OpenShift Cluster defined in the Kube Config file>
+      data:
+        pvc_name: <PVC Claim Name for COS Bucket>

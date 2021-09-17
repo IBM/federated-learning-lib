@@ -1,0 +1,25 @@
+cluster:
+  agg_pod:
+      cpu: 2
+      memory: 3Gi
+  party_pod:
+      cpu: 2
+      memory: 4Gi
+  kube_config_location: /demo/kubeconfig
+experiments:
+  default:
+    exec_mode: seq
+    image_name: ibmfl:latest
+    commands:
+      aggregator: ['START', 'TRAIN', 'SAVE','EVAL','STOP']
+  experiment_list:
+      - staging_dir: /demo/testexp1
+        name: testexp1
+        num_trials: 1
+        cluster_list:
+          - context_name: 'demo-cluster1'
+            namespace: 'demo-namespace1'
+          - context_name: 'demo-cluster2'
+            namespace: 'demo-namespace2'
+        data:
+          pvc_name: ibmfl-datasets-pvc

@@ -1,0 +1,46 @@
+fusion_identifier, fusion_algo, dataset, model_spec_name, fl_model, model_ui
+coordinate_median, Coordinate-wise Median, mnist, keras-cnn, KerasFLModel, Keras
+coordinate_median, Coordinate-wise Median, mnist, pytorch-nn, PytorchFLModel, PyTorch
+coordinate_median, Coordinate-wise Median, mnist,, SklearnSGDFLModel, Scikit-learn
+coordinate_median, Coordinate-wise Median, mnist,tf-cnn, TensorFlowFLModel, TensorFlow
+coordinate_median_plus, CoordinateMedian+, mnist, tf-cnn, TensorFlowModel, TensorFlow
+differential_privacy_sgd, Differentially Private SGD, mnist, keras-dpcnn, KerasDPModel, Keras
+fedavg, Federated Averaging, mnist, keras-cnn, KerasFLModel, Keras
+fedavg, Federated Averaging, mnist, pytorch-nn, PytorchFLModel, PyTorch
+fedavg, Federated Averaging, mnist,, SklearnSGDFLModel, Scikit-learn
+fedavg, Federated Averaging, mnist, tf-cnn, TensorFlowFLModel, TensorFlow
+fedavgplus, FedAvg+, mnist, tf-cnn, TensorFlowFLModel, TensorFlow
+fedprox, FedProx, mnist, tf-cnn, TensorFlowFLModel, TensorFlow
+geometric_median_plus, GeometricMedian+, mnist, tf-cnn, TensorFlowModel, TensorFlow
+gradient_aggregation, Gradient Averaging, mnist, keras-cnn, KerasFLModel, Keras
+gradient_aggregation, Gradient Averaging, mnist, pytorch-nn, PytorchFLModel, PyTorch
+gradient_aggregation, Gradient Averaging, mnist, tf-cnn, TensorFlowFLModel, TensorFlow
+iter_avg, Iterative Averaging, mnist, keras-cnn, KerasFLModel, Keras
+iter_avg, Iterative Averaging, mnist, pytorch-nn, PytorchFLModel, PyTorch
+iter_avg, Iterative Averaging, mnist, tf-cnn, TensorFlowFLModel, TensorFlow
+iter_avg, Iterative Averaging, mnist, , SklearnSGDFLModel, Scikit-learn
+iter_avg, Iterative Averaging, adult,, SklearnSGDFLModel, Scikit-learn
+iter_avg, Iterative Averaging, cifar10, keras-cnn-cifar10, KerasFLModel, Keras
+iter_avg, Iterative Averaging, femnist, keras-cnn, KerasFLModel, Keras
+krum, Krum, mnist, keras-cnn, KerasFLModel, Keras
+krum, Krum, mnist, pytorch-nn, PytorchFLModel, PyTorch
+krum, Krum, mnist, tf-cnn, TensorFlowFLModel, TensorFlow
+pfnm, Probabilistic Federated Neural Matching, mnist, keras-fc, KerasFLModel, Keras
+pfnm, Probabilistic Federated Neural Matching, mnist, pytorch-nn, PytorchFLModel, PyTorch
+shuffle_iter_avg, Shuffled Iterative Avg, mnist, keras-cnn, KerasFLModel, Keras
+shuffle_iter_avg, Shuffled Iterative Avg, mnist, pytorch-nn, PytorchFLModel, PyTorch
+shuffle_iter_avg, Shuffled Iterative Avg, mnist,, SklearnSGDFLModel, Scikit-learn
+shuffle_iter_avg, Shuffled Iterative Avg, mnist, tf-cnn, TensorFlowFLModel, TensorFlow
+shuffle_iter_avg, Shuffled Iterative Avg, adult,, SKlearnSGDFLModel, Scikit-learn
+shuffle_iter_avg, Shuffled Iterative Avg, cifar10, keras-cnn-cifar10, KerasFLModel, Keras
+shuffle_iter_avg, Shuffled Iterative Avg, femnist, keras-cnn, KerasFLModel, Keras
+sklearn_logclassification_globalrw,Logistic Classification with Global Reweighing, adult,, SklearnSGDFLModel, Scikit-learn
+sklearn_logclassification_globalrw,Logistic Classification with Global Reweighing, compas,, SklearnSGDFLModel, Scikit-learn
+sklearn_logclassification_globalrw,Logistic Classification with Global Reweighing, german,, SklearnSGDFLModel, Scikit-learn
+sklearn_logclassification_rw,Logistic Classification with Local Reweighing, adult,, SklearnSGDFLModel, Scikit-learn
+sklearn_logclassification_rw,Logistic Classification with Local Reweighing, compas,, SklearnSGDFLModel, Scikit-learn
+sklearn_logclassification_rw,Logistic Classification with Local Reweighing, german,, SklearnSGDFLModel, Scikit-learn
+spahm,SPAHM, federated-clustering,, SklearnKMeansFLModel, Scikit-learn
+zeno,Zeno, mnist, keras-cnn, KerasFLModel, Keras
+zeno,Zeno, mnist, pytorch-nn, PytorchFLModel, PyTorch
+zeno,Zeno, mnist, tf-cnn,TensorFlowFLModel, TensorFlow

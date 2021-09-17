@@ -36,8 +36,8 @@ For a particular ML model, you can select multiple types of fusion algorithms:
 |                                     | Coordinate-wise median [Yin et al.](https://arxiv.org/pdf/1803.01498.pdf) |
 |                                     | Zeno [Xie et al.](https://arxiv.org/abs/1805.10032)  |
 |                                     | SPAHM [Yurochkin et al.](https://arxiv.org/abs/1911.00218) |
-|                                     | Fed+ [Yu et al.](https://arxiv.org/abs/2009.06303) |     
-|                                     | FedProx: [Tian Li et al.](https://arxiv.org/pdf/1812.06127.pdf). |
+|                                     | Fed+ [Yu et al.](https://arxiv.org/abs/2009.06303) |
+|                                     | Shuffle Iterative Average [Cheng et al.](https://arxiv.org/pdf/2105.09400.pdf)|                                                    
 | ID3 Decision Tree	                  |	ID3 fusion  [Quinlan](https://link.springer.com/article/10.1007/BF00116251)             |
 |	Reinforcement Learning RLLib models	|	Iterative Average        |
 |                                     |	FedAvg [McMahan et al.](https://arxiv.org/pdf/1602.05629.pdf)  |
@@ -45,16 +45,9 @@ For a particular ML model, you can select multiple types of fusion algorithms:
 |K-means | SPAHM [Yurochkin et al.](https://arxiv.org/abs/1911.00218) |
 |Naïve Bayes | Naive Bayes fusion with differential privacy|
 
-We also support the following fairness techniques that help to mitigate bias in federated learning and can be coupled for multiple types of ML models: 
+In order to aid orchestration of Federated Learning experiments using the IBMFL library, we also provide a Jupyter Notebook based UI interface, [Experiment Manager Dashboard](experiment_manager/Experiment_Manager_dashboard.ipynb) where users can choose the model, fusion algorithm, number of parties and other (hyper) parameters for a run. This orchestration can be done on the machine where the notebook is hosted, i.e., locally or even across remote machines. The usage guide on how to go about using the dashboard can be found [here](experiment_manager/usage_guide.md).
 
-| *Fairness techniques*   | *Algorithm types* | *Supported ML models* | 
-|-------------------------|-------------------|-------------------------|
-| Local Reweighing [Abay et al.](https://arxiv.org/abs/2012.02447)| Pre-processing | All ML models |
-| Global Reweighing with Differetial Privacy [Abay et al.](https://arxiv.org/abs/2012.02447)| Pre-processing | All ML models |
-| Federated Prejudice Removal [Abay et al.](https://arxiv.org/abs/2012.02447) | In-processing | Logistic Regression |
-
-In order to aid orchestration of Federated Learning experiments using the IBMFL library, we also provide a Jupyter Notebook based UI interface, [Experiment Manager Dashboard](runner/exp_manager/Experiment_Manager_dashboard.ipynb) where users can choose the model, fusion algorithm, number of parties and other (hyper) parameters for a run. This orchestration can be done on the machine where the notebook is hosted, i.e., locally or even across remote machines. As of now, only limited models and datasets are supported, but more will be added in the near future.
-The dashboard uses a [runner](runner/) module, and there's a [usage guide](runner/exp_manager/usage_guide.md) on how to go about using the dashboard.
+IBMFL Multi-Cloud and Hybrid Cloud Orchestrator automates the deployment and monitoring of aggregator and party process using federated learning library docker image on OpenShift clusters which are setup on different cloud data center regions. For more information on how to use OpenShift Orchestrator please refer to [README](openshift_fl/README.md).
 
 ## How to get started?
 
@@ -63,6 +56,10 @@ Clone the repository. The main framework runtime is packaged in a [whl file](fed
 Try the [set-up guide](setup.md) for a single-node federated learning setup. 
 
 There are a number of [examples](examples/README.md) with explanation for different federated learning tasks with different model types to get started with.
+
+Try our experiment manager [here](experiment_manager). 
+
+Try IBM FL with OpenShift [here](openshift_fl).
 
 ## How does it work?
 
@@ -78,7 +75,7 @@ There is a [docs folder](./docs) with tutorials and API documentation to learn h
 
 We appreciate feedback and questions. Please post issues when you encounter them. 
 
-We have set up a Slack channel for ongoing discussion. Join the IBM federated learning workspace: https://ibm-fl.slack.com/
+We have set up a Slack channel for ongoing discussion. Join the IBM federated learning workspace: https://ibm-fl.slack.com/. If the previous link does not work for you, you can also use [this invitation link](https://join.slack.com/t/ibm-fl/shared_invite/zt-ff0k1xgh-IL9Aq6sW6rNny9gDdnEttQ).
 
 
 ## Citing IBM Federated Learning

@@ -16,7 +16,6 @@ def get_hyperparams():
 
 
 def get_model_config(folder_configs, dataset, is_agg=False, party_id=0):
-
     model = nn.Sequential(nn.Conv2d(1, 32, 3, 1),
                           nn.ReLU(),
                           nn.Conv2d(32, 64, 3, 1),
