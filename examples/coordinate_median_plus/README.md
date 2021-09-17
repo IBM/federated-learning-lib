@@ -14,9 +14,6 @@ No other preprocessing is performed.
 
 ## Setup FL
 
-## Setup FL
-
-
 - Split data by running:
 
     ```

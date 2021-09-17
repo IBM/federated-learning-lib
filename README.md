@@ -37,6 +37,7 @@ For a particular ML model, you can select multiple types of fusion algorithms:
 |                                     | Zeno [Xie et al.](https://arxiv.org/abs/1805.10032)  |
 |                                     | SPAHM [Yurochkin et al.](https://arxiv.org/abs/1911.00218) |
 |                                     | Fed+ [Yu et al.](https://arxiv.org/abs/2009.06303) |
+|                                     | FedProx: [Tian Li et al.](https://arxiv.org/pdf/1812.06127.pdf) |
 |                                     | Shuffle Iterative Average [Cheng et al.](https://arxiv.org/pdf/2105.09400.pdf)|                                                    
 | ID3 Decision Tree	                  |	ID3 fusion  [Quinlan](https://link.springer.com/article/10.1007/BF00116251)             |
 |	Reinforcement Learning RLLib models	|	Iterative Average        |
@@ -44,6 +45,14 @@ For a particular ML model, you can select multiple types of fusion algorithms:
 |Linear classifiers with SGD | Iterative Average |
 |K-means | SPAHM [Yurochkin et al.](https://arxiv.org/abs/1911.00218) |
 |Naïve Bayes | Naive Bayes fusion with differential privacy|
+
+We also support the following fairness techniques that help to mitigate bias in federated learning and can be coupled for multiple types of ML models: 
+
+| *Fairness techniques*   | *Algorithm types* | *Supported ML models* | 
+|-------------------------|-------------------|-------------------------|
+| Local Reweighing [Abay et al.](https://arxiv.org/abs/2012.02447)| Pre-processing | All ML models |
+| Global Reweighing with Differetial Privacy [Abay et al.](https://arxiv.org/abs/2012.02447)| Pre-processing | All ML models |
+| Federated Prejudice Removal [Abay et al.](https://arxiv.org/abs/2012.02447) | In-processing | Logistic Regression |
 
 In order to aid orchestration of Federated Learning experiments using the IBMFL library, we also provide a Jupyter Notebook based UI interface, [Experiment Manager Dashboard](experiment_manager/Experiment_Manager_dashboard.ipynb) where users can choose the model, fusion algorithm, number of parties and other (hyper) parameters for a run. This orchestration can be done on the machine where the notebook is hosted, i.e., locally or even across remote machines. The usage guide on how to go about using the dashboard can be found [here](experiment_manager/usage_guide.md).
 
