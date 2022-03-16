@@ -36,7 +36,8 @@ For a particular ML model, you can select multiple types of fusion algorithms:
 |                                     | Coordinate-wise median [Yin et al.](https://arxiv.org/pdf/1803.01498.pdf) |
 |                                     | Zeno [Xie et al.](https://arxiv.org/abs/1805.10032)  |
 |                                     | SPAHM [Yurochkin et al.](https://arxiv.org/abs/1911.00218) |
-|                                     | Fed+ [Yu et al.](https://arxiv.org/abs/2009.06303) |                                     | FedProx: [Tian Li et al.](https://arxiv.org/pdf/1812.06127.pdf) |
+|                                     | Fed+ [Yu et al.](https://arxiv.org/abs/2009.06303) | 
+|                                    | FedProx: [Tian Li et al.](https://arxiv.org/pdf/1812.06127.pdf) |
 |                                     | Shuffle Iterative Average [Cheng et al.](https://arxiv.org/pdf/2105.09400.pdf)| 
 |                                     | Comparative elimination [Gupta et al.](https://arxiv.org/abs/2108.11769) |                                                   
 | ID3 Decision Tree	                  |	ID3 fusion  [Quinlan](https://link.springer.com/article/10.1007/BF00116251)             |
