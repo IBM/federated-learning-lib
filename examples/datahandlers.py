@@ -150,14 +150,6 @@ def get_datahandler_config(dh_name, folder_data, party_id, is_agg):
             }
         }
         if is_agg:
-            # if os.path.exists(os.path.join(staging_dir, "datasets", "adult.data")):
-            #     data['info'] = {
-            #         'txt_file': os.path.join(staging_dir, "datasets", "adult.data")
-            #     }
-            # else:
-            #     data['info'] = {
-            #         'txt_file': os.path.join("examples", "datasets", "adult.data")
-            #     }
             return None
 
     elif dh_name == 'adult_sklearn_grw':
@@ -452,5 +444,18 @@ def get_datahandler_config(dh_name, folder_data, party_id, is_agg):
         }
         if is_agg:
             data['info'] = {}
+
+    elif dh_name == 'wikipedia':
+        data = {
+            'name': 'WikipediaDoc2VecDataHandler',
+            'path': 'ibmfl.util.data_handlers.wikipedia_doc2vec_data_handler',
+            'info': {
+                'pickled_file': os.path.join(folder_data, 'data_party' + str(party_id) + '.pickle')
+            }
+        }
+        if is_agg:
+            data['info'] = {
+                'pickled_file': os.path.join("examples", "datasets", "wikipedia.pickle")
+            }
 
     return data

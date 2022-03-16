@@ -90,14 +90,50 @@ You must also specify the party data path via `-p`.
 
 Run `python examples/generate_configs.py -h` for full descriptions of the different options.
 
-If the RabbitMQ connection is available, ensure that the environment variable `IBMFL_BROKER` is available and use the `-c` option with the `generate_configs.py` script, e.g. `-c rabbitmq`.
+#### Using IBM Cloud interoperability (PubSub Plugin)
 
-The IBMFL_BROKER variable takes the following form:
+A more sophisticated communications mechanism between parties and the aggregator is also available. This is called the PubSub plugin, which is based on the publish/subscribe design pattern. It uses a service broker, which is an IBM Cloud hosted instance of RabbitMQ, backed by a number of cloud micro-services. The purpose of this is to provide a more secure and privacy aware mechanism for running a federated learning task, whereby no party or the aggregator is required to present a service or listen on an open port.
 
-`"{'aggregator': {'name': '', 'password': ''}, 'party0' : {'name': '', 'password': ''}, ..., 'partyn': {'name': '', 'password': ''}, 'rabbit' : {from the IBM team}}"`
+As the service broker is running on IBM Cloud, a user account for the broker is required for the aggregator and each party. You can create accounts as follows:
 
-The aggregator field is only used when in aggregator mode, and the party0...n fields for the appropriate party.
+```
+python examples/pubsub_register.py --credentials=<CLOUDCREDENTIALS> --user=<AGGREGATOR USER> --password=<PASSWORD> > aggregator.json
+python examples/pubsub_register.py --credentials=<CLOUDCREDENTIALS> --user=<PARTY 0> --password=<PASSWORD> > party0.json
+python examples/pubsub_register.py --credentials=<CLOUDCREDENTIALS> --user=<PARTY N> --password=<PASSWORD> > partyn.json
+```
 
+In these examples, the output of the registration process is saved to a new json file. In these files there will be specific credentials for each party/aggregator to use during federated learning.
+
+The <CLOUDCREDENTIALS> parameter should be a file with the following contents:
+
+```
+{
+        "register_url": "https://service.eu-de.apiconnect.ibmcloud.com/gws/apigateway/api/682af43631cf55f6fc1787d3cfbe75c26e2d9d53a335c655856cb3f4f499ae68/register/user",
+        "register_api_key": "c340dfdc-4967-4071-aee5-c49a722a168a"
+}
+```
+
+It is also possible to deregister a created account:
+
+```
+python examples/pubsub_deregister.py --credentials=aggregator.json
+```
+
+The PubSub plugin operates on the basis that a Federated Learning task exists. This task can be created as follows:
+
+```
+python examples/pubsub_task.py --credentials=aggregator.json --task_name=<TASK NAME>
+```
+
+Note: the user account that creates the federated learning task should be the aggregator.
+
+Now that the correct number of broker user accounts are created and we have a task created, we can generate the configs to use the PubSub plugin:
+
+```
+python examples/generate_configs.py -f iter_avg -m tf -n 2 -d mnist -p examples/data/mnist/random -c pubsub -t <TASK NAME>
+```
+
+Note: The config generation for the PubSub plugin assumes the credentials json file names above, i.e. aggregator.json, party0.json etc.
 
 ## Initiate Learning
 

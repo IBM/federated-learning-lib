@@ -10,7 +10,6 @@ def get_hyperparams():
             'lr': 0.001,
             'batch_size': 32
         },
-        'optimizer': 'optim.Adam'
     }
 
     return local_params
@@ -38,9 +37,20 @@ def get_model_config(folder_configs, dataset, is_agg=False, party_id=0):
     # Save model
     fname = os.path.join(folder_configs, 'pytorch_sequence.pt')
     torch.save(model, fname)
+
+    # Specify an optimizer class as optim.<optimizer> 
+    # The entire expression should be of type string
+    # e.g., optimizer = 'optim.SGD'
+    optimizer = 'optim.Adadelta'
+    # Specify a loss criterion as nn.<loss-criterion>
+    # The entire expression should be of type string
+    # e.g., criterion = 'nn.NLLLoss'
+    criterion = 'nn.NLLLoss'
     spec = {
         'model_name': 'pytorch-nn',
-        'model_definition': fname
+        'model_definition': fname,
+        'optimizer': optimizer,
+        'loss_criterion': criterion,
     }
     model = {
         'name': 'PytorchFLModel',

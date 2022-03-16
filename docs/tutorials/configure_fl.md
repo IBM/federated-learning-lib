@@ -23,7 +23,7 @@ A *Local Training Handler* sits at each party to control the local training happ
 The aggregator and parties communicate through flask-based servers. 
 All messages and communication are handled by protocol handler and connection modules. 
 
-<img src="../assets/images/architecture.jpeg">
+<img src="../assets/images/architecture.png">
 
 IBM FL has built-in algorithms to train different types of machine learning models, 
 e.g., neural networks, linear models and decision tree, in a federated learning fashion. 

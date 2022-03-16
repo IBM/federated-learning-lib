@@ -6,6 +6,8 @@ import time
 import argparse
 import numpy as np
 import pandas as pd
+import pickle
+from random import shuffle
 
 fl_path = os.path.abspath('.')
 if fl_path not in sys.path:
@@ -13,7 +15,7 @@ if fl_path not in sys.path:
 
 from ibmfl.util.datasets import load_nursery, load_mnist, load_adult, load_compas, load_german, \
     load_higgs, load_airline, load_diabetes, load_binovf, load_multovf, load_linovf, \
-    load_simulated_federated_clustering, load_leaf_femnist, load_cifar10
+    load_simulated_federated_clustering, load_leaf_femnist, load_cifar10, load_wikipedia
 from examples.constants import GENERATE_DATA_DESC, NUM_PARTIES_DESC, DATASET_DESC, PATH_DESC, PER_PARTY, \
     STRATIFY_DESC, FL_DATASETS, NEW_DESC, PER_PARTY_ERR, NAME_DESC
 
@@ -861,6 +863,44 @@ def save_party_data(nb_dp_per_party, should_stratify, party_folder, dataset_fold
 
     print('Finished! :) Data saved in', party_folder)
 
+
+def save_wikipedia_party_data(nb_dp_per_party, party_folder, dataset_folder):
+    """
+    Saves Wikipedia party data for Doc2Vec
+
+    :param nb_dp_per_party: the number of data points each party should have
+    :type nb_dp_per_party: `list[int]`
+    :param party_folder: folder to save party data
+    :type party_folder: `str`
+    :param dataset_folder: folder to save dataset
+    :type dataset_folder: `str`
+    """
+    if not os.path.exists(dataset_folder):
+        os.makedirs(dataset_folder)
+
+    total_samples = 0
+    for num_samples in nb_dp_per_party:
+        total_samples += num_samples
+
+    x = load_wikipedia(total_samples)
+    shuffle(x)
+
+    start_index = 0
+    for i, dp in enumerate(nb_dp_per_party):
+        end_index = start_index + dp
+        party_sample = x[start_index: end_index]
+
+        name_file = 'data_party' + str(i) + '.pickle'
+        name_file = os.path.join(party_folder, name_file)
+
+        with open(name_file, 'wb') as file:
+            pickle.dump(party_sample, file)
+
+        start_index = end_index
+
+    print('Finished! :) Data saved in', party_folder)
+
+
 if __name__ == '__main__':
     # Parse command line options
     parser = setup_parser()
@@ -944,6 +984,8 @@ if __name__ == '__main__':
         save_femnist_party_data(points_per_party, stratify, folder_party_data, folder_dataset)
     elif dataset == 'cifar10':
         save_cifar10_party_data(points_per_party, stratify, folder_party_data, folder_dataset)
+    elif dataset == 'wikipedia':
+        save_wikipedia_party_data(points_per_party, folder_party_data, folder_dataset)
     else:
         print("Loading a non-default dataset, redircting to general data split method...")
         save_party_data(points_per_party, stratify, folder_party_data, folder_dataset, dataset)

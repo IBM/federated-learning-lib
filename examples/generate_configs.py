@@ -62,7 +62,7 @@ def setup_parser():
     return p
 
 
-def generate_connection_config(conn_type, party_id=0, is_party=False, task_name = None):
+def generate_connection_config(conn_type, party_id=0, is_party=False, task_name=None):
     connection = {}
 
     if conn_type == 'flask':
@@ -85,39 +85,21 @@ def generate_connection_config(conn_type, party_id=0, is_party=False, task_name 
                 'port': 5000
             }
         connection['info']['tls_config'] = tls_config
-    if conn_type == 'rabbitmq':
-        credentials = os.environ.get('IBMFL_BROKER')
-        if not credentials:
-            raise Exception("IBMFL_BROKER: environment variable not available.")
-
-        credentials = yaml.load(credentials)
-        if 'rabbit' in credentials:
-            with open('ibmfl_broker_connection.json', 'w') as creds:
-                creds.write(json.dumps(credentials['rabbit']))
-
+    if conn_type == 'pubsub':
         connection = {
             'name': 'RabbitMQConnection',
             'path': 'ibmfl.connection.rabbitmq_connection',
             'sync': True
         }
         if is_party:
-            party = credentials[f'party{party_id}']['name']
-            password = credentials[f'party{party_id}']['password']
             connection['info'] = {
-                'credentials': 'ibmfl_broker_connection.json',
-                'user': party,
-                'password': password,
+                'credentials': f'party{party_id}.json',
                 'role': 'party',
                 'task_name': task_name
             }
-
         else:
-            aggregator = credentials['aggregator']['name']
-            password = credentials['aggregator']['password']
             connection['info'] = {
-                'credentials': 'ibmfl_broker_connection.json',
-                'user': aggregator,
-                'password': password,
+                'credentials': 'aggregator.json',
                 'role': 'aggregator',
                 'task_name': task_name
             }
@@ -146,6 +128,14 @@ def get_privacy():
     return privacy
 
 
+# def get_mh():
+#     metrics = {
+#         'name': 'FileCheckpointHandler',
+#         'path': 'ibmfl.aggregator.metric_service'
+#     }
+#     return metrics
+
+
 def generate_ph_config(conn_type, is_party=False):
     if is_party:
         protocol_handler = {
@@ -157,7 +147,7 @@ def generate_ph_config(conn_type, is_party=False):
             'name': 'ProtoHandler',
             'path': 'ibmfl.aggregator.protohandler.proto_handler'
         }
-    if conn_type == 'rabbitmq':
+    if conn_type == 'pubsub':
         protocol_handler['name'] += 'RabbitMQ'
     return protocol_handler
 
@@ -182,9 +172,10 @@ def generate_model_config(module, model, folder_configs, dataset, is_agg=False, 
     return model
 
 
-def generate_lt_config(module, folder_configs=None, party_id=None):
+def generate_lt_config(module, folder_configs=None):
     get_local_training_config = getattr(module, 'get_local_training_config')
-    lt = get_local_training_config(folder_configs)
+    lt = get_local_training_config(configs_folder=folder_configs)
+
     return lt
 
 
@@ -196,8 +187,8 @@ def generate_datahandler_config(module, model, party_id, dataset, folder_data, i
     return dh
 
 
-def generate_agg_config(module, model, num_parties, conn_type,
-                        dataset, folder_data, folder_configs, task_name = None):
+def generate_agg_config(module, model, num_parties, conn_type,  dataset,
+                        folder_data, folder_configs, task_name=None):
 
     if not os.path.exists(folder_configs):
         os.makedirs(folder_configs)
@@ -224,8 +215,8 @@ def generate_agg_config(module, model, num_parties, conn_type,
           os.path.abspath(os.path.join(folder_configs, 'config_agg.yml')))
 
 
-def generate_party_config(module, model, num_parties, conn_type, 
-                                    dataset, folder_data, folder_configs, task_name = None):
+def generate_party_config(module, model, num_parties, conn_type, dataset,
+                          folder_data, folder_configs, task_name=None):
 
     for i in range(num_parties):
         config_file = os.path.join(
@@ -236,12 +227,10 @@ def generate_party_config(module, model, num_parties, conn_type,
             'data': generate_datahandler_config(module, model, i, dataset, folder_data),
             'model': generate_model_config(module, model, folder_configs, dataset, party_id=i),
             'protocol_handler': generate_ph_config(conn_type, True),
+            'local_training': generate_lt_config(module, folder_configs=folder_configs),
             'aggregator': get_aggregator_info(conn_type),
             'privacy': get_privacy()
         }
-
-        content['local_training'] = generate_lt_config(module=module,
-                                                           folder_configs=folder_configs, party_id=i)
 
         with open(config_file, 'w') as outfile:
             yaml.dump(content, outfile)
@@ -301,8 +290,7 @@ if __name__ == '__main__':
             sys.exit(1)
     else:
         config_fusion = import_module('examples.{}.generate_configs'.format(fusion))
-    # if crypto feature is enable generate crypto keys
-    # keys = {'keys_agg': None, 'keys_list': None}
+
     generate_agg_config(config_fusion, model, num_parties, conn_type,
                         dataset, party_data_path, folder_configs, task_name)
     generate_party_config(config_fusion, model, num_parties, conn_type,
