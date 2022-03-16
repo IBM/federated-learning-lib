@@ -17,9 +17,9 @@ GENERATE_CONFIG_DESC = "generates aggregator and party configuration files"
 PATH_CONFIG_DESC = "path to load saved config data"
 FUSION_CONFIG_DESC = "which fusion example to run"
 MODEL_CONFIG_DESC = "which model to use for fusion example"
-TASK_NAME_DESC = "task name, specified when using RabbitMQ connection"
+TASK_NAME_DESC = "task name, specified when using PubSub connection"
 
-CONNECTION_TYPE_DESC = "type of connection to use; supported types are flask and rabbitmq"
+CONNECTION_TYPE_DESC = "type of connection to use; supported types are flask and pubsub"
 
 CONTEXT_PATH = "context directory to import the generate script from different folders other that examples"
 
@@ -32,9 +32,9 @@ FL_EXAMPLES = ["iter_avg", "fedavg", "coordinate_median", "gradient_aggregation"
                 "differential_privacy_sgd", 
                 "rl_cartpole", "rl_pendulum", "sklearn_logclassification_rw", "spahm",
                 "sklearn_logclassification_globalrw", "naive_bayes_dp", "id3_dt", "prej_remover", "iter_avg_openshift", "shuffle_iter_avg",
-                "coordinate_median_plus", "geometric_median_plus"]
-FL_MODELS = ["keras", "pytorch", "tf", "sklearn", "None"]
+                "coordinate_median_plus", "geometric_median_plus", "doc2vec", "comparative_elimination"]
+FL_MODELS = ["keras", "pytorch", "tf", "sklearn", "doc2vec", "None"]
 
-FL_CONN_TYPES = ["flask", "rabbitmq"]
+FL_CONN_TYPES = ["flask", "pubsub"]
 
 FL_CONTEXT = {'openshift':'openshift_fl.examples'}

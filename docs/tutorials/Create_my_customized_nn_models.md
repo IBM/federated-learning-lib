@@ -278,9 +278,21 @@ def get_model_config(path_to_save_the_model):
     # Save model
     fname = os.path.join(path_to_save_the_model, 'pytorch_sequence.pt')
     torch.save(model, fname)
+
+    # Optional, specify an optimizer class as optim.<optimizer> 
+    # The entire expression should be of type string
+    # e.g., optimizer = 'optim.SGD'
+    optimizer = 'optim.Adam'
+    # Optional, specify a loss criterion as nn.<loss-criterion>
+    # The entire expression should be of type string
+    # e.g., criterion = 'nn.NLLLoss'
+    criterion = 'nn.NLLLoss'
+
     spec = {
         'model_name': 'pytorch-nn',
-        'model_definition': fname
+        'model_definition': fname,
+        'optimizer': optimizer,
+        'loss_criterion': criterion,
     }
     return spec
 ```

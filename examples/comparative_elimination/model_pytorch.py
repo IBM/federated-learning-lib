@@ -7,7 +7,7 @@ def get_hyperparams():
     local_params = {
         'training': {
             'epochs': 3,
-            'lr': 1
+            'lr': 0.001
         },
     }
     
@@ -46,7 +46,6 @@ def get_model_config(folder_configs, dataset, is_agg=False, party_id=0):
     # The entire expression should be of type string
     # e.g., criterion = 'nn.NLLLoss'
     criterion = 'nn.NLLLoss'
-    
     spec = {
         'model_name': 'pytorch-nn',
         'model_definition': fname,
@@ -59,3 +58,4 @@ def get_model_config(folder_configs, dataset, is_agg=False, party_id=0):
         'spec': spec,
     }
     return model
+    
