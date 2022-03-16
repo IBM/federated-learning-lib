@@ -13,10 +13,7 @@ The documentation is still growing. Here are the basics:
   * [Load large datasets via data generators](tutorials/set_up_data_generators_for_fl.md)
   * [Configure GPU training](tutorials/configure_gpu_training.md)
 
-- Playing with IBM FL via Jupyter notebooks:
-  * [Training a Keras MNIST classifier with iterative Averaging](../Notebooks/keras_mnist_classifier)
-  * [Simple example for reinforcement learning](../Notebooks/reinforcement_learning_cartpole)
-  * [Mitigating bias for a scikit-learn logistic regression model](../Notebooks/sklearn_logclassification_rw)
+- Playing with IBM FL via [Jupyter notebooks](./Notebooks):
 
 - [Configuring aggregators and parties](tutorials/configure_fl.md)
   
