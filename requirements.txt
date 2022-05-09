@@ -26,7 +26,7 @@ h5py==2.10.0
 image
 aif360
 fairlearn
-gensim
+gensim==3.8.3
 ray
 dm-tree
 GPUtil
