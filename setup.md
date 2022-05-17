@@ -127,10 +127,12 @@ python examples/pubsub_task.py --credentials=aggregator.json --task_name=<TASK N
 
 Note: the user account that creates the federated learning task should be the aggregator.
 
+If the task creation fails, it may be due to a firewall blocking access. In this case, adding a firewall rule allowing access to the `broker_host` field in the aggregator.json file should resolve this.
+
 Now that the correct number of broker user accounts are created and we have a task created, we can generate the configs to use the PubSub plugin:
 
 ```
-python examples/generate_configs.py -f iter_avg -m tf -n 2 -d mnist -p examples/data/mnist/random -c pubsub -t <TASK NAME>
+python examples/generate_configs.py -f iter_avg -m keras -n 2 -d mnist -p examples/data/mnist/random -c pubsub -t <TASK NAME>
 ```
 
 Note: The config generation for the PubSub plugin assumes the credentials json file names above, i.e. aggregator.json, party0.json etc.
@@ -170,3 +172,16 @@ To register new parties, open a new terminal window for each party, running the 
 #### Train
 
 To initiate federated training, type `TRAIN` in your aggregator terminal and press enter.
+
+
+## FL Command Reference
+
+
+| FL Command | Participant | Description |
+| :-----------: | :-----------: | :----------- |
+| `START` | aggregator / party | Start accepting connections|
+| `REGISTER` | party | Join an FL project |
+| `TRAIN` | aggregator | Initiate training process |
+| `SYNC` | aggregator | Synchronize model among parties |
+| `STOP` (coming soon) | aggregator | Pause training process |
+| `EVAL` | party | Evaluate model |
