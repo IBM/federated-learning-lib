@@ -97,21 +97,12 @@ A more sophisticated communications mechanism between parties and the aggregator
 As the service broker is running on IBM Cloud, a user account for the broker is required for the aggregator and each party. You can create accounts as follows:
 
 ```
-python examples/pubsub_register.py --credentials=<CLOUDCREDENTIALS> --user=<AGGREGATOR USER> --password=<PASSWORD> > aggregator.json
-python examples/pubsub_register.py --credentials=<CLOUDCREDENTIALS> --user=<PARTY 0> --password=<PASSWORD> > party0.json
-python examples/pubsub_register.py --credentials=<CLOUDCREDENTIALS> --user=<PARTY N> --password=<PASSWORD> > partyn.json
+python examples/pubsub_register.py --credentials=pubsub_credentials.json --user=<AGGREGATOR USER> --password=<PASSWORD> > aggregator.json
+python examples/pubsub_register.py --credentials=pubsub_credentials.json --user=<PARTY 0> --password=<PASSWORD> > party0.json
+python examples/pubsub_register.py --credentials=pubsub_credentials.json --user=<PARTY N> --password=<PASSWORD> > partyn.json
 ```
 
 In these examples, the output of the registration process is saved to a new json file. In these files there will be specific credentials for each party/aggregator to use during federated learning.
-
-The <CLOUDCREDENTIALS> parameter should be a file with the following contents:
-
-```
-{
-        "register_url": "https://service.eu-de.apiconnect.ibmcloud.com/gws/apigateway/api/682af43631cf55f6fc1787d3cfbe75c26e2d9d53a335c655856cb3f4f499ae68/register/user",
-        "register_api_key": "c340dfdc-4967-4071-aee5-c49a722a168a"
-}
-```
 
 It is also possible to deregister a created account:
 
