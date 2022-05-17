@@ -19,8 +19,6 @@ def args_parse():
 def main():
     cmdline = args_parse()
 
-    print(f"Creating user: {cmdline.user} ...")
-
     creds = fflapi.create_user(cmdline.user, cmdline.password, cmdline.org, cmdline.credentials)
     print(json.dumps(creds['connection'], indent=4))
 
