@@ -97,21 +97,12 @@ A more sophisticated communications mechanism between parties and the aggregator
 As the service broker is running on IBM Cloud, a user account for the broker is required for the aggregator and each party. You can create accounts as follows:
 
 ```
-python examples/pubsub_register.py --credentials=<CLOUDCREDENTIALS> --user=<AGGREGATOR USER> --password=<PASSWORD> > aggregator.json
-python examples/pubsub_register.py --credentials=<CLOUDCREDENTIALS> --user=<PARTY 0> --password=<PASSWORD> > party0.json
-python examples/pubsub_register.py --credentials=<CLOUDCREDENTIALS> --user=<PARTY N> --password=<PASSWORD> > partyn.json
+python examples/pubsub_register.py --credentials=pubsub_credentials.json --user=<AGGREGATOR USER> --password=<PASSWORD> > aggregator.json
+python examples/pubsub_register.py --credentials=pubsub_credentials.json --user=<PARTY 0> --password=<PASSWORD> > party0.json
+python examples/pubsub_register.py --credentials=pubsub_credentials.json --user=<PARTY N> --password=<PASSWORD> > partyn.json
 ```
 
 In these examples, the output of the registration process is saved to a new json file. In these files there will be specific credentials for each party/aggregator to use during federated learning.
-
-The <CLOUDCREDENTIALS> parameter should be a file with the following contents:
-
-```
-{
-        "register_url": "https://service.eu-de.apiconnect.ibmcloud.com/gws/apigateway/api/682af43631cf55f6fc1787d3cfbe75c26e2d9d53a335c655856cb3f4f499ae68/register/user",
-        "register_api_key": "c340dfdc-4967-4071-aee5-c49a722a168a"
-}
-```
 
 It is also possible to deregister a created account:
 
@@ -127,10 +118,12 @@ python examples/pubsub_task.py --credentials=aggregator.json --task_name=<TASK N
 
 Note: the user account that creates the federated learning task should be the aggregator.
 
+If the task creation fails, it may be due to a firewall blocking access. In this case, adding a firewall rule allowing access to the `broker_host` field in the aggregator.json file should resolve this.
+
 Now that the correct number of broker user accounts are created and we have a task created, we can generate the configs to use the PubSub plugin:
 
 ```
-python examples/generate_configs.py -f iter_avg -m tf -n 2 -d mnist -p examples/data/mnist/random -c pubsub -t <TASK NAME>
+python examples/generate_configs.py -f iter_avg -m keras -n 2 -d mnist -p examples/data/mnist/random -c pubsub -t <TASK NAME>
 ```
 
 Note: The config generation for the PubSub plugin assumes the credentials json file names above, i.e. aggregator.json, party0.json etc.
@@ -170,3 +163,16 @@ To register new parties, open a new terminal window for each party, running the 
 #### Train
 
 To initiate federated training, type `TRAIN` in your aggregator terminal and press enter.
+
+
+## FL Command Reference
+
+
+| FL Command | Participant | Description |
+| :-----------: | :-----------: | :----------- |
+| `START` | aggregator / party | Start accepting connections|
+| `REGISTER` | party | Join an FL project |
+| `TRAIN` | aggregator | Initiate training process |
+| `SYNC` | aggregator | Synchronize model among parties |
+| `STOP` (coming soon) | aggregator | Pause training process |
+| `EVAL` | party | Evaluate model |
