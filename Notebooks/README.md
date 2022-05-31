@@ -2,6 +2,8 @@
 
 In this directory, we have a collection of jupyter notebooks to demonstrate how to use IBM FL to run some of our examples.
 
+**Note:** please run all notebooks from the main notebook directory, i.e., open `Notebooks` (the main notebook directory) via `jupyter notebook`, so all images in the notebooks can render properly. 
+
 * [Training a Keras CNN model on MNIST dataset](./keras_mnist_classifier)
 * [Training a PyTorch model on MNIST dataset](./pytorch_classifier)
 * [Mitigating bias of the global model on Adult dataset via local reweighing](./sklearn_logclassification_rw)
