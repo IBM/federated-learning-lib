@@ -65,12 +65,12 @@ No other preprocessing is performed.
     ```
 - In a terminal running an activated FL environment, start the aggregator by running:
     ```
-    python ibmfl/aggregator/aggregator.py <agg_config>
+    python -m ibmfl.aggregator.aggregator <agg_config>
     ```
     Type `START` and press enter to start accepting connections
 - In a terminal running an activated FL environment, start each party by running:
     ```
-    python ibmfl/party/party.py <party_config>
+    python -m ibmfl.party.party <party_config>
     ```
     Type `START` and press enter to start accepting connections.
 
