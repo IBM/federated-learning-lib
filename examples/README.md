@@ -29,8 +29,8 @@
 * [SPAHM with KMeans](spahm)
 
 ### Jupyter Notebooks to run IBM FL:
-* [Keras Classifier](../Notebooks/keras_classifier)
-* [Reinforcement learning Cartpole](../Notebooks/cartpole)
+* [Keras Classifier](../Notebooks/keras_mnist_classifier)
+* [Reinforcement learning Cartpole](../Notebooks/reinforcement_learning_cartpole)
 
 ## IBM FL Command Reference
 
