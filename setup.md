@@ -34,7 +34,7 @@ you can [install it here](https://docs.conda.io/projects/conda/en/latest/user-gu
 
 3. Install the IBM FL package by running:
     
-    `pip install <IBM_federated_learning_whl_file>`
+    `pip install federated-learning-lib/<IBM_federated_learning_whl_file>`
 
 
 #### Installation with pip
