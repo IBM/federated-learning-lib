@@ -1,5 +1,6 @@
 scikit-learn==0.23.1
 tensorflow==2.1
+tensorflow-estimator=2.1
 numpy
 pandas
 pytest
