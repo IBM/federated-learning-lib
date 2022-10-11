@@ -40,28 +40,40 @@ model.compile(loss=keras.losses.categorical_crossentropy,
 
 We highly recommend using Conda installation for IBM federated learning.
 If you don't have Conda, you can install it [here](https://docs.conda.io/projects/conda/en/latest/user-guide/install/). 
-If you already have Conda installed, create a new conda environment for IBM federated learning by running:
+If you already have Conda installed, create a new conda environment for IBM federated learning.
+
+If you want to use TensorFlow 2.1, create the environment by running:
+
 ```commandline
-conda create -n <env_name> python=3.6 tensorflow=1.15
-```     
+conda create -n <env_name> python=3.6 tensorflow=2.1 tensorflow-estimator=2.1
+```
+
+If you want to use TensorFlow 1.15 (older), create the environment by running:
+
+```commandline
+conda create -n <env_name> python=3.6 tensorflow=1.15 tensorflow-estimator=1.15 keras
+```
 Follow the prompts to install all the required packages.
 The figure below is a screenshot of sample outputs from setting up such a conda environment named *fl-demo*.
 
 <img src="./docs/assets/images/env_setup.jpg">
 
 Run `conda activate <env_name>` to activate the new Conda environment, and install the IBM federated learning package by running:
+
 ```commandline
-pip install <IBM_federated_learning_whl_file>
+pip install federated-learning-lib/<IBM_federated_learning_whl_file>
 ```  
 
-**Note**: Lastest IBM FL library supports Keras model training with two different Tensorflow Backend versions (1.15 and 2.1). It is recommended to install IBM FL in different conda environment with different tf versions. See [here](setup.md#installation-with-conda-recommended) for details of how to set up IBM FL with a specific tensorflow backend.
+**Note**: Lastest IBM FL library supports Keras model training with two different TensorFlow Backend versions (1.15 and 2.1). It is recommended to install IBM FL in different conda environment with different tf versions. See [here](setup.md#installation-with-conda-recommended) for details of how to set up IBM FL with a specific tensorflow backend.
 
 ### 2. Prepare datasets for each participating parties.
 
 For example, run
+
 ```commandline
 python examples/generate_data.py -n 2 -d mnist -pp 200 
 ```
+
 This command would generate 2 parties with 200 data points each, randomly sampled from the MNIST dataset.
 By default, the data is stored under the `examples/data/mnist/random` directory.
 ```buildoutcfg
@@ -429,5 +441,3 @@ STOP
 2020-06-29 11:47:01,587 - ibmfl.connection.flask_connection - INFO - Stopping Receiver and Sender
 2020-06-29 11:47:01,591 - werkzeug - INFO - 127.0.0.1 - - [29/Jun/2020 11:47:01] "POST /shutdown HTTP/1.1" 200 -
 ```
-
- 

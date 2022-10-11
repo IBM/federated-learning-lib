@@ -14,27 +14,29 @@ you can [install it here](https://docs.conda.io/projects/conda/en/latest/user-gu
     `conda create -n <env_name> python=3.6`
 
     **Note**: Latest IBM FL library supports Keras model training with two different 
-    Tensorflow Backend versions(1.15 and 2.1). It is recommended to install IBM FL 
+    TensorFlow Backend versions(1.15 and 2.1). It is recommended to install IBM FL
     in different conda environment with different tf versions.
-    
-    a. While running Keras experiments with Tensorflow v1.15, create a new environment 
-    by running:
+    If you already have Conda installed, create a new conda environment for IBM federated learning.
 
-        `conda create -n <env_name> python=3.6 tensorflow=1.15`
+    a. While running Keras experiments with TensorFlow v1.15, create a new environment by running:
 
-    b. While running Keras experiments with Tensorflow v2.1, try creating a new environment by running:
+        `conda create -n <env_name> python=3.6 tensorflow=1.15 tensorflow-estimator=1.15 keras`
 
-        `conda create -n <env_name> python=3.6 tensorflow=2.1.0`
+    b. While running Keras experiments with TensorFlow v2.1, create a new environment by running:
+
+        `conda create -n <env_name> python=3.6 tensorflow=2.1 tensorflow-estimator=2.1`
  
-    **Note**: Tensorflow v2.1 may not be available through conda install. If you get a `PackagesNotFoundError` after running the above command, please try creating a new envirnoment via:
+    **Note**: TensorFlow v2.1 may not be available through conda install. If you get a `PackagesNotFoundError`after running the above command, please try creating a new envirnoment via:
+
         `conda create -n <env_name> python=3.6`
-    After activating the new Conda environment (see Step 2), use `pip install tensorflow==2.1` to install the required tensorflow package.
+
+    After activating the new Conda environment (see Step 2), use `pip install tensorflow==2.1 tensorflow-estimator==2.1` to install the required tensorflow package.
 
 2. Run `conda activate <env_name>` to activate the new Conda environment.
 
 3. Install the IBM FL package by running:
     
-    `pip install <IBM_federated_learning_whl_file>`
+    `pip install federated-learning-lib/<IBM_federated_learning_whl_file>`
 
 
 #### Installation with pip
@@ -48,15 +50,21 @@ you can [install it here](https://docs.conda.io/projects/conda/en/latest/user-gu
     python -m pip install --upgrade pip
     ```
 
-    **Then run 'source/venv/bin/activate' to enable the virtual environment.**
+    **Then run 'source /venv/bin/activate' to enable the virtual environment.**
 
 2. Install basic dependencies:
 
-    `pip install -r requirements.txt`
+    a. While running Keras experiments with TensorFlow v1.15, install the dependencies by running:
+
+        `pip install -r requirements_tf1.txt`
+
+    b. While running Keras experiments with TensorFlow v2.1, install the dependencies by running:
+
+        `pip install -r requirements_tf2.txt`
 
 3. Install the IBM FL package by running:
     
-    `pip install <IBM_federated_learning_whl_file>`
+    `pip install federated-learning-lib/<IBM_federated_learning_whl_file>`
 
 
 ## Split Sample Data
@@ -86,6 +94,14 @@ python examples/generate_configs.py -f iter_avg -m keras -n 2 -d mnist -p exampl
 ```
 
 This command would generate the configs for the `keras_classifier` model, assuming 2 parties.
+
+<br/>
+To use the `tensorflow_classifier` model, assuming 2 parties, you could run:
+
+```commandline
+python examples/generate_configs.py -f iter_avg -m tf -n 2 -d mnist -p examples/data/mnist/random
+```
+
 You must also specify the party data path via `-p`. 
 
 Run `python examples/generate_configs.py -h` for full descriptions of the different options.
@@ -135,9 +151,18 @@ Note: The config generation for the PubSub plugin assumes the credentials json f
 To start the aggregator, open a terminal window running the IBM FL environment set up previously.
 
 1. In the terminal run:
+
+    using the `keras_classifier` model
+
     ```commandline
     python -m ibmfl.aggregator.aggregator examples/configs/iter_avg/keras/config_agg.yml
     ```  
+
+    using the `tensorflow_classifier` model
+
+    ```commandline
+    python -m ibmfl.aggregator.aggregator examples/configs/iter_avg/tf/config_agg.yml
+    ```
 
     where the path provided is the aggregator config file path.
 
@@ -148,9 +173,18 @@ To start the aggregator, open a terminal window running the IBM FL environment s
 To register new parties, open a new terminal window for each party, running the IBM FL environment set up previously.
 
 1. In the terminal run:
+
+    using the `keras_classifier` model
+
      ```commandline
     python -m ibmfl.party.party examples/configs/iter_avg/keras/config_party0.yml
-    ``` 
+    ```
+
+    using the `tensorflow_classifier` model
+
+     ```commandline
+    python -m ibmfl.party.party examples/configs/iter_avg/tf/config_party0.yml
+    ```
 
     where the path provided is the path to the party config file.
 
