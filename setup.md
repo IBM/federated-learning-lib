@@ -34,7 +34,11 @@ you can [install it here](https://docs.conda.io/projects/conda/en/latest/user-gu
     conda create -n <env_name> python=3.6
     ```
 
-    After activating the new Conda environment (see Step 2), use `pip install tensorflow==2.1 tensorflow-estimator==2.1` to install the required tensorflow package.
+    After activating the new Conda environment (see Step 2), use
+    ```commandline
+    pip install tensorflow==2.1 tensorflow-estimator==2.1
+    ```
+    to install the required tensorflow package.
 
 2. Run `conda activate <env_name>` to activate the new Conda environment.
 
@@ -59,11 +63,13 @@ you can [install it here](https://docs.conda.io/projects/conda/en/latest/user-gu
 2. Install basic dependencies:
 
     a. While running Keras experiments with TensorFlow v1.15, install the dependencies by running:
+
         ```commandline
         pip install -r requirements_tf1.txt
         ```
 
     b. While running Keras experiments with TensorFlow v2.1, install the dependencies by running:
+
         ```commandline
         pip install -r requirements_tf2.txt
         ```
