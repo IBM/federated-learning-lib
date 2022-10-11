@@ -1,5 +1,5 @@
 scikit-learn==0.23.1
-keras==2.2.4
+keras==2.3
 tensorflow==1.15
 tensorflow-estimator==1.15
 numpy
