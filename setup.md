@@ -10,8 +10,9 @@ you can [install it here](https://docs.conda.io/projects/conda/en/latest/user-gu
 #### Installation with Conda (recommended)
 
 1. If you already have Conda installed, create a new environment for IBM FL by running:
-
-    `conda create -n <env_name> python=3.6`
+    ```commandline
+    conda create -n <env_name> python=3.6
+    ```
 
     **Note**: Latest IBM FL library supports Keras model training with two different 
     TensorFlow Backend versions(1.15 and 2.1). It is recommended to install IBM FL
@@ -19,30 +20,33 @@ you can [install it here](https://docs.conda.io/projects/conda/en/latest/user-gu
     If you already have Conda installed, create a new conda environment for IBM federated learning.
 
     a. While running Keras experiments with TensorFlow v1.15, create a new environment by running:
-
-        `conda create -n <env_name> python=3.6 tensorflow=1.15 tensorflow-estimator=1.15 keras`
+    ```commandline
+    conda create -n <env_name> python=3.6 tensorflow=1.15 tensorflow-estimator=1.15 keras
+    ```
 
     b. While running Keras experiments with TensorFlow v2.1, create a new environment by running:
-
-        `conda create -n <env_name> python=3.6 tensorflow=2.1 tensorflow-estimator=2.1`
+    ```commandline
+    conda create -n <env_name> python=3.6 tensorflow=2.1 tensorflow-estimator=2.1
+    ```
  
     **Note**: TensorFlow v2.1 may not be available through conda install. If you get a `PackagesNotFoundError`after running the above command, please try creating a new envirnoment via:
-
-        `conda create -n <env_name> python=3.6`
+    ```commandline
+    conda create -n <env_name> python=3.6
+    ```
 
     After activating the new Conda environment (see Step 2), use `pip install tensorflow==2.1 tensorflow-estimator==2.1` to install the required tensorflow package.
 
 2. Run `conda activate <env_name>` to activate the new Conda environment.
 
 3. Install the IBM FL package by running:
-    
-    `pip install federated-learning-lib/<IBM_federated_learning_whl_file>`
+    ```commandline
+    pip install federated-learning-lib/<IBM_federated_learning_whl_file>
+    ```
 
 
 #### Installation with pip
 
 1. Create a virtual environment by running:
-
     ```commandline
     python -m pip install --user virtualenv
     virtualenv venv
@@ -55,16 +59,19 @@ you can [install it here](https://docs.conda.io/projects/conda/en/latest/user-gu
 2. Install basic dependencies:
 
     a. While running Keras experiments with TensorFlow v1.15, install the dependencies by running:
-
-        `pip install -r requirements_tf1.txt`
+        ```commandline
+        pip install -r requirements_tf1.txt
+        ```
 
     b. While running Keras experiments with TensorFlow v2.1, install the dependencies by running:
-
-        `pip install -r requirements_tf2.txt`
+        ```commandline
+        pip install -r requirements_tf2.txt
+        ```
 
 3. Install the IBM FL package by running:
-    
-    `pip install federated-learning-lib/<IBM_federated_learning_whl_file>`
+    ```commandline
+    pip install federated-learning-lib/<IBM_federated_learning_whl_file>
+    ```
 
 
 ## Split Sample Data
@@ -112,7 +119,7 @@ A more sophisticated communications mechanism between parties and the aggregator
 
 As the service broker is running on IBM Cloud, a user account for the broker is required for the aggregator and each party. You can create accounts as follows:
 
-```
+```commandline
 python examples/pubsub_register.py --credentials=pubsub_credentials.json --user=<AGGREGATOR USER> --password=<PASSWORD> > aggregator.json
 python examples/pubsub_register.py --credentials=pubsub_credentials.json --user=<PARTY 0> --password=<PASSWORD> > party0.json
 python examples/pubsub_register.py --credentials=pubsub_credentials.json --user=<PARTY N> --password=<PASSWORD> > partyn.json
@@ -122,13 +129,13 @@ In these examples, the output of the registration process is saved to a new json
 
 It is also possible to deregister a created account:
 
-```
+```commandline
 python examples/pubsub_deregister.py --credentials=aggregator.json
 ```
 
 The PubSub plugin operates on the basis that a Federated Learning task exists. This task can be created as follows:
 
-```
+```commandline
 python examples/pubsub_task.py --credentials=aggregator.json --task_name=<TASK NAME>
 ```
 
@@ -138,7 +145,7 @@ If the task creation fails, it may be due to a firewall blocking access. In this
 
 Now that the correct number of broker user accounts are created and we have a task created, we can generate the configs to use the PubSub plugin:
 
-```
+```commandline
 python examples/generate_configs.py -f iter_avg -m keras -n 2 -d mnist -p examples/data/mnist/random -c pubsub -t <TASK NAME>
 ```
 
@@ -153,13 +160,11 @@ To start the aggregator, open a terminal window running the IBM FL environment s
 1. In the terminal run:
 
     using the `keras_classifier` model
-
     ```commandline
     python -m ibmfl.aggregator.aggregator examples/configs/iter_avg/keras/config_agg.yml
     ```  
 
     using the `tensorflow_classifier` model
-
     ```commandline
     python -m ibmfl.aggregator.aggregator examples/configs/iter_avg/tf/config_agg.yml
     ```
@@ -175,14 +180,12 @@ To register new parties, open a new terminal window for each party, running the 
 1. In the terminal run:
 
     using the `keras_classifier` model
-
-     ```commandline
+    ```commandline
     python -m ibmfl.party.party examples/configs/iter_avg/keras/config_party0.yml
     ```
 
     using the `tensorflow_classifier` model
-
-     ```commandline
+    ```commandline
     python -m ibmfl.party.party examples/configs/iter_avg/tf/config_party0.yml
     ```
 

@@ -43,23 +43,21 @@ If you don't have Conda, you can install it [here](https://docs.conda.io/project
 If you already have Conda installed, create a new conda environment for IBM federated learning.
 
 If you want to use TensorFlow 2.1, create the environment by running:
-
 ```commandline
 conda create -n <env_name> python=3.6 tensorflow=2.1 tensorflow-estimator=2.1
 ```
 
 If you want to use TensorFlow 1.15 (older), create the environment by running:
-
 ```commandline
 conda create -n <env_name> python=3.6 tensorflow=1.15 tensorflow-estimator=1.15 keras
 ```
+
 Follow the prompts to install all the required packages.
 The figure below is a screenshot of sample outputs from setting up such a conda environment named *fl-demo*.
 
 <img src="./docs/assets/images/env_setup.jpg">
 
 Run `conda activate <env_name>` to activate the new Conda environment, and install the IBM federated learning package by running:
-
 ```commandline
 pip install federated-learning-lib/<IBM_federated_learning_whl_file>
 ```  
@@ -69,7 +67,6 @@ pip install federated-learning-lib/<IBM_federated_learning_whl_file>
 ### 2. Prepare datasets for each participating parties.
 
 For example, run
-
 ```commandline
 python examples/generate_data.py -n 2 -d mnist -pp 200 
 ```
