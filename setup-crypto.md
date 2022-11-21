@@ -97,7 +97,7 @@ We recommend using Python 3.6, but newer versions may also work.
 
 Follow one of the [tutorial notebooks](Notebooks) for getting starting with crypto and running IBM federated learning using fully homomorphic encryption (HE). Tutorials currently exist for:
 
-* [Generating homomorphic encryption key files](Notebooks/crypto_fhe_key_setup.ipynb)
+* (Optional) [Generating homomorphic encryption key files](Notebooks/crypto_fhe_key_setup.ipynb)
 * [Training a TensorFlow model using homomorphic encryption](Notebooks/crypto_fhe_tensorflow)
 * [Training a PyTorch model using homomorphic encryption](Notebooks/crypto_fhe_pytorch)
 * [Training a Scikit-learn model using homomorphic encryption](Notebooks/crypto_fhe_sklearn)
