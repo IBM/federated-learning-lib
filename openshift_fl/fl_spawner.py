@@ -1,11 +1,12 @@
 """
 Licensed Materials - Property of IBM
 Restricted Materials of IBM
-20190891
-© Copyright IBM Corp. 2021 All Rights Reserved.
+20221069
+© Copyright IBM Corp. 2022 All Rights Reserved.
 """
 import logging
 import os
+import pathlib
 
 import yaml
 from kubernetes import client, config, watch
@@ -16,6 +17,7 @@ from openshift.dynamic import DynamicClient
 logger = logging.getLogger(__name__)
 import tarfile
 from tempfile import TemporaryFile
+import subprocess
 
 
 class FLSpawner:
@@ -51,14 +53,16 @@ class FLSpawner:
             with open(os.path.join(__location__, 'pod_template.yml')) as pod_tmpl_file:
                 self.pod_tmpl = pod_tmpl_file.read()
         else:
-            with open(os.path.join(__location__, 'pod_persistence_template.yml')) as pod_tmpl_file:
-                self.pod_tmpl = pod_tmpl_file.read()
+            with open(os.path.join(__location__, 'pod_persistence_agg_template.yml')) as pod_tmpl_file:
+                self.pod_agg_tmpl = pod_tmpl_file.read()
+            with open(os.path.join(__location__, 'pod_persistence_party_template.yml')) as pod_tmpl_file:
+                self.pod_party_tmpl = pod_tmpl_file.read()
         with open(os.path.join(__location__, 'service_template.yml')) as service_tmpl_file:
             self.service_tmpl = service_tmpl_file.read()
         with open(os.path.join(__location__, 'route_template.yml')) as route_tmpl_file:
             self.route_tmpl = route_tmpl_file.read()
 
-    def create_pod(self, pod_name, image_name, role, command_list, cos_mount_path, cpu="2", memory="4Gi"):
+    def create_pod(self, pod_name, image_name, role, command_list, cos_mount_path, cpu="2", memory="4Gi", aggregator=False):
         """
         Create pod in a kubernetes cluster based on the pod_template file
         :param pod_name: string to specify the name of the pod
@@ -69,13 +73,23 @@ class FLSpawner:
         :param memory: memory required to run the pod
         :param cos_mount_path: data mount path in the pod to mount the pvc
         """
-        if self.data is None:
-            pod = self.pod_tmpl.format(pod_name, pod_name, self.namespace, image_name, cpu, memory, command_list)
+        if aggregator:
+            if self.data is None:
+                pod = self.pod_tmpl.format(pod_name, pod_name, self.namespace, image_name, cpu, memory, command_list)
+            else:
+                pod = self.pod_agg_tmpl.format(pod_name, pod_name, self.namespace, image_name, cos_mount_path, cpu, memory,
+                                           command_list, self.data.get('pvc_name'))
         else:
-            pod = self.pod_tmpl.format(pod_name, pod_name, self.namespace, image_name, cos_mount_path, cpu, memory,
-                                       command_list, self.data.get('pvc_name'))
+            if self.data is None:
+                pod = self.pod_tmpl.format(pod_name, pod_name, self.namespace, image_name, cpu, memory, command_list)
+            else:
+                pod = self.pod_party_tmpl.format(pod_name, pod_name, self.namespace, image_name, cos_mount_path, cpu, memory,
+                                           command_list, self.data.get('pvc_name'))
         v1_pod = self.dynamic_client.resources.get(api_version='v1', kind='Pod')
         pod_data = yaml.safe_load(pod)
+
+        logger.info(f'create_pod {pod_data}')
+
         resp = v1_pod.create(body=pod_data, namespace=self.namespace)
 
     def get_pod_ip(self, pod_name):
@@ -95,7 +109,7 @@ class FLSpawner:
         :param pod_name: name of pod to fetch the ip address
         :return: route URL
         """
-        v1_route = self.dynamic_client.resources.get(api_version='v1', kind='Route')
+        v1_route = self.dynamic_client.resources.get(api_version='route.openshift.io/v1', kind='Route')
 
         res = v1_route.get(name=pod_name, namespace=self.namespace)
         return "https://{}".format(res.spec.host);
@@ -221,6 +235,55 @@ class FLSpawner:
                 "kubectl config --kubeconfig={} use-context {} && kubectl --kubeconfig={} cp  {} {}/{}:{}".format(
                     self.config_file, self.context, self.config_file, src_file, self.namespace, pod_name, dest_file))
 
+    def copy_files_from_pod(self, pod_name, remote_filepath, local_filepath):
+        """
+        Copy files from remote pod to the local staging directory using kubectl cp command
+        :param remote_filepath: absolute path of the file in the pod to copy
+        :param pod_name: name of the pod where the file resides
+        :param local_dir: absolute path of local directory
+        :return: None
+        """
+        if self.config_file is None:
+            ls_output = "kubectl exec {} -- ls {}".format(pod_name, pathlib.Path(remote_filepath).parent)
+        else:
+            ls_output = "kubectl config --kubeconfig={} use-context {} && kubectl --kubeconfig={} exec {} -- ls {}".format(
+                    self.config_file, self.context, self.config_file, pod_name, pathlib.Path(remote_filepath).parent)
+
+        process_ls = subprocess.run(ls_output, shell=True,
+                                    stdout=subprocess.PIPE,
+                                    stderr=subprocess.PIPE,
+                                    universal_newlines=True)
+        if process_ls.returncode != 0:
+            logger.error('Erred running ls on pod: ', process_ls.stderr)
+            return False
+        else:
+            logger.info(
+                'Checking for existence of filepath:{} in Pod:{}'.format(remote_filepath, pod_name))
+            files_present = process_ls.stdout.split('\n')
+            file_name = pathlib.Path(remote_filepath).name
+            if file_name not in files_present:
+                logger.info('Remote file:{} not found on Pod:{}'.format(file_name, pod_name))
+                return False
+
+        if self.config_file is None:
+            cmd = "kubectl cp {}/{}:{} {}".format(
+                self.namespace, pod_name, remote_filepath, local_filepath)
+        else:
+            cmd = "kubectl config --kubeconfig={} use-context {} && kubectl --kubeconfig={} cp {}/{}:{} {}".format(
+                    self.config_file, self.context, self.config_file, self.namespace, pod_name, remote_filepath, local_filepath)
+
+        logger.debug("Copying from pod by running: {}".format(cmd))
+
+        process = subprocess.run(cmd, shell=True,
+                                 stdout=subprocess.PIPE,
+                                 stderr=subprocess.PIPE)
+        if process.returncode != 0:
+            logger.error('Erred: ', process.stderr)
+            return False
+        else:
+            logger.info("Copied file: {} from: {} to: {}".format(remote_filepath, pod_name, local_filepath))
+            return True
+
     def delete_pod(self, pod_name):
         """
         Delete a running pod by pod name
@@ -295,7 +358,7 @@ class FLSpawner:
         image_name = image_name or "ibmfl:latest"
         label_role = "ibmfl"
         command_list = ["python3", "/FL/openshift_fl/run_agg.py", "{}/config_agg.yml".format(pod_staging_dir)]
-        self.create_pod(pod_name, image_name, label_role, command_list, cos_mount_path, cpu, memory)
+        self.create_pod(pod_name, image_name, label_role, command_list, cos_mount_path, cpu, memory, aggregator=True)
 
     def spawn_party(self, pod_name, party_index, pod_staging_dir, cos_mount_path, image_name):
         """
@@ -311,7 +374,7 @@ class FLSpawner:
         label_role = "ibmfl"
         command_list = ["python3", "/FL/openshift_fl/run_party.py",
                         "{}/config_party{}.yml".format(pod_staging_dir, party_index)]
-        self.create_pod(pod_name, image_name, label_role, command_list, cos_mount_path, cpu, memory)
+        self.create_pod(pod_name, image_name, label_role, command_list, cos_mount_path, cpu, memory, aggregator=False)
 
     def copy_dataset_configs_to_pods(self, pod_name, file_list, pod_staging_dir, commands=None):
         """
@@ -335,11 +398,11 @@ class FLSpawner:
             file_base_name = os.path.basename(file)
             if self.data is None:
                 self.copy_files(pod_name, file, '{}/{}'.format(pod_staging_dir, file_base_name))
-                logger.info("Copying file {} to  pod - {} completed".format(file_base_name, pod_name))
+                logger.info("Copying file {} from local to  pod - {} completed".format(file_base_name, pod_name))
             else:
                 if file_base_name.endswith('.yml'):
                     self.copy_files(pod_name, file, '{}/{}'.format(pod_staging_dir, file_base_name))
-                    logger.info("Copying file {} to  pod - {} completed".format(file_base_name, pod_name))
+                    logger.info("Copying yml file {} from local to pod - {} completed".format(file_base_name, pod_name))
 
         if commands is not None:
             commands_str = [

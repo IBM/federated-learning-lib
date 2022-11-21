@@ -50,7 +50,7 @@ def main():
                 result = user.model_lineage(cmdline.task_name)
                 print_lineage(result)
     except Exception as err:
-        print(f'error: {err}')
+        print('error: %s', err)
         raise err
 
 
