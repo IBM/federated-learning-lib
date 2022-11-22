@@ -32,7 +32,7 @@ FL_EXAMPLES = ["iter_avg", "fedavg", "coordinate_median", "gradient_aggregation"
                 "differential_privacy_sgd", 
                 "rl_cartpole", "rl_pendulum", "sklearn_logclassification_rw", "spahm",
                 "sklearn_logclassification_globalrw", "naive_bayes_dp", "id3_dt", "prej_remover", "iter_avg_openshift", "shuffle_iter_avg",
-                "coordinate_median_plus", "geometric_median_plus", "doc2vec", "comparative_elimination"]
+                "coordinate_median_plus", "geometric_median_plus", "doc2vec", "comparative_elimination", "afa"]
 FL_MODELS = ["keras", "pytorch", "tf", "sklearn", "doc2vec", "None"]
 
 FL_CONN_TYPES = ["flask", "pubsub"]

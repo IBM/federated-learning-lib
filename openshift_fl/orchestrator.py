@@ -1,8 +1,8 @@
 """
 Licensed Materials - Property of IBM
 Restricted Materials of IBM
-20190891
-© Copyright IBM Corp. 2021 All Rights Reserved.
+20221069
+© Copyright IBM Corp. 2022 All Rights Reserved.
 """
 import concurrent.futures
 import logging
@@ -95,7 +95,7 @@ class Orchestrator:
             if commands is not None:
                 agg_commands = commands.get('aggregator')
                 if agg_commands is not None:
-                    commands_list = ['START', 'TRAIN', 'EVAL', 'SAVE', 'STOP']
+                    commands_list = ['START', 'TRAIN', 'EVAL', 'SAVE', 'STOP', 'SYNC']
                     for agg_command in agg_commands:
                         if not any(agg_command.strip().upper() in s for s in commands_list):
                             raise ValueError('{} not a valid aggregator command'.format(agg_command))

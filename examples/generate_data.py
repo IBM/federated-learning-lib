@@ -400,7 +400,7 @@ def save_higgs_party_data(nb_dp_per_party, should_stratify, party_folder, datase
         indices = indices.tolist()
 
         # Use indices for data/classification subset
-        x_part = [','.join(item) for item in X[indices, :].astype(str)]
+        x_part = [','.join(item) for item in x[indices, :].astype(str)]
         y_part = y[indices]
 
         # Write to File
