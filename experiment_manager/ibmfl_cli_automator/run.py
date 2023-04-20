@@ -811,7 +811,7 @@ class Runner:
                 if config_agg_dict is not None and 'agg' in proc_label:
                     orig_config = config_agg_dict
                 elif config_party_dicts is not None and 'party' in proc_label:
-                    orig_config = config_party_dicts[int(proc_label[-1])]
+                    orig_config = config_party_dicts[int(proc_label[5:])]
                 else:
                     with open(file, 'r') as stream:
                         orig_config = yaml.load(stream.read(), Loader=yaml.Loader)
