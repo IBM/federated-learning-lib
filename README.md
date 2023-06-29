@@ -82,9 +82,9 @@ Try IBM FL with OpenShift [here](openshift_fl).
 
 There is a [docs folder](./docs) with tutorials and API documentation to learn how to use and extend IBM federated learning. We also have a few [video tutorials](https://ibmfl.mybluemix.net/tutorials).
 
-- [Web Site](https://ibmfl.mybluemix.net/)
+- [Web Site](https://ibmfl.cash.sl.cloud9.ibm.com)
 - Aggregator and Party [configuration tutorial](docs/tutorials/configure_fl.md)
-- [API documentation](http://ibmfl-api-docs.mybluemix.net/index.html)
+- [API documentation](https://ibmfl-api-docs.cash.sl.cloud9.ibm.com)
 - [Related publications](docs/papers.md)
 - [White paper](https://arxiv.org/abs/2007.10987)
 
