@@ -1,16 +1,12 @@
 # Quickstart
 
+**Note:** This guide will not work for Mac M1/M2 systems as they do not support Keras with TensorFlow v1. Refer to the [setup.md](setup.md) for the PyTorch guide which will work on Mac M1/M2 systems.
+
 ## Try out the step-by-step Keras classifier example
 
-All commands are assumed to be run from the directory where the `.whl` file is located. We also assume other folders, like `examples`, are located under the same directory. Use
+All commands are assumed to be run from the base directory at the top of this repository. We also assume other folders, like `examples`, are located under the same directory.
 
-```bash
-cd <path_to_whl_directory>
-```
-
-to arrive at the correct directory.
-
-In this example, we will train a Keras CNN model, as shown in figure below, on [MNIST](https://en.wikipedia.org/wiki/MNIST_database) data in the federated learning fashion.
+In this example, we will train a Keras (TensorFlow v1) CNN model, as shown below, on [MNIST](https://en.wikipedia.org/wiki/MNIST_database) data in the federated learning fashion.
 
 ```python
 num_classes = 10
@@ -21,9 +17,7 @@ else:
     input_shape = (img_rows, img_cols, 1)
 
 model = Sequential()
-model.add(Conv2D(32, kernel_size=(3, 3),
-                 activation='relu',
-                 input_shape=input_shape))
+model.add(Conv2D(32, (3, 3), activation='relu', input_shape=input_shape))
 model.add(Conv2D(64, (3, 3), activation='relu'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.25))
@@ -39,24 +33,30 @@ model.compile(loss=keras.losses.categorical_crossentropy,
 
 ### 1. Set up a running environment for IBM federated learning
 
-We highly recommend using Conda installation for IBM federated learning. If you don't have Conda, you can install it [here](https://docs.conda.io/projects/conda/en/latest/user-guide/install/). If you already have Conda installed, create a new conda environment for IBM federated learning by running:
+We highly recommend using Conda installation for IBM federated learning. If you don't have Conda, you can install it [here](https://docs.conda.io/projects/conda/en/latest/user-guide/install).
 
-```bash
-conda create -n <env_name> python=3.6 tensorflow=1.15
+Once Conda is installed, create a new environment for IBM federated learning by running the following. To use Keras with TensorFlow v1, you must use Python 3.7.
+
+```sh
+conda create -n <env_name> python=3.7
 ```
 
-Follow the prompts to install all the required packages.
-The figure below is a screenshot of sample outputs from setting up such a conda environment named *fl-demo*.
+Once the conda environment is created, activate it by running the following.
 
-![Environment Setup](./docs/assets/images/env_setup.jpg)
+```sh
+conda activate <env_name>
+```
 
-Run `conda activate <env_name>` to activate the new Conda environment, and install the IBM federated learning package by running:
+Then install the IBM federated learning package using the wheel file (located in the `federated-learning-lib` directory) with a Keras backend by running the following.
 
-```bash
-pip install <IBM_federated_learning_whl_file>
-```  
+```sh
+pip install "/path/to/federated_learning_lib.whl[keras]"
+```
 
-**Note**: The latest IBM FL library supports model training using Keras (with TensorFlow v1), TensorFlow v2, PyTorch, and Scikit-learn. It is recommended to install IBM FL in different conda environments for the Keras and TensorFlow v2 versions. Models using PyTorch or Scikit-learn will work on either. See [here](setup.md#installation-with-conda-recommended) for details of how to set up IBM FL with a specific TensorFlow backend.
+**Notes:**
+
+* The quotes are required if using the Zsh shell (this is the default shell for Mac).
+* The latest IBM FL library supports model training using Scikit-learn, PyTorch, Keras (with TensorFlow v1), and TensorFlow v2. You must specify the desired model training backend when installing the IBM FL library. In this example, we specify to install with the Keras backend. See [here](setup.md#Setup-IBM-federated-learning) for more details.
 
 ### 2. Prepare datasets for each participating parties
 
@@ -131,7 +131,7 @@ You may also see warning messages which are fine. For a full description of the 
 
 Below you can see samples of configuration files.
 
-- Aggregator's configuration file:
+* Aggregator's configuration file:
 
 ```yaml
 connection:
@@ -167,7 +167,7 @@ protocol_handler:
   path: ibmfl.aggregator.protohandler.proto_handler
 ```
 
-- Party's configuration file:
+* Party's configuration file:
 
 ```yaml
 aggregator:
@@ -241,8 +241,7 @@ START
 
 ### 5. Start and register parties
 
-To start and register a new party, open one new terminal window for each party, running the IBM federated learning environment set up beforehand,
-and make sure you are in the correct directory. In the terminal run:
+To start and register a new party, open one new terminal window for each party, running the IBM federated learning environment set up beforehand, and make sure you are in the correct directory. In the terminal run:
 
 ```bash
 python -m ibmfl.party.party examples/configs/iter_avg/keras/config_party<idx>.yml
@@ -250,9 +249,7 @@ python -m ibmfl.party.party examples/configs/iter_avg/keras/config_party<idx>.ym
 
 where the path provided is the path to the party's configuration file.
 
-**NOTE**: Each party will have a different configuration file;
-in our example, it is noted by changing `config_party<idx>.yml`.
-For instance, to start the 1st party, one would run:
+**Note:** Each party will have a different configuration file; in our example, it is noted by changing `config_party<idx>.yml`. For instance, to start the 1st party, one would run:
 
 ```bash
 python -m ibmfl.party.party examples/configs/iter_avg/keras/config_party0.yml
@@ -297,7 +294,7 @@ The aggregator terminal will also prompt out INFO to show that it receives the p
 
 To initiate federated training, type `TRAIN` in your aggregator terminal and press enter.
 
-**NOTE**: In this example, we have 2 parties join the training and we run 3 global rounds, each round with 3 local epochs.
+**Note:** In this example, we have 2 parties join the training and we run 3 global rounds, each round with 3 local epochs.
 
 Outputs in the aggregator terminal after running the above command will look like:
 

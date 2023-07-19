@@ -13,4 +13,3 @@
 - Learn how to enable and configure GPU training in [Configure GPU training](../tutorials/configure_gpu_training.md).
 
 - Learn how to specify quorum, maximum timeout for each round, and rejoin party after a dropout [Quorum handling and ability to Rejoin](../tutorials/quorum_rejoin.md).
-

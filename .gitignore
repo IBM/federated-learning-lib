@@ -1,0 +1,75 @@
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Example data
+examples/data/
+examples/datasets/
+examples/configs/
+examples/keys/
+configs
+
+# Log files
+*.log
+
+# ide project files
+.idea/
+*.DS_Store
+*.vscode
+
+# Certificates
+*.pem
+*.crt
+*.key
+*.context
+
+# Jupyter notebook files
+.ipynb_checkpoints
+history.json
+
+# Data
+*.npz
+*.data
+*.pth
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST

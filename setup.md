@@ -4,80 +4,79 @@ This tutorial explains how to setup and run IBM federated learning from scratch.
 
 ## Setup IBM federated learning
 
-To run projects in IBM federated learning, you must first install all the requirements. We highly recommend using Conda installation for this project. If you don't have Conda, you can [install it here](https://docs.conda.io/projects/conda/en/latest/user-guide/install/).
+To run projects in IBM federated learning, you must first create a Python environment to install all the requirements. You can use either Conda or venv:
 
-The latest IBM FL library supports model training using Keras (with TensorFlow v1), TensorFlow v2, PyTorch, and Scikit-learn. It is recommended to install IBM FL in different conda environments for the Keras and TensorFlow v2 versions. Models using PyTorch or Scikit-learn will work on either.
+<details>
+<summary>Conda (recommended)</summary>
 
-### Installation with Conda (recommended)
+If you don't have Conda, you can install it [here](https://docs.conda.io/projects/conda/en/latest/user-guide/install).
 
-1. If you already have Conda installed, create a new environment for IBM FL. We recommend using Python 3.6, but newer versions may also work.
+Once installed, create a new Conda environment. We recommend using Python 3.7, but newer versions may also work. For Mac M1/M2 systems, you must use Python 3.8 or above.
 
-    a. If running experiments using Keras models (with Tensorflow v1), create a new environment by running:
+```sh
+conda create -n <env_name> python=3.7
+```
 
-    ```bash
-    conda create -n <env_name> python=3.6 tensorflow=1.15
-    ```
+Activate the newly created Conda environment.
 
-    b. If running experiments using TensorFlow v2, create a new environment by running:
+```sh
+conda activate <env_name>
+```
 
-    ```bash
-    conda create -n <env_name> python=3.6
-    ```
+</details>
 
-    c. If running experiments using PyTorch or Scikit-learn, either environment will work.
+<details>
+<summary>Venv</summary>
 
-2. Activate the new Conda environment by running:
+Create a new virtual environment using Python's built-in `venv` module. This will use your system's Python version which may or may not be fully compatible.
 
-    ```bash
-    conda activate <env_name>
-    ```
+```bash
+python -m venv venv
+```
 
-    If using TensorFlow v2, install the package:
+Activate the newly created virtual environment.
 
-    ```bash
-    pip install tensorflow==2.1.0
-    ```
+```sh
+source venv/bin/activate
+```
 
-    If this version of TensorFlow is unavailable, try installing a newer version.
+</details>
 
-3. Install the IBM FL package by running:
+After creating and activating the Python environment, install the wheel file to install the IBM federated learning library and all dependencies. This file is located in the `federated-learning-lib` directory of this repo. By default, the wheel file will not install any additional machine learning libraries. You must specify the desired model training backend library in brackets. The following backends are supported:
 
-    ```bash
-    pip install <IBM_federated_learning_whl_file>
-    ```
+```sh
+# Install with no additional machine learning libraries
+pip install "/path/to/federated_learning_lib.whl"
+# Install with Scikit-learn backend
+pip install "/path/to/federated_learning_lib.whl[sklearn]"
+# Install with PyTorch backend
+pip install "/path/to/federated_learning_lib.whl[pytorch]"
+# Install with Keras (TensorFlow v1) backend
+pip install "/path/to/federated_learning_lib.whl[keras]"
+# Install with TensorFlow v2 backend
+pip install "/path/to/federated_learning_lib.whl[tf]"
+# Install with RLlib backend
+pip install "/path/to/federated_learning_lib.whl[rllib]"
+```
 
-### Installation with virtualenv
+You can also install multiple backends using a comma separated list. For example:
 
-We recommend using Python 3.6, but newer versions may also work.
+```sh
+# Install with Scikit-learn and Keras (TensorFlow v1) backend
+pip install "/path/to/federated_learning_lib.whl[sklearn,keras]"
+# Install with PyTorch and TensorFlow v2 backend
+pip install "/path/to/federated_learning_lib.whl[pytorch,tf]"
+# Install with Scikit-learn, TensorFlow v2, and RLlib backend
+pip install "/path/to/federated_learning_lib.whl[sklearn,tf,rllib]"
+```
 
-1. Create a virtual environment by running:
+You may install as many backends as you'd like. The only exception is that you **cannot** install both the Keras and TensorFlow v2 backends since they are different versions of TensorFlow.
 
-    ```bash
-    python -m pip install --user virtualenv
-    virtualenv venv
-    source venv/bin/activate
-    python -m pip install --upgrade pip
-    ```
+**Notes:**
 
-2. Install basic dependencies:
-
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-    If using TensorFlow v2, install the package:
-
-    ```bash
-    pip install tensorflow==2.1.0
-    ```
-
-    If this version of TensorFlow is unavailable, try installing a newer version.
-
-3. Install the IBM FL package by running:
-
-    ```bash
-    pip install <IBM_federated_learning_whl_file>
-    ```
+* The quotes are required if using the Zsh shell (this is the default shell for Mac).
+* There should be no spaces before or after each comma.
+* The Keras backend will only work for Python 3.7; therefore, it will not work for Mac M1/M2 systems.
 
 ## Split Sample Data
 
@@ -91,7 +90,7 @@ You can use `generate_data.py` to generate sample data on any of the integrated 
 
 For example to generate data for **2 parties** with **200 data points** each from the **MNIST dataset**, you could run:
 
-```bash
+```sh
 python examples/generate_data.py -n 2 -d mnist -pp 200
 ```
 
@@ -108,16 +107,16 @@ You can generate these config files using the `generate_configs.py` script. This
 | Flag | Description | Type |
 | - | - | - |
 | `-f <fusion>` | which fusion algorithm to run | string |
-| `-m <model>` | which framework model to use (`keras`, `tf`, `pytorch`, `sklearn`) | string |
+| `-m <model>` | which framework model to use (`sklearn`, `pytorch`, `keras`, `tf`) | string |
 | `-n <num_parties>` | the number of parties to split the data into | integer |
 | `-d <dataset>` | which data set to use | string |
 | `-p <path>` | path to load saved config data | string |
 
-The `-n <num_parties>` and `-d <dataset>` flags should be the same same as when generating the sample data. The `-p <path>` flag will depend on the generated data from the previous step, but will typically be `-p examples/data/<dataset>/random`.
+The `-n <num_parties>` and `-d <dataset>` flags should be the same same as when generating the sample data. The `-p <path>` flag will depend on the generated data from the previous step, but will typically be `-p examples/data/<dataset>/random`. The backend framework for model from the `-m <model>` flag must be installed.
 
 This script will generate config files as follows:
 
-```bash
+```sh
 # aggregator config
 examples/configs/<fusion>/<model>/config_agg.yml
 # party configs
@@ -127,31 +126,34 @@ examples/configs/<fusion>/<model>/config_party1.yml
 examples/configs/<fusion>/<model>/config_party<n-1>.yml
 ```
 
-For example to generate the configs for a **Keras model** for **2 parties** using the **iterated average fusion algorithm** from the **MNIST dataset** (generated from before), you could run:
+For example to generate the configs for a **PyTorch model** for **2 parties** using the **iterated average fusion algorithm** from the **MNIST dataset** (generated from before), you could run:
 
-```bash
-python examples/generate_configs.py -f iter_avg -m keras -n 2 -d mnist -p examples/data/mnist/random
+```sh
+python examples/generate_configs.py -f iter_avg -m pytorch -n 2 -d mnist -p examples/data/mnist/random
 ```
 
 This command will generate the following config files:
 
-```bash
+```sh
 # aggregator config
-examples/configs/iter_avg/keras/config_agg.yml
+examples/configs/iter_avg/pytorch/config_agg.yml
 # party configs
-examples/configs/iter_avg/keras/config_party0.yml
-examples/configs/iter_avg/keras/config_party1.yml
+examples/configs/iter_avg/pytorch/config_party0.yml
+examples/configs/iter_avg/pytorch/config_party1.yml
 ```
 
 Run `python examples/generate_configs.py -h` for full descriptions of the different options.
 
 ### Using IBM Cloud interoperability (PubSub Plugin)
 
+<details>
+<summary>Show</summary>
+
 A more sophisticated communications mechanism between parties and the aggregator is also available. This is called the PubSub plugin, which is based on the publish/subscribe design pattern. It uses a service broker, which is an IBM Cloud hosted instance of RabbitMQ, backed by a number of cloud micro-services. The purpose of this is to provide a more secure and privacy aware mechanism for running a federated learning task, whereby no party or the aggregator is required to present a service or listen on an open port.
 
 As the service broker is running on IBM Cloud, a user account for the broker is required for the aggregator and each party. You can create accounts as follows:
 
-```bash
+```sh
 python examples/pubsub_register.py --credentials=pubsub_credentials.json --user=<AGGREGATOR USER> --password=<PASSWORD> > aggregator.json
 python examples/pubsub_register.py --credentials=pubsub_credentials.json --user=<PARTY 0> --password=<PASSWORD> > party0.json
 python examples/pubsub_register.py --credentials=pubsub_credentials.json --user=<PARTY N> --password=<PASSWORD> > partyn.json
@@ -171,17 +173,18 @@ The PubSub plugin operates on the basis that a Federated Learning task exists. T
 python examples/pubsub_task.py --credentials=aggregator.json --task_name=<TASK NAME>
 ```
 
-Note: the user account that creates the federated learning task should be the aggregator.
+**Note:** the user account that creates the federated learning task should be the aggregator.
 
 If the task creation fails, it may be due to a firewall blocking access. In this case, adding a firewall rule allowing access to the `broker_host` field in the aggregator.json file should resolve this.
 
 Now that the correct number of broker user accounts are created and we have a task created, we can generate the configs to use the PubSub plugin:
 
-```bash
+```sh
 python examples/generate_configs.py -f iter_avg -m keras -n 2 -d mnist -p examples/data/mnist/random -c pubsub -t <TASK NAME>
 ```
 
-Note: The config generation for the PubSub plugin assumes the credentials json file names above, i.e. `aggregator.json`, `party0.json`, `party1.json`, etc.
+**Note:** The config generation for the PubSub plugin assumes the credentials json file names above, i.e. `aggregator.json`, `party0.json`, `party1.json`, etc.
+</details>
 
 ## Initiate Learning
 
@@ -191,14 +194,14 @@ To start the aggregator, open a terminal window running the IBM FL environment s
 
 1. In the terminal run:
 
-    ```bash
+    ```sh
     python -m ibmfl.aggregator.aggregator examples/configs/<fusion>/<model>/config_agg.yml
     ```
 
-    where the path provided is the aggregator config file. So using the examples above for the **Keras model** using the **iterated average fusion algorithm**, you can run:
+    where the path provided is the aggregator config file. So using the examples above for the **PyTorch model** using the **iterated average fusion algorithm**, you can run:
 
-    ```bash
-    python -m ibmfl.aggregator.aggregator examples/configs/iter_avg/keras/config_agg.yml
+    ```sh
+    python -m ibmfl.aggregator.aggregator examples/configs/iter_avg/pytorch/config_agg.yml
     ```
 
 2. Then in the terminal, type `START` and press enter.
@@ -209,22 +212,22 @@ To register new parties, open a new terminal window for each party. Activate the
 
 1. In the terminal run:
 
-    ```bash
+    ```sh
     python -m ibmfl.party.party examples/configs/<fusion>/<model>/config_party<idx>.yml
     ```
 
     where the path provided is the path to the party config file. Each party will have a different config file, usually noted by changing `config_party<idx>.yml`
 
-    So using the examples above for the **Keras model** with **2 parties**, you can run in one terminal:
+    So using the examples above for the **PyTorch model** with **2 parties**, you can run in one terminal:
 
-    ```bash
-    python -m ibmfl.party.party examples/configs/iter_avg/keras/config_party0.yml
+    ```sh
+    python -m ibmfl.party.party examples/configs/iter_avg/pytorch/config_party0.yml
     ```
 
     and run in another terminal:
 
-    ```bash
-    python -m ibmfl.party.party examples/configs/iter_avg/keras/config_party1.yml
+    ```sh
+    python -m ibmfl.party.party examples/configs/iter_avg/pytorch/config_party1.yml
     ```
 
 2. In the terminal for each party, type `START` and press enter.

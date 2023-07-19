@@ -1,20 +1,13 @@
 import os
+
 import numpy as np
 import tensorflow as tf
-from tensorflow.keras.layers import Dense, Flatten, Conv2D
 from tensorflow.keras import Model
+from tensorflow.keras.layers import Conv2D, Dense, Flatten
 
 
-def get_hyperparams(model='keras'):
-    hyperparams = {
-        'training': {
-            'epochs': 10,
-            'batch_size': 10
-        },
-        'optimizer': {
-            'lr': 0.0003
-        }
-    }
+def get_hyperparams(model="keras"):
+    hyperparams = {"training": {"epochs": 10, "batch_size": 10}, "optimizer": {"lr": 0.0003}}
 
     return hyperparams
 
@@ -26,9 +19,9 @@ def get_model_config(folder_configs, dataset, is_agg=False, party_id=0):
     class MyModel(Model):
         def __init__(self):
             super(MyModel, self).__init__()
-            self.conv1 = Conv2D(32, 3, activation='relu')
+            self.conv1 = Conv2D(32, 3, activation="relu")
             self.flatten = Flatten()
-            self.d1 = Dense(128, activation='relu')
+            self.d1 = Dense(128, activation="relu")
             self.d2 = Dense(10)
 
         def call(self, x):
@@ -39,10 +32,9 @@ def get_model_config(folder_configs, dataset, is_agg=False, party_id=0):
 
     # Create an instance of the model
     model = MyModel()
-    loss_object = tf.keras.losses.SparseCategoricalCrossentropy(
-        from_logits=True)
+    loss_object = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True)
     optimizer = tf.keras.optimizers.Adam()
-    acc = tf.keras.metrics.SparseCategoricalAccuracy(name='accuracy')
+    acc = tf.keras.metrics.SparseCategoricalAccuracy(name="accuracy")
     model.compile(optimizer=optimizer, loss=loss_object, metrics=[acc])
     img_rows, img_cols = 28, 28
     input_shape = (None, img_rows, img_cols, 1)
@@ -53,13 +45,8 @@ def get_model_config(folder_configs, dataset, is_agg=False, party_id=0):
 
     model.save(folder_configs)
     model.summary()
-    spec = {'model_name': 'tf-cnn',
-            'model_definition': folder_configs}
+    spec = {"model_name": "tf-cnn", "model_definition": folder_configs}
 
-    model = {
-        'name': 'TensorFlowFLModel',
-        'path': 'ibmfl.model.tensorflow_fl_model',
-        'spec': spec
-    }
+    model = {"name": "TensorFlowFLModel", "path": "ibmfl.model.tensorflow_fl_model", "spec": spec}
 
     return model

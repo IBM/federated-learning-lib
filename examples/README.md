@@ -1,25 +1,32 @@
 # Explore Available Examples
 
+Jupyter notebook examples can be found [here](../Notebooks/)
+
 ## Examples and Tutorials
 
-### Training Keras, TensorFlow 2.1 and PyTorch models with different fusion algorithms
+### Training Keras (TensorFlow v1), TensorFlow v2 and PyTorch models in IBM FL
 
-* [Running federated averaging (FedAvg)](fedavg)
+* [Federated averaging (FedAvg)](fedavg)
 * [Simple average](iter_avg)
 * [Shuffle iterative average](shuffle_iter_avg)
-* [FedAvgPlus with Tensorflow and PyTorch](fedavgplus)
+* [FedAvgPlus](fedavgplus)
 * [Gradient aggregation](gradient_aggregation)
-* [PFNM with Keras](pfnm)
+* [PFNM](pfnm)
 * [Coordinate median](coordinate_median)
 * [Coordinate median plus](coordinate_median_plus)
 * [Geometric median plus](geometric_median_plus)
-* [Krum with Keras](krum)
-* [Zeno with Keras](zeno)
-* [Adaptive federated averaging with Keras](afa)
+* [Krum](krum)
+* [Zeno](zeno)
+* [Adaptive federated averaging](afa)
+* [Comparative Elimination (CE)](comparative_elimination)
+* [Doc2vec](doc2vec)
+* [FedProx with Tensorflow](fedprox)
+
 
 ### Training scikit-learn models in IBM FL
 
 * [Logistic classifier](iter_avg)
+* [Federated averaging (FedAvg)](fedavg)
 * [SPAHM with KMeans](spahm)
 * [Differential private Naive Bayes models](naive_bayes_dp)
 
@@ -36,19 +43,7 @@
 
 * [SPAHM with KMeans](spahm)
 
-### Jupyter Notebooks to run IBM FL
-
-* [Keras Classifier](../Notebooks/keras_mnist_classifier)
-* [Reinforcement learning Cartpole](../Notebooks/reinforcement_learning_cartpole)
-
-## IBM FL Command Reference
-
-| IBM FL Command | Participant | Description |
-| :-----------: | :-----------: | :----------- |
-| `START` | aggregator / party | Start accepting connections|
-| `REGISTER` | party | Join an FL project |
-| `TRAIN` | aggregator | Initiate training process |
-| `SYNC` | aggregator | Synchronize model among parties |
-| `EVAL` | party | Evaluate model |
-| `SAVE` | party | Save model in current directory |
-| `STOP` | aggregator / party | Stop the connection |
+### Mitigating bias in IBM FL
+* [Federated Prejudice Removal](prej_remover)
+* [Global Reweighing](sklearn_logclassification_globalrw)
+* [Local Reweighing](sklearn_logclassification_rw)
