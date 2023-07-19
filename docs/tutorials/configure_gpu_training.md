@@ -1,19 +1,23 @@
 # Enabling GPU training
 
-IBM federated learning offers support for training neural network models 
+IBM federated learning offers support for training neural network models
 under GPU environment at the party side to speedup the training process.
 
 ## Environment setup
+
 Please install required libraries for GPU training.
- - For Keras and TensorFlow models, install the corresponding `tensorflow-gpu` package 
- according to [Tensorflow GPU tutorial](https://www.tensorflow.org/install/gpu). 
- IBM FL currently requires `tensorflow==1.15.0`, therefore, 
+
+- For Keras and TensorFlow models, install the corresponding `tensorflow-gpu` package
+ according to [Tensorflow GPU tutorial](https://www.tensorflow.org/install/gpu).
+ IBM FL currently requires `tensorflow==1.15.0`, therefore,
  you will need to install `tensorflow-gpu==1.15.0` in your GPU environment.
 
 ## IBM FL configuration
-Users can enable and specify the number of GPUs they want to use for training 
-via the party's configuration file. 
+
+Users can enable and specify the number of GPUs they want to use for training
+via the party's configuration file.
 Below is an example of the party's configuration file:
+
 ```yaml
 aggregator:
   ip: 127.0.0.1
@@ -48,9 +52,10 @@ protocol_handler:
   name: PartyProtocolHandler
   path: ibmfl.party.party_protocol_handler
 ```
-In the above example, the `gpu` section under `info` section of `model` specifies 
-the `gpu` setting of party's local training. 
+
+In the above example, the `gpu` section under `info` section of `model` specifies
+the `gpu` setting of party's local training.
 Users can change the `num_gpus` according to the computing resources available to the parties.
 
-If no `gpu` section is presented in `info`, the Keras/TensorFlow.keras training will be 
+If no `gpu` section is presented in `info`, the Keras/TensorFlow.keras training will be
 using the default CPU environment or **only one GPU** even if the party can access one or more GPU(s).

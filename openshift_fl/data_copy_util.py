@@ -2,15 +2,18 @@
 Licensed Materials - Property of IBM
 Restricted Materials of IBM
 20221069
-© Copyright IBM Corp. 2022 All Rights Reserved.
+© Copyright IBM Corp. 2023 All Rights Reserved.
 """
-import yaml
+import traceback
 from pathlib import Path
 from shutil import copyfile
 
+import yaml
 
-def stage_trial_files(generated_files_dir, local_trial_dir, machine_trial_dir,
-                      config_agg_dict=None, config_party_dicts=None):
+
+def stage_trial_files(
+    generated_files_dir, local_trial_dir, machine_trial_dir, config_agg_dict=None, config_party_dicts=None
+):
     """
     - Copy all files placed into generated_files_dir by the IBMFL generate_* scripts and place \
       them all flat into local_trial_dir. \
@@ -35,13 +38,13 @@ def stage_trial_files(generated_files_dir, local_trial_dir, machine_trial_dir,
     :return: a dictionary with key for each process, listing the paths to the files it needs
     :rtype: `dict{str,list}`
     """
+    import re
     from collections import MutableMapping
     from functools import reduce
     from operator import getitem
-    import re
 
     # flattens a dictionary
-    def flatten(d, parent_key='', sep='.'):
+    def flatten(d, parent_key="", sep="."):
         items = []
         for k, v in d.items():
             new_key = parent_key + sep + k if parent_key else k
@@ -62,27 +65,31 @@ def stage_trial_files(generated_files_dir, local_trial_dir, machine_trial_dir,
     machine_trial_pobj = Path(machine_trial_dir)
 
     # get all the files in our relevant folders
-    generated_files = tuple() \
-                      + tuple(Path(f'{generated_files_dir}/configs').rglob('*.*')) \
-                      + tuple(Path(f"{generated_files_dir}/data").rglob('*.*'))
+    generated_files = (
+        tuple()
+        + tuple(Path(f"{generated_files_dir}/configs").rglob("*.*"))
+        + tuple(Path(f"{generated_files_dir}/data").rglob("*.*"))
+        + tuple(Path(f"{generated_files_dir}/keys").rglob("*.*"))
+    )
 
     proc_file_map = {}
 
     # if the file is a config, open it and handle the filepaths in it
     for file in generated_files:
-        if 'config_' in str(file):
-            proc_label = re.search('config_(.*).yml', str(file)).group(1)
-            if config_agg_dict is not None and 'agg' in proc_label:
+        if "config_" in str(file):
+            proc_label = re.search("config_(.*).yml", str(file)).group(1)
+            if config_agg_dict is not None and "agg" in proc_label:
                 orig_config = config_agg_dict
-            elif config_party_dicts is not None and 'party' in proc_label:
+            elif config_party_dicts is not None and "party" in proc_label:
                 orig_config = config_party_dicts[int(proc_label[-1])]
             else:
-                with open(file, 'r') as stream:
+                with open(file, "r") as stream:
                     orig_config = yaml.load(stream.read(), Loader=yaml.Loader)
             flat_config = flatten(orig_config)
             proc_file_map[proc_label] = []
         else:
             continue
+
         for k, v in flat_config.items():
             # determine if this entry contains a filepath we need to handle
             if isinstance(v, str):
@@ -96,16 +103,19 @@ def stage_trial_files(generated_files_dir, local_trial_dir, machine_trial_dir,
             l_filepath = local_trial_pobj.joinpath(g_filepath.name)
             m_filepath = machine_trial_pobj.joinpath(g_filepath.name)
             # move the file to our local trial dir
-            if not l_filepath.is_file() and 'output' not in k:
-                copyfile(g_filepath, l_filepath)
+            if not l_filepath.is_file() and "output" not in k:
+                try:
+                    copyfile(g_filepath, l_filepath)
+                except IOError:
+                    traceback.print_exc()
             # don't plan to scp it to the machine if it's an output file
-            if 'output' not in k:
+            if "output" not in k:
                 proc_file_map[proc_label] += [l_filepath]
             # set the path in the config to the machine trial dir, where the run happens
-            dict_set_nested(orig_config, k.split('.'), str(m_filepath))
+            dict_set_nested(orig_config, k.split("."), str(m_filepath))
 
-        with open(f'{local_trial_dir}/{file.name}', "w") as local_trial_config_file:
+        with open(f"{local_trial_dir}/{file.name}", "w") as local_trial_config_file:
             yaml.dump(orig_config, local_trial_config_file)
-            proc_file_map[proc_label] += ['{}/{}'.format(local_trial_dir, file.name)]
+            proc_file_map[proc_label] += ["{}/{}".format(local_trial_dir, file.name)]
 
     return proc_file_map

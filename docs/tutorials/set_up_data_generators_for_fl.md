@@ -90,7 +90,11 @@ class DataGenerator(keras.utils.Sequence):
         for subdir in labels:
             subpath = os.path.join(directory, subdir)
             list_ids = []
-
+            
+            # We assume assumes features are provided as in `.png` format, 
+            # and labels are provided as in `string` format. 
+            # Please make sure the data file format is consistent and 
+            # make necessary changes accordingly.
             list_ids = list_ids + glob.glob(os.path.join(subpath, '*.png'))
             class_list = [self.class_indices[subdir]] * len(list_ids)
             self.filenames = self.filenames + list_ids
@@ -174,6 +178,21 @@ class MyDataHandler(DataHandler):
         :rtype: `tuple` 
         """
         pass
+
+    def get_train_counts(self):
+        """
+        Returns the training data sample size.
+
+        :return: training data sample size
+        :rtype: `int`
+        """
+        # Retrieving the training sample size is required if one selects
+        # to use FedAvg as fusion algorithm.
+        # Following our previous data generator example which returns
+        # a DataGenerator object to retrieve data during local training,
+        # one can retrieve the training sample size as follows.
+
+        return len(self.train_datagenerator.filenames)
 ```
 
 ## Configure the `data` section in config files

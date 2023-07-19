@@ -1,35 +1,35 @@
 # Create a customized data handler
 
-In IBM federated learning, we use the `DataHandler` class to load and pre-process data. 
-When running an FL job, the data from each party must be formatted correctly. 
-For this reason, although each party can implement and use different data handlers, 
-we recommend parties in the same task use the same or similar data handlers to 
+In IBM federated learning, we use the `DataHandler` class to load and pre-process data.
+When running an FL job, the data from each party must be formatted correctly.
+For this reason, although each party can implement and use different data handlers,
+we recommend parties in the same task use the same or similar data handlers to
 make sure their input data is in the correct format.
 
-
-As we have discussed in the [previous tutorial](configure_fl.md), 
-the aggregator and parties use configuration files (`.yml` files) for initialization 
+As we have discussed in the [previous tutorial](configure_fl.md),
+the aggregator and parties use configuration files (`.yml` files) for initialization
 ([Here](configure_fl.md#the-aggregators-configuration-file) is an examples of the configuration files.)
-In the config files, a section named `data` will be used to initialize the `DataHandler` class 
-for the aggregator (if it has access to any dataset) and parties. 
-In particular, both the aggregator and each party can specify their own data handlers in their config files. 
-Note that the `data` section is optional in the config file for the aggregator. 
-If the aggregator has access to a dataset, for example, a global testset or a validation set, 
-it can access the data via its data handler to monitor the global model's performance. 
+In the config files, a section named `data` will be used to initialize the `DataHandler` class
+for the aggregator (if it has access to any dataset) and parties.
+In particular, both the aggregator and each party can specify their own data handlers in their config files.
+Note that the `data` section is optional in the config file for the aggregator.
+If the aggregator has access to a dataset, for example, a global testset or a validation set,
+it can access the data via its data handler to monitor the global model's performance.
 The data handlers for each party help them to access their own training and testing data.
 
 ## What's inside our build-in data handlers?
-Below is one of our build-in data handlers for preparing [MNIST](http://yann.lecun.com/exdb/mnist/) data to train a Keras CNN model, 
+
+Below is one of our build-in data handlers for preparing [MNIST](http://yann.lecun.com/exdb/mnist/) data to train a Keras CNN model,
 see our example [iter_avg](../../examples/iter_avg).
 
-The `get_data` method is where the party accesses its local dataset to perform training and testing. 
-Specifically,  when local training is triggered, the party will load the training data from the first return argument of `get_data`. 
+The `get_data` method is where the party accesses its local dataset to perform training and testing.
+Specifically,  when local training is triggered, the party will load the training data from the first return argument of `get_data`.
 When an evaluation of the model is triggered, the testing data is taken from the second return argument.
-If we observe this example code, we find that it loads and pre-processes the MNIST dataset the same way we do in a centralized machine learning job. 
+If we observe this example code, we find that it loads and pre-processes the MNIST dataset the same way we do in a centralized machine learning job.
 
 **Note that** this data handler assumes the local data is saved as a `.npz` file, and MNIST data has not been pre-processed yet.
-However, `.npz` format is not a mandatory format. One can load their local dataset from 
-any other file format, like `.csv` and `.txt`, etc. 
+However, `.npz` format is not a mandatory format. One can load their local dataset from
+any other file format, like `.csv` and `.txt`, etc.
 
 ```python
 import numpy as np
@@ -102,9 +102,11 @@ class MnistKerasDataHandler(DataHandler):
         self.y_train = np.eye(num_classes)[self.y_train]
         self.y_test = np.eye(num_classes)[self.y_test]
 ```
-Below is an example of the `data` section in the configuration files. 
+
+Below is an example of the `data` section in the configuration files.
 The name and path of the specified data handler must match its relative path in the working directory.
 In the `info` section, one can include any information they want to load in their data handler's `__init__`.
+
 ```yaml
 data:
   info: # load as `data_config`, one can configure the `info` section at will
@@ -116,9 +118,9 @@ data:
 ## How to create my own data handlers for supervised learning?
 
 One can create a customized data handler via inheritance from the ibmfl base data handler class.
-In the `__init__` function, it loads the dataset information via `data_config`. 
-This argument takes as input a dictionary that is received from the `info` field of the `data` section in the configuration file. 
-In the example below, we can see the data file is specified in the config and can be received by the data handler. 
+In the `__init__` function, it loads the dataset information via `data_config`.
+This argument takes as input a dictionary that is received from the `info` field of the `data` section in the configuration file.
+In the example below, we can see the data file is specified in the config and can be received by the data handler.
 Any other additional hyper-parameters and other arguments can also be passed in here to the data handler from the configuration file.
 
 ```python
@@ -159,12 +161,13 @@ class MyDataHandler(DataHandler):
         """
         pass
 ```
+
 **Note that** for training neural networks, it is possible to load large datasets via data generators.
-Click [here](set_up_data_generators_for_fl.md) to find more details about how to setup data generators for training neural networks. 
+Click [here](set_up_data_generators_for_fl.md) to find more details about how to setup data generators for training neural networks.
 
 ## IBM FL built-in pre-processing helper functions
 
-IBM FL provides a list of helper functions to facilitate the data preparation process; 
-see our [API documentation](http://ibmfl-api-docs.mybluemix.net/index.html) to learn more about `ibmfl.data`.
-Users can get it for free by inheriting from `ibmfl.data.data_handler.DataHandler` class. 
+IBM FL provides a list of helper functions to facilitate the data preparation process;
+see our [API documentation](https://ibmfl-api-docs.res.ibm.com/) to learn more about `ibmfl.data`.
+Users can get it for free by inheriting from `ibmfl.data.data_handler.DataHandler` class.
 All of the current helper functions assume that the input data is of type `numpy.ndarray`.

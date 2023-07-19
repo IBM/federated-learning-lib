@@ -1,103 +1,88 @@
 # Setup with Crypto
 
-This tutorial explains how to setup with crypto and run IBM federated learning using fully homomorphic encryption (HE). All commands are assumed to be run from the base directory at the top of this repository.
+This tutorial explains how to setup and run IBM federated learning with crypto using fully homomorphic encryption (HE). All commands are assumed to be run from the base directory at the top of this repository.
 
-**Note:** This will only work on a Linux machine (x86 and IBM Z). Other operating systems are not supported.
+**Note:** This will only work on a Linux machine (x86 and IBM Z). Other operating systems and architectures are not supported.
 
-## Setup IBM federated learning
+## Setup IBM federated learning with crypto
 
-To run projects in IBM federated learning, you must first install all the requirements. We highly recommend using Conda installation for this project. If you don't have Conda, you can [install it here](https://docs.conda.io/projects/conda/en/latest/user-guide/install/).
+To run projects in IBM federated learning, you must first create a Python environment to install all the requirements. You can use either Conda or venv:
 
-The latest IBM FL library supports model training using Keras (with TensorFlow v1), TensorFlow v2, PyTorch, and Scikit-learn. It is recommended to install IBM FL in different conda environments for the Keras and TensorFlow v2 versions. Models using PyTorch or Scikit-learn will work on either.
+<details>
+<summary>Conda (recommended)</summary>
 
-### Installation with Conda (recommended)
+If you don't have Conda, you can install it [here](https://docs.conda.io/projects/conda/en/latest/user-guide/install).
 
-1. If you already have Conda installed, create a new environment for IBM FL. We recommend using Python 3.6, but newer versions may also work.
+Once installed, create a new Conda environment. We recommend using Python 3.7, but newer versions may also work.
 
-    a. If running experiments using Keras models (with Tensorflow v1), create a new environment by running:
+```sh
+conda create -n <env_name> python=3.7
+```
 
-    ```bash
-    conda create -n <env_name> python=3.6 tensorflow=1.15
-    ```
+Activate the newly created Conda environment.
 
-    b. If running experiments using TensorFlow v2, create a new environment by running:
+```sh
+conda activate <env_name>
+```
 
-    ```bash
-    conda create -n <env_name> python=3.6
-    ```
+</details>
 
-    c. If running experiments using PyTorch or Scikit-learn, either environment will work.
+<details>
+<summary>Venv</summary>
 
-2. Activate the new Conda environment by running:
+Create a new virtual environment using Python's built-in `venv` module. This will use your system's Python version which may or may not be fully compatible.
 
-    ```bash
-    conda activate <env_name>
-    ```
+```bash
+python -m venv venv
+```
 
-    If using TensorFlow v2, install the package:
+Activate the newly created virtual environment.
 
-    ```bash
-    pip install tensorflow==2.1.0
-    ```
+```sh
+source venv/bin/activate
+```
 
-    If this version of TensorFlow is unavailable, try installing a newer version.
+</details>
 
-3. Install the necessary packages needed for IBM HElayers to use fully homomorphic encryption:
+After creating and activating the Python environment, install the wheel file to install the IBM federated learning library and all dependencies. This file is located in the `federated-learning-lib` directory of this repo. By default, the wheel file will not install any additional machine learning or crypto libraries. You must specify `crypto` and the desired model training backend library in brackets. The following backends are supported:
 
-    ```bash
-    pip install cryptography pyhelayers
-    ```
+```sh
+# Install with crypto and no additional machine learning libraries
+pip install "/path/to/federated_learning_lib.whl[crypto]"
+# Install with crypto and Scikit-learn backend
+pip install "/path/to/federated_learning_lib.whl[crypto,sklearn]"
+# Install with crypto and PyTorch backend
+pip install "/path/to/federated_learning_lib.whl[crypto,pytorch]"
+# Install with crypto and Keras (TensorFlow v1) backend
+pip install "/path/to/federated_learning_lib.whl[crypto,keras]"
+# Install with crypto and TensorFlow v2 backend
+pip install "/path/to/federated_learning_lib.whl[crypto,tf]"
+```
 
-4. Install the IBM FL package by running:
+You can also install multiple backends using a comma separated list. For example:
 
-    ```bash
-    pip install <IBM_federated_learning_whl_file>
-    ```
+```sh
+# Install with crypto and Scikit-learn and Keras (TensorFlow v1) backend
+pip install "/path/to/federated_learning_lib.whl[crypto,sklearn,keras]"
+# Install with crypto and PyTorch and TensorFlow v2 backend
+pip install "/path/to/federated_learning_lib.whl[crypto,pytorch,tf]"
+# Install with crypto and Scikit-learn, PyTorch, and Keras (TensorFlow v1) backend
+pip install "/path/to/federated_learning_lib.whl[crypto,sklearn,pytorch,keras]"
+```
 
-### Installation with virtualenv
+You may install as many backends as you'd like. The only exception is that you **cannot** install both the Keras and TensorFlow v2 backends since they are different versions of TensorFlow.
 
-We recommend using Python 3.6, but newer versions may also work.
+**Notes:**
 
-1. Create a virtual environment by running:
-
-    ```bash
-    python -m pip install --user virtualenv
-    virtualenv venv
-    source venv/bin/activate
-    python -m pip install --upgrade pip
-    ```
-
-2. Install basic dependencies:
-
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-    If using TensorFlow v2, install the package:
-
-    ```bash
-    pip install tensorflow==2.1.0
-    ```
-
-    If this version of TensorFlow is unavailable, try installing a newer version.
-
-3. Install the necessary packages needed for IBM HElayers to use fully homomorphic encryption:
-
-    ```bash
-    pip install cryptography pyhelayers
-    ```
-
-4. Install the IBM FL package by running:
-
-    ```bash
-    pip install <IBM_federated_learning_whl_file>
-    ```
+* The quotes are required if using the Zsh shell (this is the default shell for Mac).
+* There should be no spaces before or after each comma.
+* The Keras backend will only work for Python 3.7.
 
 ## Run Tutorial Notebook
 
 Follow one of the [tutorial notebooks](Notebooks) for getting starting with crypto and running IBM federated learning using fully homomorphic encryption (HE). Tutorials currently exist for:
 
-* (Optional) [Generating homomorphic encryption key files](Notebooks/crypto_fhe_key_setup.ipynb)
-* [Training a TensorFlow model using homomorphic encryption](Notebooks/crypto_fhe_tensorflow)
-* [Training a PyTorch model using homomorphic encryption](Notebooks/crypto_fhe_pytorch)
-* [Training a Scikit-learn model using homomorphic encryption](Notebooks/crypto_fhe_sklearn)
+* (Optional) [Generating homomorphic encryption key files](notebooks/crypto_fhe_key_setup.ipynb)
+* [Training a TensorFlow model using homomorphic encryption](notebooks/crypto_fhe_tensorflow)
+* [Training a PyTorch model using homomorphic encryption](notebooks/crypto_fhe_pytorch)
+* [Training a Scikit-learn model using homomorphic encryption](notebooks/crypto_fhe_sklearn)
