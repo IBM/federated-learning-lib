@@ -1,9 +1,21 @@
 import os
-
 import joblib
+from enum import Enum
 from sklearn.linear_model import SGDClassifier
 
 import examples.datahandlers as datahandlers
+
+
+class Dataset(Enum):
+    ADULT = "adult"
+    COMPAS = "compas"
+    GERMAN = "german"
+    CUSTOM_DATASET = "custom_dataset"
+
+
+class ModelType(Enum):
+    SKLEARN = "sklearn"
+    # Add other model types here if needed
 
 
 def get_fusion_config():
@@ -19,45 +31,54 @@ def get_local_training_config(configs_folder=None):
     return local_training_handler
 
 
-def get_hyperparams(model):
-    hyperparams = {"global": {"rounds": 3, "termination_accuracy": 0.9}, "local": {"training": {"max_iter": 2}}}
-
+def get_hyperparams(model_type: ModelType):
+    hyperparams = {
+        "global": {"rounds": 3, "termination_accuracy": 0.9},
+        "local": {"training": {"max_iter": 2}}
+    }
     return hyperparams
 
 
-def get_data_handler_config(party_id, dataset, folder_data, is_agg=False, model="sklearn"):
-    SUPPORTED_DATASETS = ["adult", "compas", "german", "custom_dataset"]
+def get_data_handler_config(party_id, dataset: Dataset, folder_data, is_agg=False):
+    SUPPORTED_DATASETS = {
+        Dataset.ADULT: "adult_sklearn",
+        Dataset.COMPAS: "compas_sklearn",
+        Dataset.GERMAN: "german_sklearn",
+    }
 
-    if dataset in SUPPORTED_DATASETS:
-        if dataset == "adult":
-            dataset = "adult_sklearn"
-        elif dataset == "compas":
-            dataset = "compas_sklearn"
-        elif dataset == "german":
-            dataset = "german_sklearn"
-        data = datahandlers.get_datahandler_config(dataset, folder_data, party_id, is_agg)
-    else:
-        raise Exception("The dataset {} is a wrong combination for fusion/model".format(dataset))
+    if dataset not in SUPPORTED_DATASETS:
+        raise Exception("The dataset {} is not supported.".format(dataset.value))
+
+    data = datahandlers.get_datahandler_config(SUPPORTED_DATASETS[dataset], folder_data, party_id, is_agg)
     return data
 
 
-def get_model_config(folder_configs, dataset, is_agg=False, party_id=0, model="sklearn"):
-    if is_agg:
-        return None
-
-    model = SGDClassifier(loss="log", penalty="l2")
-
+def save_model(model, folder_configs):
     if not os.path.exists(folder_configs):
         os.makedirs(folder_configs)
 
     fname = os.path.join(folder_configs, "model_architecture.pickle")
-
     with open(fname, "wb") as f:
         joblib.dump(model, f)
 
-    # Generate model spec:
-    spec = {"model_definition": fname}
+    return fname
 
-    model = {"name": "SklearnSGDFLModel", "path": "ibmfl.model.sklearn_SGD_linear_fl_model", "spec": spec}
 
-    return model
+def get_model_config(folder_configs, dataset: Dataset, is_agg=False, party_id=0, model_type: ModelType = ModelType.SKLEARN):
+    if is_agg:
+        return None
+
+    if model_type == ModelType.SKLEARN:
+        model = SGDClassifier(loss="log", penalty="l2")
+    else:
+        raise ValueError("Model type {} is not supported.".format(model_type.value))
+
+    model_spec = {"model_definition": save_model(model, folder_configs)}
+
+    model_config = {
+        "name": "SklearnSGDFLModel",
+        "path": "ibmfl.model.sklearn_SGD_linear_fl_model",
+        "spec": model_spec,
+    }
+
+    return model_config
